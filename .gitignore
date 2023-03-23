@@ -1,0 +1,342 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Flask stuff:
+instance/
+.webassets-cache
+
+# Scrapy stuff:
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+.pybuilder/
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+#   For a library or package, you might want to ignore these files since the code is
+#   intended to run in multiple environments; otherwise, check them in:
+# .python-version
+
+# pipenv
+#   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
+#   However, in case of collaboration, if having platform-specific dependencies or dependencies
+#   having no cross-platform support, pipenv may install dependencies that don't work, or not
+#   install all needed dependencies.
+#Pipfile.lock
+
+# poetry
+#   Similar to Pipfile.lock, it is generally recommended to include poetry.lock in version control.
+#   This is especially recommended for binary packages to ensure reproducibility, and is more
+#   commonly ignored for libraries.
+#   https://python-poetry.org/docs/basic-usage/#commit-your-poetrylock-file-to-version-control
+#poetry.lock
+
+# pdm
+#   Similar to Pipfile.lock, it is generally recommended to include pdm.lock in version control.
+#pdm.lock
+#   pdm stores project-wide configurations in .pdm.toml, but it is recommended to not include it
+#   in version control.
+#   https://pdm.fming.dev/#use-with-ide
+.pdm.toml
+
+# PEP 582; used by e.g. github.com/David-OConnor/pyflow and github.com/pdm-project/pdm
+__pypackages__/
+
+# Celery stuff
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# pytype static type analyzer
+.pytype/
+  
+# Cython debug symbols
+cython_debug/
+
+# PyCharm
+#  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
+#  be found at https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
+#  and can be added to the global gitignore or merged into this file.  For a more nuclear
+#  option (not recommended) you can uncomment the following to ignore the entire idea folder.
+#.idea/
+*.gz
+staticfiles/staticfiles.json
+staticfiles/admin/css/autocomplete.4a81fc4242d0.css
+staticfiles/admin/css/base.01580fff1759.css
+staticfiles/admin/css/changelists.ae46354f4e80.css
+staticfiles/admin/css/dark_mode.4e3d1504ca81.css
+staticfiles/admin/css/dashboard.be83f13e4369.css
+staticfiles/admin/css/fonts.168bab448fee.css
+staticfiles/admin/css/forms.c192d1ec6902.css
+staticfiles/admin/css/login.586129c60a93.css
+staticfiles/admin/css/nav_sidebar.30423191f399.css
+staticfiles/admin/css/responsive_rtl.e13ae754cceb.css
+staticfiles/admin/css/responsive.02281633b5f1.css
+staticfiles/admin/css/rtl.8473f45bd49b.css
+staticfiles/admin/css/widgets.00318bc424d3.css
+staticfiles/admin/css/vendor/select2/LICENSE-SELECT2.f94142512c91.md
+staticfiles/admin/css/vendor/select2/select2.a2194c262648.css
+staticfiles/admin/css/vendor/select2/select2.min.9f54e6414f87.css
+staticfiles/admin/fonts/LICENSE.d273d63619c9.txt
+staticfiles/admin/fonts/README.ab99e6b541ea.txt
+staticfiles/admin/fonts/Roboto-Bold-webfont.50d75e48e0a3.woff
+staticfiles/admin/fonts/Roboto-Light-webfont.c73eb1ceba33.woff
+staticfiles/admin/fonts/Roboto-Regular-webfont.35b07eb2f871.woff
+staticfiles/admin/img/calendar-icons.39b290681a8b.svg
+staticfiles/admin/img/icon-addlink.d519b3bab011.svg
+staticfiles/admin/img/icon-alert.034cc7d8a67f.svg
+staticfiles/admin/img/icon-calendar.ac7aea671bea.svg
+staticfiles/admin/img/icon-changelink.18d2fd706348.svg
+staticfiles/admin/img/icon-clock.e1d4dfac3f2b.svg
+staticfiles/admin/img/icon-deletelink.564ef9dc3854.svg
+staticfiles/admin/img/icon-no.439e821418cd.svg
+staticfiles/admin/img/icon-unknown-alt.81536e128bb6.svg
+staticfiles/admin/img/icon-unknown.a18cb4398978.svg
+staticfiles/admin/img/icon-viewlink.41eb31f7826e.svg
+staticfiles/admin/img/icon-yes.d2f9f035226a.svg
+staticfiles/admin/img/inline-delete.fec1b761f254.svg
+staticfiles/admin/img/LICENSE.2c54f4e1ca1c
+staticfiles/admin/img/README.a70711a38d87.txt
+staticfiles/admin/img/search.7cf54ff789c6.svg
+staticfiles/admin/img/selector-icons.b4555096cea2.svg
+staticfiles/admin/img/sorting-icons.3a097b59f104.svg
+staticfiles/admin/img/tooltag-add.e59d620a9742.svg
+staticfiles/admin/img/tooltag-arrowright.bbfb788a849e.svg
+staticfiles/admin/img/gis/move_vertex_off.7a23bf31ef8a.svg
+staticfiles/admin/img/gis/move_vertex_on.0047eba25b67.svg
+staticfiles/admin/js/actions.eac7e3441574.js
+staticfiles/admin/js/autocomplete.01591ab27be7.js
+staticfiles/admin/js/calendar.f8a5d055eb33.js
+staticfiles/admin/js/cancel.ecc4c5ca7b32.js
+staticfiles/admin/js/change_form.9d8ca4f96b75.js
+staticfiles/admin/js/collapse.f84e7410290f.js
+staticfiles/admin/js/core.5d6b384a08b5.js
+staticfiles/admin/js/filters.295a9d3d8b6a.js
+staticfiles/admin/js/inlines.22d4d93c00b4.js
+staticfiles/admin/js/jquery.init.b7781a0897fc.js
+staticfiles/admin/js/nav_sidebar.36a64ecb39ed.js
+staticfiles/admin/js/popup_response.c6cc78ea5551.js
+staticfiles/admin/js/prepopulate_init.6cac7f3105b8.js
+staticfiles/admin/js/prepopulate.bd2361dfd64d.js
+staticfiles/admin/js/SelectBox.8161741c7647.js
+staticfiles/admin/js/SelectFilter2.3f53e33c88d6.js
+staticfiles/admin/js/urlify.25cc3eac8123.js
+staticfiles/admin/js/admin/DateTimeShortcuts.300591891b2b.js
+staticfiles/admin/js/admin/RelatedObjectLookups.de5309ac06dd.js
+staticfiles/admin/js/vendor/jquery/jquery.2849239b95f5.js
+staticfiles/admin/js/vendor/jquery/jquery.min.8fb8fee4fcc3.js
+staticfiles/admin/js/vendor/jquery/LICENSE.de877aa6d744.txt
+staticfiles/admin/js/vendor/select2/LICENSE.f94142512c91.md
+staticfiles/admin/js/vendor/select2/select2.full.c2afdeda3058.js
+staticfiles/admin/js/vendor/select2/select2.full.min.fcd7500d8e13.js
+staticfiles/admin/js/vendor/select2/i18n/af.4f6fcd73488c.js
+staticfiles/admin/js/vendor/select2/i18n/ar.65aa8e36bf5d.js
+staticfiles/admin/js/vendor/select2/i18n/az.270c257daf81.js
+staticfiles/admin/js/vendor/select2/i18n/bg.39b8be30d4f0.js
+staticfiles/admin/js/vendor/select2/i18n/bn.6d42b4dd5665.js
+staticfiles/admin/js/vendor/select2/i18n/bs.91624382358e.js
+staticfiles/admin/js/vendor/select2/i18n/ca.a166b745933a.js
+staticfiles/admin/js/vendor/select2/i18n/cs.4f43e8e7d33a.js
+staticfiles/admin/js/vendor/select2/i18n/da.766346afe4dd.js
+staticfiles/admin/js/vendor/select2/i18n/de.8a1c222b0204.js
+staticfiles/admin/js/vendor/select2/i18n/dsb.56372c92d2f1.js
+staticfiles/admin/js/vendor/select2/i18n/el.27097f071856.js
+staticfiles/admin/js/vendor/select2/i18n/en.cf932ba09a98.js
+staticfiles/admin/js/vendor/select2/i18n/es.66dbc2652fb1.js
+staticfiles/admin/js/vendor/select2/i18n/et.2b96fd98289d.js
+staticfiles/admin/js/vendor/select2/i18n/eu.adfe5c97b72c.js
+staticfiles/admin/js/vendor/select2/i18n/fa.3b5bd1961cfd.js
+staticfiles/admin/js/vendor/select2/i18n/fi.614ec42aa9ba.js
+staticfiles/admin/js/vendor/select2/i18n/fr.05e0542fcfe6.js
+staticfiles/admin/js/vendor/select2/i18n/gl.d99b1fedaa86.js
+staticfiles/admin/js/vendor/select2/i18n/he.e420ff6cd3ed.js
+staticfiles/admin/js/vendor/select2/i18n/hi.70640d41628f.js
+staticfiles/admin/js/vendor/select2/i18n/hr.a2b092cc1147.js
+staticfiles/admin/js/vendor/select2/i18n/hsb.fa3b55265efe.js
+staticfiles/admin/js/vendor/select2/i18n/hu.6ec6039cb8a3.js
+staticfiles/admin/js/vendor/select2/i18n/hy.c7babaeef5a6.js
+staticfiles/admin/js/vendor/select2/i18n/id.04debded514d.js
+staticfiles/admin/js/vendor/select2/i18n/is.3ddd9a6a97e9.js
+staticfiles/admin/js/vendor/select2/i18n/it.be4fe8d365b5.js
+staticfiles/admin/js/vendor/select2/i18n/ja.170ae885d74f.js
+staticfiles/admin/js/vendor/select2/i18n/ka.2083264a54f0.js
+staticfiles/admin/js/vendor/select2/i18n/km.c23089cb06ca.js
+staticfiles/admin/js/vendor/select2/i18n/ko.e7be6c20e673.js
+staticfiles/admin/js/vendor/select2/i18n/lt.23c7ce903300.js
+staticfiles/admin/js/vendor/select2/i18n/lv.08e62128eac1.js
+staticfiles/admin/js/vendor/select2/i18n/mk.dabbb9087130.js
+staticfiles/admin/js/vendor/select2/i18n/ms.4ba82c9a51ce.js
+staticfiles/admin/js/vendor/select2/i18n/nb.da2fce143f27.js
+staticfiles/admin/js/vendor/select2/i18n/ne.3d79fd3f08db.js
+staticfiles/admin/js/vendor/select2/i18n/nl.997868a37ed8.js
+staticfiles/admin/js/vendor/select2/i18n/pl.6031b4f16452.js
+staticfiles/admin/js/vendor/select2/i18n/ps.38dfa47af9e0.js
+staticfiles/admin/js/vendor/select2/i18n/pt-BR.e1b294433e7f.js
+staticfiles/admin/js/vendor/select2/i18n/pt.33b4a3b44d43.js
+staticfiles/admin/js/vendor/select2/i18n/ro.f75cb460ec3b.js
+staticfiles/admin/js/vendor/select2/i18n/ru.934aa95f5b5f.js
+staticfiles/admin/js/vendor/select2/i18n/sk.33d02cef8d11.js
+staticfiles/admin/js/vendor/select2/i18n/sl.131a78bc0752.js
+staticfiles/admin/js/vendor/select2/i18n/sq.5636b60d29c9.js
+staticfiles/admin/js/vendor/select2/i18n/sr-Cyrl.f254bb8c4c7c.js
+staticfiles/admin/js/vendor/select2/i18n/sr.5ed85a48f483.js
+staticfiles/admin/js/vendor/select2/i18n/sv.7a9c2f71e777.js
+staticfiles/admin/js/vendor/select2/i18n/th.f38c20b0221b.js
+staticfiles/admin/js/vendor/select2/i18n/tk.7c572a68c78f.js
+staticfiles/admin/js/vendor/select2/i18n/tr.b5a0643d1545.js
+staticfiles/admin/js/vendor/select2/i18n/uk.8cede7f4803c.js
+staticfiles/admin/js/vendor/select2/i18n/vi.097a5b75b3e1.js
+staticfiles/admin/js/vendor/select2/i18n/zh-CN.2cff662ec5f9.js
+staticfiles/admin/js/vendor/select2/i18n/zh-TW.04554a227c2b.js
+staticfiles/admin/js/vendor/xregexp/LICENSE.bf79e414957a.txt
+staticfiles/admin/js/vendor/xregexp/xregexp.efda034b9537.js
+staticfiles/admin/js/vendor/xregexp/xregexp.min.b0439563a5d3.js
+staticfiles/base/css/bootstrap-grid.07b22d783b4c.css
+staticfiles/base/css/bootstrap-grid.css.5b0b5762df7f.map
+staticfiles/base/css/bootstrap-grid.min.aaa24ff22c79.css
+staticfiles/base/css/bootstrap-grid.min.css.7d7e99bcf5c2.map
+staticfiles/base/css/bootstrap-grid.rtl.4d8fbec12b46.css
+staticfiles/base/css/bootstrap-grid.rtl.css.b9d28bff0e56.map
+staticfiles/base/css/bootstrap-grid.rtl.min.css.dcee708a5289.map
+staticfiles/base/css/bootstrap-grid.rtl.min.d54f18ac2e43.css
+staticfiles/base/css/bootstrap-reboot.45c7af2b43f9.css
+staticfiles/base/css/bootstrap-reboot.css.e8e9e9714198.map
+staticfiles/base/css/bootstrap-reboot.min.0cbdc209ebc7.css
+staticfiles/base/css/bootstrap-reboot.min.css.abdd88cacad7.map
+staticfiles/base/css/bootstrap-reboot.rtl.78b8f600b381.css
+staticfiles/base/css/bootstrap-reboot.rtl.css.f553e33d099b.map
+staticfiles/base/css/bootstrap-reboot.rtl.min.5e1636175566.css
+staticfiles/base/css/bootstrap-reboot.rtl.min.css.56e63ca354e7.map
+staticfiles/base/css/bootstrap-utilities.c971eba05809.css
+staticfiles/base/css/bootstrap-utilities.css.1c77eca0a1ee.map
+staticfiles/base/css/bootstrap-utilities.min.99c3ff0260d5.css
+staticfiles/base/css/bootstrap-utilities.min.css.8f62b7c9ba72.map
+staticfiles/base/css/bootstrap-utilities.rtl.02b9b70412af.css
+staticfiles/base/css/bootstrap-utilities.rtl.css.4a832854b813.map
+staticfiles/base/css/bootstrap-utilities.rtl.min.3923b19c0f96.css
+staticfiles/base/css/bootstrap-utilities.rtl.min.css.caea84d7fcec.map
+staticfiles/base/css/bootstrap.css.4ef2a729a295.map
+staticfiles/base/css/bootstrap.e8dba5006dda.css
+staticfiles/base/css/bootstrap.min.css.9398eb863aa8.map
+staticfiles/base/css/bootstrap.min.d444c544fbba.css
+staticfiles/base/css/bootstrap.rtl.css.0c612da03913.map
+staticfiles/base/css/bootstrap.rtl.fc5f2ee7cbd3.css
+staticfiles/base/css/bootstrap.rtl.min.7eb9680cb53f.css
+staticfiles/base/css/bootstrap.rtl.min.css.17b586acdbdb.map
+staticfiles/base/js/bootstrap.a6f5ca4119b3.js
+staticfiles/base/js/bootstrap.bundle.e1427b44f739.js
+staticfiles/base/js/bootstrap.bundle.js.2db6d0fe06ce.map
+staticfiles/base/js/bootstrap.bundle.min.119fc8956785.js
+staticfiles/base/js/bootstrap.bundle.min.js.c2dd8a49de58.map
+staticfiles/base/js/bootstrap.esm.e25c3c5ed65b.js
+staticfiles/base/js/bootstrap.esm.js.f8fbe7503a64.map
+staticfiles/base/js/bootstrap.esm.min.f5ff35b0dfcb.js
+staticfiles/base/js/bootstrap.esm.min.js.aece759b31fd.map
+staticfiles/base/js/bootstrap.js.73f567001ffe.map
+staticfiles/base/js/bootstrap.min.0fdb92bc3788.js
+staticfiles/base/js/bootstrap.min.js.fab39d2b9deb.map
+staticfiles/elden_ring_lore/static/css/Site-logo.182266c0f047.png
+staticfiles/elden_ring_lore/static/css/Site-logo.c5a33db46a6f.webp
+staticfiles/elden_ring_lore/static/css/style.6e3654aaf6aa.css
+staticfiles/elden_ring_lore/static/js/scripts.26a9a475fc00.js
+staticfiles/staticfiles.json
+staticfiles/staticfiles.json
