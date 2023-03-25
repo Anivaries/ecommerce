@@ -1,6 +1,6 @@
 {% load cart_template_tags %}
 {% for item in products %}
-{{ item.name }}
+<a href="{% url 'product-detail' item.slug %}">{{ item.name }}</a>
 {% endfor %}
 
 <div>

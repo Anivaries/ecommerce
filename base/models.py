@@ -32,6 +32,10 @@ class OrderItem(models.Model):
     def __str__(self) -> str:
         return f"{self.quantity} of {self.item}"
 
+    def get_sum_price(self):
+        total_price = self.quantity * self.item.price
+        return total_price
+
 
 class Order(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
@@ -40,6 +44,26 @@ class Order(models.Model):
     ordered_date = models.DateTimeField()
     items = models.ManyToManyField(OrderItem)
     start_date = models.DateTimeField(auto_now_add=True)
+    billing_address = models.ForeignKey(
+        'BillingAddress', on_delete=models.SET_NULL, blank=True, null=True)
 
     def __str__(self) -> str:
         return f"{self.user} ordered {self.items}"
+
+    def get_total_price(self):
+        total = 0
+        for item in self.items.all():
+            total += item.get_sum_price()
+        return total
+
+
+class BillingAddress(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             on_delete=models.CASCADE)
+    street_address = models.CharField(max_length=100)
+    apartment_address = models.CharField(max_length=10, blank=True)
+    phone_number = models.IntegerField()
+    zip = models.CharField(max_length=100)
+
+    def __str__(self) -> str:
+        return self.user.username

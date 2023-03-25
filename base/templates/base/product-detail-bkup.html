@@ -1,0 +1,14 @@
+{% load cart_template_tags %}
+<h2>{{ object.name }}</h2><br>
+<p>{{ object.price }}</p>
+<p>{{ object.size }}</p> 
+
+
+<a href="{{object.get_add_to_cart_url}}">Kupi</a><br>
+
+<a href="{{object.get_remove_from_cart_url}}">Obrisi</a>
+
+
+<div>
+    <h1>{{request.user|cart_item_count}}</h1>
+</div>

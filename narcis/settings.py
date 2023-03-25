@@ -25,8 +25,11 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
 
     'base',
+    'crispy_forms',
+    'crispy_bootstrap4',
 ]
-
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
+CRISPY_TEMPLATE_PACK = "bootstrap4"
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -100,7 +103,9 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static/base/static/')
+]
 STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
