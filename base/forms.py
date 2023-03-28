@@ -6,3 +6,10 @@ class CheckoutForm(forms.Form):
     apartment_address = forms.CharField(required=False)
     phone_number = forms.IntegerField()
     zip_code = forms.CharField()
+
+
+class ContactForm(forms.Form):
+    name = forms.CharField()
+    email = forms.CharField()
+    subject = forms.CharField()
+    message = forms.CharField(widget=forms.Textarea)

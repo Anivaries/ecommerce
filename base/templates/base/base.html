@@ -1,4 +1,5 @@
 {% load static %}
+{% load cart_template_tags %}
 <!-- 
 THEME: Aviato | E-commerce template
 VERSION: 1.0.0
@@ -32,25 +33,26 @@ FACEBOOK: https://www.facebook.com/themefisher
   <meta name="generator" content="Themefisher Constra HTML Template v1.0">
   
   <!-- Favicon -->
-  <link rel="shortcut icon" type="image/x-icon" href="images/favicon.png" />
+  <link rel="shortcut icon" type="image/x-icon" href="{% static 'images/favicon.png' %}" />
   
   <!-- Themefisher Icon font -->
-  <link rel="stylesheet" href="{% static 'plugins/themefisher-font/style.css'%}">
+  <link rel="stylesheet" href="{% static 'plugins/themefisher-font/style.css' %}">
   <!-- bootstrap.min css -->
-  <link rel="stylesheet" href="{% static 'plugins/bootstrap/css/bootstrap.min.css'%}">
+  <link rel="stylesheet" href="{% static 'plugins/bootstrap/css/bootstrap.min.css' %}">
   
   <!-- Animate css -->
-  <link rel="stylesheet" href="{% static 'plugins/animate/animate.css'%}">
+  <link rel="stylesheet" href="{% static 'plugins/animate/animate.css' %}">
   <!-- Slick Carousel -->
-  <link rel="stylesheet" href="{% static 'plugins/slick/slick.css'%}">
-  <link rel="stylesheet" href="{% static 'plugins/slick/slick-theme.css'%}">
+  <link rel="stylesheet" href="{% static 'plugins/slick/slick.css' %}">
+  <link rel="stylesheet" href="{% static 'plugins/slick/slick-theme.css' %}">
   
   <!-- Main Stylesheet -->
-  <link rel="stylesheet" href="{% static 'css/style.css'%}">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
 </head>
 
 <body id="body">
+
 <!-- Start Top Header Bar -->
 <section class="top-header">
 	<div class="container">
@@ -88,43 +90,35 @@ FACEBOOK: https://www.facebook.com/themefisher
 								class="tf-ion-android-cart"></i>Cart</a>
 						<div class="dropdown-menu cart-dropdown">
 							<!-- Cart Item -->
+							<!-- TO DO: Don't show cart dropdown if empty -->
+							{% if user.is_authenticated%}
+							{% show_cart_items as cart_items %}
+							{% for item in cart_items %}
 							<div class="media">
 								<a class="pull-left" href="#!">
 									<img class="media-object" src="images/shop/cart/cart-1.jpg" alt="image" />
 								</a>
 								<div class="media-body">
-									<h4 class="media-heading"><a href="#!">Ladies Bag</a></h4>
+									<h4 class="media-heading"><a href="#!">{{item.item.name}}</a></h4>
 									<div class="cart-price">
-										<span>1 x</span>
-										<span>1250.00</span>
+										<span>{{item.quantity}}x</span>
+										<span>{{item.item.price}} din</span>
 									</div>
-									<h5><strong>$1200</strong></h5>
+									<h5><strong>{{item.get_sum_price}} din</strong></h5>
 								</div>
-								<a href="#!" class="remove"><i class="tf-ion-close"></i></a>
-							</div><!-- / Cart Item -->
-							<!-- Cart Item -->
-							<div class="media">
-								<a class="pull-left" href="#!">
-									<img class="media-object" src="images/shop/cart/cart-2.jpg" alt="image" />
-								</a>
-								<div class="media-body">
-									<h4 class="media-heading"><a href="#!">Ladies Bag</a></h4>
-									<div class="cart-price">
-										<span>1 x</span>
-										<span>1250.00</span>
-									</div>
-									<h5><strong>$1200</strong></h5>
-								</div>
-								<a href="#!" class="remove"><i class="tf-ion-close"></i></a>
-							</div><!-- / Cart Item -->
-
+								<a href="{% url 'remove-from-cart' item.item.slug%}" class="remove"><i class="tf-ion-close"></i></a>
+							</div>
+							{% endfor %}
+							{% endif %}
+							<!-- / Cart Item -->
 							<div class="cart-summary">
 								<span>Total</span>
-								<span class="total-price">$1799.00</span>
+								<span class="total-price">{{object.get_total_price}} din</span>
 							</div>
+							
 							<ul class="text-center cart-buttons">
-								<li><a href="cart.html" class="btn btn-small">View Cart</a></li>
-								<li><a href="checkout.html" class="btn btn-small btn-solid-border">Checkout</a></li>
+								<li><a href="{% url 'order-summary'%}" class="btn btn-small">View Cart</a></li>
+								<li><a href="{% url 'checkout'%}" class="btn btn-small btn-solid-border">Checkout</a></li>
 							</ul>
 						</div>
 
@@ -277,21 +271,6 @@ FACEBOOK: https://www.facebook.com/themefisher
 					</li><!-- / Pages -->
 
 
-
-					<!-- Blog -->
-					<li class="dropdown dropdown-slide">
-						<a href="#!" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="350"
-							role="button" aria-haspopup="true" aria-expanded="false">Blog <span
-								class="tf-ion-ios-arrow-down"></span></a>
-						<ul class="dropdown-menu">
-							<li><a href="blog-left-sidebar.html">Blog Left Sidebar</a></li>
-							<li><a href="blog-right-sidebar.html">Blog Right Sidebar</a></li>
-							<li><a href="blog-full-width.html">Blog Full Width</a></li>
-							<li><a href="blog-grid.html">Blog 2 Columns</a></li>
-							<li><a href="blog-single.html">Blog Single</a></li>
-						</ul>
-					</li><!-- / Blog -->
-
 					<!-- Shop -->
 					<li class="dropdown dropdown-slide">
 						<a href="#!" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="350"
@@ -310,170 +289,11 @@ FACEBOOK: https://www.facebook.com/themefisher
 		</div><!-- / .container -->
 	</nav>
 </section>
-<section class="single-product">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-6">
-				<ol class="breadcrumb">
-					<li><a href="#">Home</a></li>
-					<li><a href="{% url 'product-list' %}">Shop</a></li>
-					<li class="active">{{object.name}}</li>
-				</ol>
-			</div>
-			<div class="col-md-6">
-				<ol class="product-pagination text-right">
-					<li><a href="blog-left-sidebar.html"><i class="tf-ion-ios-arrow-left"></i> Next </a></li>
-					<li><a href="blog-left-sidebar.html">Preview <i class="tf-ion-ios-arrow-right"></i></a></li>
-				</ol>
-			</div>
-		</div>
-		<div class="row mt-20">
-			<div class="col-md-5">
-				<div class="single-product-slider">
-					<div id='carousel-custom' class='carousel slide' data-ride='carousel'>
-						<div class='carousel-outer'>
-							<!-- me art lab slider -->
-							<div class='carousel-inner '>
-								<div class='item active'>
-									<img src='images/shop/single-products/product-1.jpg' alt='' data-zoom-image="images/shop/single-products/product-1.jpg" />
-								</div>
-								<div class='item'>
-									<img src='images/shop/single-products/product-2.jpg' alt='' data-zoom-image="images/shop/single-products/product-2.jpg" />
-								</div>
-								
-								<div class='item'>
-									<img src='images/shop/single-products/product-3.jpg' alt='' data-zoom-image="images/shop/single-products/product-3.jpg" />
-								</div>
-								<div class='item'>
-									<img src='images/shop/single-products/product-4.jpg' alt='' data-zoom-image="images/shop/single-products/product-4.jpg" />
-								</div>
-								<div class='item'>
-									<img src='images/shop/single-products/product-5.jpg' alt='' data-zoom-image="images/shop/single-products/product-5.jpg" />
-								</div>
-								<div class='item'>
-									<img src='images/shop/single-products/product-6.jpg' alt='' data-zoom-image="images/shop/single-products/product-6.jpg" />
-								</div>
-								
-							</div>
-							
-							<!-- sag sol -->
-							<a class='left carousel-control' href='#carousel-custom' data-slide='prev'>
-								<i class="tf-ion-ios-arrow-left"></i>
-							</a>
-							<a class='right carousel-control' href='#carousel-custom' data-slide='next'>
-								<i class="tf-ion-ios-arrow-right"></i>
-							</a>
-						</div>
-						
-						<!-- thumb -->
-						<ol class='carousel-indicators mCustomScrollbar meartlab'>
-							<li data-target='#carousel-custom' data-slide-to='0' class='active'>
-								<img src='images/shop/single-products/product-1.jpg' alt='' />
-							</li>
-							<li data-target='#carousel-custom' data-slide-to='1'>
-								<img src='images/shop/single-products/product-2.jpg' alt='' />
-							</li>
-							<li data-target='#carousel-custom' data-slide-to='2'>
-								<img src='images/shop/single-products/product-3.jpg' alt='' />
-							</li>
-							<li data-target='#carousel-custom' data-slide-to='3'>
-								<img src='images/shop/single-products/product-4.jpg' alt='' />
-							</li>
-							<li data-target='#carousel-custom' data-slide-to='4'>
-								<img src='images/shop/single-products/product-5.jpg' alt='' />
-							</li>
-							<li data-target='#carousel-custom' data-slide-to='5'>
-								<img src='images/shop/single-products/product-6.jpg' alt='' />
-							</li>
-							<li data-target='#carousel-custom' data-slide-to='6'>
-								<img src='images/shop/single-products/product-7.jpg' alt='' />
-							</li>
-						</ol>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-7">
-				<div class="single-product-details">
-					<h2>{{object.name}}</h2>
-					<p class="product-price">{{object.price}}din</p>
-					
-					<p class="product-description mt-20">
-						Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laborum ipsum dicta quod, quia doloremque aut deserunt commodi quis. Totam a consequatur beatae nostrum, earum consequuntur? Eveniet consequatur ipsum dicta recusandae.
-					</p>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt, velit, sunt temporibus, nulla accusamus similique sapiente tempora, at atque cumque assumenda minus asperiores est esse sequi dolore magnam. Debitis, explicabo.</p>
-					<div class="color-swatches">
-						<span>color:</span>
-						<ul>
-							<li>
-								<a href="#!" class="swatch-violet"></a>
-							</li>
-							<li>
-								<a href="#!" class="swatch-black"></a>
-							</li>
-							<li>
-								<a href="#!" class="swatch-cream"></a>
-							</li>
-						</ul>
-					</div>
-					<div class="product-size">
-						<span>Size:</span>
-						<select class="form-control">
-							<option>S</option>
-							<option>M</option>
-							<option>L</option>
-							<option>XL</option>
-						</select>
-					</div>
-					<div class="product-quantity">
-						<span>Quantity:</span>
-						<div class="product-quantity-slider">
-							<input id="product-quantity" type="text" value="0" name="product-quantity">
-						</div>
-					</div>
-					<div class="product-category">
-						<span>Categories:</span>
-						<ul>
-							<li><a href="product-single.html">Products</a></li>
-							<li><a href="product-single.html">Soap</a></li>
-						</ul>
-					</div>
-					<a href="{{object.get_add_to_cart_url}}" class="btn btn-main mt-20">Add To Cart</a>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
+{% block contact%}{% endblock%}{% block cart%}{% endblock%}{% block products%}{% endblock %}{% block checkout %}{% endblock%}
+<!--
+Start Call To Action
+==================================== -->
 
-<!-- Modal -->
-<div class="modal product-modal fade" id="product-modal">
-	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		<i class="tf-ion-close"></i>
-	</button>
-  	<div class="modal-dialog " role="document">
-    	<div class="modal-content">
-	      	<div class="modal-body">
-	        	<div class="row">
-	        		<div class="col-md-8">
-	        			<div class="modal-image">
-		        			<img class="img-responsive" src="images/shop/products/modal-product.jpg" />
-	        			</div>
-	        		</div>
-	        		<div class="col-md-3">
-	        			<div class="product-short-details">
-	        				<h2 class="product-title">GM Pendant, Basalt Grey</h2>
-	        				<p class="product-price">$200</p>
-	        				<p class="product-short-description">
-	        					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem iusto nihil cum. Illo laborum numquam rem aut officia dicta cumque.
-	        				</p>
-	        				<a href="#!" class="btn btn-main">Add To Cart</a>
-	        				<a href="#!" class="btn btn-transparent">View Product Details</a>
-	        			</div>
-	        		</div>
-	        	</div>
-	        </div>
-    	</div>
-  	</div>
-</div>
 <footer class="footer section text-center">
 	<div class="container">
 		<div class="row">
@@ -505,7 +325,7 @@ FACEBOOK: https://www.facebook.com/themefisher
 						<a href="{% url 'contact'%}">CONTACT</a>
 					</li>
 					<li>
-						<a href="shop.html">SHOP</a>
+						<a href="{% url 'product-list'%}">SHOP</a>
 					</li>
 					<li>
 						<a href="pricing.html">Pricing</a>
@@ -519,33 +339,30 @@ FACEBOOK: https://www.facebook.com/themefisher
 		</div>
 	</div>
 </footer>
+
     <!-- 
     Essential Scripts
     =====================================-->
     
     <!-- Main jQuery -->
-    <script src="{% static 'plugins/jquery/dist/jquery.min.js'%}"></script>
+    <script src="{% static 'plugins/jquery/dist/jquery.min.js' %}"></script>
     <!-- Bootstrap 3.1 -->
-    <script src="{% static 'plugins/bootstrap/js/bootstrap.min.js'%}"></script>
+    <script src="{% static 'plugins/bootstrap/js/bootstrap.min.js' %}"></script>
     <!-- Bootstrap Touchpin -->
-    <script src="{% static 'plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js'%}"></script>
+    <script src="{% static 'plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js' %}"></script>
     <!-- Instagram Feed Js -->
-    <script src="{% static 'plugins/instafeed/instafeed.min.js'%}"></script>
+    <script src="{% static 'plugins/instafeed/instafeed.min.js' %}"></script>
     <!-- Video Lightbox Plugin -->
-    <script src="{% static 'plugins/ekko-lightbox/dist/ekko-lightbox.min.js'%}"></script>
+    <script src="{% static 'plugins/ekko-lightbox/dist/ekko-lightbox.min.js' %}"></script>
     <!-- Count Down Js -->
-    <script src="{% static 'plugins/syo-timer/build/jquery.syotimer.min.js'%}"></script>
+    <script src="{% static 'plugins/syo-timer/build/jquery.syotimer.min.js' %}"></script>
 
     <!-- slick Carousel -->
-    <script src="{% static 'plugins/slick/slick.min.js'%}"></script>
-    <script src="{% static 'plugins/slick/slick-animation.min.js'%}"></script>
-
-    <!-- Google Mapl -->
-    {% comment %} <script src="{% static 'https://maps.googleapis.com/maps/api/js?key=AIzaSyCC72vZw-6tGqFyRhhg5CkF2fqfILn2Tsw'%}"></script>
-    <script type="{% static 'text/javascript" src="plugins/google-map/gmap.js'%}"></script> {% endcomment %}
+    <script src="{% static 'plugins/slick/slick.min.js' %}"></script>
+    <script src="{% static 'plugins/slick/slick-animation.min.js' %}"></script>
 
     <!-- Main Js File -->
-    <script src="{% static 'js/script.js'%}"></script>
+    <script src="{% static 'js/script.js' %}"></script>
     
 
 

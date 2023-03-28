@@ -7,7 +7,8 @@ from django.urls import reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
-from .forms import CheckoutForm
+from .forms import CheckoutForm, ContactForm
+from django.http import HttpResponseRedirect
 
 
 class ProductDetailView(DetailView):
@@ -26,16 +27,26 @@ class ProductListView(ListView):
     def get_queryset(self):
         return Product.objects.all()
 
+    def list_by_male_products(self):
+        # Filter male products only
+        pass
+
+    def list_by_female_products(self):
+        # Filter female products only
+        pass
+
 
 class OrderSummaryView(LoginRequiredMixin, View):
-    def get(self, *args):
+
+    template_name = "order_summary.html"
+
+    def get(self, request, *args):
         try:
             order = Order.objects.get(user=self.request.user, ordered=False)
         except ObjectDoesNotExist:
             # TO DO ; ERROR - no order, add message
             return redirect("/")
         return render(self.request, 'order_summary.html', {"object": order})
-    template_name = "order_summary.html"
 
 
 @login_required
@@ -76,6 +87,7 @@ def remove_from_cart(request, slug):
                 # TO DO MESSAGE CART IS EMPTY
                 print("CART IS EMPTY")
             print("ITEM DELETED")
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
             # TO DO Message to remove cart item
         else:
             print("This item was not in your cart")
@@ -95,6 +107,9 @@ def remove_item_from_cart(request, slug):
             order_item.quantity -= 1
             if order_item.quantity == 0:
                 order_item.delete()
+                if len(order.items.all()) == 0:
+                    # TO DO MESSAGE CART IS EMPTY
+                    print("CART IS EMPTY")
                 # order.items.remove(order_item)
                 # TO DO: Print message item removed from cart
                 print("MESSAGE DA JE REMOVED IZ CARTA")
@@ -145,3 +160,15 @@ class CheckoutView(View):
         except ObjectDoesNotExist:
             # TO DO ; ERROR - no order, add message
             return redirect("/")
+
+
+def contact_form(request):
+    form = ContactForm()
+    if request.method == "POST":
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            print(form.cleaned_data)
+            # TO DO: Send email to admin
+        # TO DO: REDIRECT TO SUCCESS MESSAGE
+        return redirect('product-list')
+    return render(request, 'contact.html', {"form": form})

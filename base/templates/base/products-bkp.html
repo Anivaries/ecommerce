@@ -1,0 +1,8 @@
+{% load cart_template_tags %}
+{% for item in products %}
+<a href="{% url 'product-detail' item.slug %}">{{ item.name }}</a>
+{% endfor %}
+
+<div>
+    <h1>{{request.user|cart_item_count}}</h1>
+</div>
