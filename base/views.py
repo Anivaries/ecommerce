@@ -8,7 +8,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from .forms import CheckoutForm, ContactForm
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 
 
 class ProductDetailView(DetailView):
@@ -127,7 +127,7 @@ def remove_item_from_cart(request, slug):
         return redirect('order-summary')
 
 
-class CheckoutView(View):
+class CheckoutView(LoginRequiredMixin, View):
 
     def get(self, *args, **kwargs):
         form = CheckoutForm()
@@ -159,7 +159,7 @@ class CheckoutView(View):
             return redirect('checkout')
         except ObjectDoesNotExist:
             # TO DO ; ERROR - no order, add message
-            return redirect("/")
+            return redirect('checkout')
 
 
 def contact_form(request):

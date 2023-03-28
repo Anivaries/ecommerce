@@ -84,15 +84,17 @@ FACEBOOK: https://www.facebook.com/themefisher
 			</div>
 			<div class="col-md-4 col-xs-12 col-sm-4">
 				<!-- Cart -->
+				
 				<ul class="top-menu text-right list-inline">
+					{% if user.is_authenticated%}
 					<li class="dropdown cart-nav dropdown-slide">
 						<a href="#!" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"><i
 								class="tf-ion-android-cart"></i>Cart</a>
 						<div class="dropdown-menu cart-dropdown">
 							<!-- Cart Item -->
 							<!-- TO DO: Don't show cart dropdown if empty -->
-							{% if user.is_authenticated%}
 							{% show_cart_items as cart_items %}
+							{% price_for_all as price%}
 							{% for item in cart_items %}
 							<div class="media">
 								<a class="pull-left" href="#!">
@@ -109,42 +111,33 @@ FACEBOOK: https://www.facebook.com/themefisher
 								<a href="{% url 'remove-from-cart' item.item.slug%}" class="remove"><i class="tf-ion-close"></i></a>
 							</div>
 							{% endfor %}
-							{% endif %}
 							<!-- / Cart Item -->
+							{% if price == 0 %}
+							<div class="cart-summary">
+								<span>Cart is empty.</span>
+							</div>
+							{% else %}
 							<div class="cart-summary">
 								<span>Total</span>
-								<span class="total-price">{{object.get_total_price}} din</span>
+								<span class="total-price">{{price}} din</span>
 							</div>
 							
 							<ul class="text-center cart-buttons">
 								<li><a href="{% url 'order-summary'%}" class="btn btn-small">View Cart</a></li>
 								<li><a href="{% url 'checkout'%}" class="btn btn-small btn-solid-border">Checkout</a></li>
 							</ul>
+							{% endif %}
 						</div>
 
 					</li><!-- / Cart -->
-
+					<li><a href="{% url 'account_logout'%}">Logout</a></li>
+					{% else %}
+					<li><a href="{% url 'account_login'%}">Login</a></li>
+					<li><a href="{% url 'account_signup'%}">Signup</a></li>
+					
+					{% endif %}
 					<!-- Search -->
-					<li class="dropdown search dropdown-slide">
-						<a href="#!" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"><i
-								class="tf-ion-ios-search-strong"></i> Search</a>
-						<ul class="dropdown-menu search-dropdown">
-							<li>
-								<form action="post"><input type="search" class="form-control" placeholder="Search..."></form>
-							</li>
-						</ul>
-					</li><!-- / Search -->
-
-					<!-- Languages -->
-					<li class="commonSelect">
-						<select class="form-control">
-							<option>EN</option>
-							<option>DE</option>
-							<option>FR</option>
-							<option>ES</option>
-						</select>
-					</li><!-- / Languages -->
-
+					
 				</ul><!-- / .nav .navbar-nav .navbar-right -->
 			</div>
 		</div>
@@ -174,7 +167,7 @@ FACEBOOK: https://www.facebook.com/themefisher
 
 					<!-- Home -->
 					<li class="dropdown ">
-						<a href="index.html">Home</a>
+						<a href="{% url 'product-list'%}">Home</a>
 					</li><!-- / Home -->
 
 
@@ -289,7 +282,11 @@ FACEBOOK: https://www.facebook.com/themefisher
 		</div><!-- / .container -->
 	</nav>
 </section>
-{% block contact%}{% endblock%}{% block cart%}{% endblock%}{% block products%}{% endblock %}{% block checkout %}{% endblock%}
+{% block contact%}{% endblock%}
+{% block cart%}{% endblock%}
+{% block products%}{% endblock %}
+{% block checkout %}{% endblock%}
+{% block product_details %}{% endblock %}
 <!--
 Start Call To Action
 ==================================== -->

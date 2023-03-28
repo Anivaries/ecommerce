@@ -1,5 +1,6 @@
 {% extends 'base.html'%}
 {% load crispy_forms_tags %}
+{% load cart_template_tags %}
 {% block checkout %}
 <!-- TO DO: BLOCK ACCESS TO CHECKOUT IF NOT REGISTERED OR HAVE EMPTY CART-->
 <section class="page-header">
@@ -9,7 +10,7 @@
 				<div class="content">
 					<h1 class="page-name">Checkout</h1>
 					<ol class="breadcrumb">
-						<li><a href="index.html">Home</a></li>
+						<li><a href="{% url 'product-list'%}">Home</a></li>
 						<li class="active">checkout</li>
 					</ol>
 				</div>
@@ -80,21 +81,26 @@
                   </div>
                </div>
             </div>
-			{% for item in object.items.all %}
+            {% if user.is_authenticated%}
+           
             <div class="col-md-4">
                <div class="product-checkout-details">
                   <div class="block">
                      <h4 class="widget-title">Order Summary</h4>
+                     {% show_cart_items as cart_items %}
+                     
+                     {% for item in cart_items %}
                      <div class="media product-card">
                         <a class="pull-left" href="{% url 'product-detail' item.item.slug %}">
                            <img class="media-object" src="images/shop/cart/cart-1.jpg" alt="Image" />
                         </a>
                         <div class="media-body">
-                           <h4 class="media-heading"><a href="{% url 'product-detail' item.item.slug %}">{{object.item.name}}</a></h4>
-                           <p class="price">{{item.quantity}}x {{object.item.price}}</p>
+                           <h4 class="media-heading"><a href="{% url 'product-detail' item.item.slug %}">{{item.item.name}}</a></h4>
+                           <p class="price">{{item.quantity}}x {{item.item.price}} din</p>
                            <span class="remove" >Remove</span>
                         </div>
                      </div>
+                     {% endfor %}
 					 <!-- TO DO: ADD DISCOUNT-->
                      {% comment %} <div class="discount-code">
                         <p>Have a discount ? <a data-toggle="modal" data-target="#coupon-modal" href="#!">enter it here</a></p>
@@ -102,7 +108,7 @@
                      <ul class="summary-prices">
                         <li>
                            <span>Subtotal:</span>
-                           <span class="price">{{object.get_sum_price}}</span>
+                           <span class="price">{{item.get_sum_price}}</span>
                         </li>
                         {% comment %} <li> {% endcomment %}
 							<!-- TO DO: Do something about shipping-->
@@ -112,7 +118,8 @@
                      </ul>
                      <div class="summary-total">
                         <span>Total</span>
-                        <span>{{object.get_total_price}}</span>
+                        {% price_for_all as price%}
+                        <span>{{price}} din</span>
                      </div>
                      <div class="verified-icon">
                         <img src="images/shop/verified.png">
@@ -120,7 +127,7 @@
                   </div>
                </div>
             </div>
-			{% endfor %}
+         {% endif %}
          </div>
       </div>
    </div>
