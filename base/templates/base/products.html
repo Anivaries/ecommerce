@@ -113,10 +113,11 @@
 									</span>
 								</li>
 								<li>
-			                        <a href="#!" ><i class="tf-ion-ios-heart"></i></a>
+									ASDASD
+			                        <a href="{% url 'add-to-favorites' item.slug %}" ><i class="tf-ion-ios-heart"></i></a>
 								</li>
 								<li>
-									<a href="#!"><i class="tf-ion-android-cart"></i></a>
+									<a href="{% url 'add-to-cart' item.slug %}"><i class="tf-ion-android-cart"></i></a>
 								</li>
 							</ul>
                       	</div>
@@ -170,3 +171,5 @@
 </section>
 
 {% endblock %}
+
+

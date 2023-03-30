@@ -20,8 +20,6 @@ class BillingAddressAdmin(admin.ModelAdmin):
     list_display = ("user", "street_address")
 
 
-# admin.site.register(Product, ProductAdmin)
 admin.site.register(Order, OrderAdmin)
 admin.site.register(OrderItem)
 admin.site.register(BillingAddress, BillingAddressAdmin)
-# admin.site.register(UserProfile, UserProfileAdmin)

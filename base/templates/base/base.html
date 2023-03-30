@@ -1,5 +1,6 @@
 {% load static %}
 {% load cart_template_tags %}
+{% load favorites_template_tags %}
 <!-- 
 THEME: Aviato | E-commerce template
 VERSION: 1.0.0
@@ -84,9 +85,11 @@ FACEBOOK: https://www.facebook.com/themefisher
 			</div>
 			<div class="col-md-4 col-xs-12 col-sm-4">
 				<!-- Cart -->
-				
 				<ul class="top-menu text-right list-inline">
 					{% if user.is_authenticated%}
+					<li>
+					<a href="#" >{{request.user|count_favorites}}<i class="tf-ion-heart"></i></a>
+					</li>
 					<li class="dropdown cart-nav dropdown-slide">
 						<a href="#!" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"><i
 								class="tf-ion-android-cart"></i>Cart</a>

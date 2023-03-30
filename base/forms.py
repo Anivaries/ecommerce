@@ -1,5 +1,4 @@
 from django import forms
-# from allauth.account.forms import LoginForm
 
 
 class CheckoutForm(forms.Form):
@@ -27,16 +26,3 @@ class SignupForm(forms.Form):
         user.last_name = self.cleaned_data['last_name']
         # user.phone_number = self.cleaned_data['phone_number']
         user.save()
-
-
-# class MyCustomLoginForm(LoginForm):
-
-#     def __init__(self, *args, **kwargs):
-#         super(MyCustomLoginForm, self).__init__(*args, **kwargs)
-#         for fieldname, field in self.fields.items():
-#             field.widget.attrs.update({
-#                 'class': 'red-border'
-#             })
-
-#     def login(self, *args, **kwargs):
-#         return super(MyCustomLoginForm, self).login(*args, **kwargs)

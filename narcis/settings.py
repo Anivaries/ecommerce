@@ -57,6 +57,7 @@ TEMPLATES = [
             ],
             'libraries':{
                 'cart_template_tags': 'base.templatetags.cart_template_tags',
+                'favorites_template_tags': 'base.templatetags.favorites_template_tags'
 
             }
         },

@@ -1,6 +1,7 @@
+
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import DetailView, ListView, View
-from .models import Product, Order, OrderItem, BillingAddress
+from .models import Product, Order, OrderItem, BillingAddress, UserProfile
 from django.shortcuts import redirect
 from django.utils import timezone
 from django.urls import reverse
@@ -47,6 +48,33 @@ class OrderSummaryView(LoginRequiredMixin, View):
             # TO DO ; ERROR - no order, add message
             return redirect("/")
         return render(self.request, 'order_summary.html', {"object": order})
+
+
+@login_required
+# TO DO: CHECK IF ITEM IS IN FAVORITES AND THEN CHANGE ICON COLOR ACORDINGLY
+def add_to_favorites(request, slug):
+    item = get_object_or_404(Product, slug=slug)
+    qs = UserProfile.objects.filter(user=request.user)
+    # print(qs[0].favorites.count())
+    try:
+        if UserProfile.objects.get(user=request.user):
+            user = UserProfile.objects.get(user=request.user)
+            if user.favorites.contains(item):
+                print(f'{item} YES')
+                user.favorites.remove(item)
+                # TO DO: ADD MESSAGE - ITEM REMOVE FROM FAVORITES
+                print(f'{item} NO')
+                print(qs[0].favorites.count())
+            else:
+                user.favorites.add(item)
+                print(qs[0].favorites.count())
+                # TO DO: ADD MESSAGE - ITEM ADDED TO FAVORITES
+                print(f'{item} YES')
+            print(item)
+            print(UserProfile.objects.get(user=request.user))
+    except:
+        return HttpResponse("You must be logged in")
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 @login_required

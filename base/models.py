@@ -14,6 +14,7 @@ class UserProfile(models.Model):
     email = models.EmailField(blank=True)
     phone_number = models.CharField(max_length=15, blank=True)
     city = models.CharField(max_length=20, blank=True)
+    favorites = models.ManyToManyField('Product', blank=True)
 
     def __str__(self) -> str:
         return f"{self.first_name} {self.last_name}"
@@ -36,6 +37,9 @@ class Product(models.Model):
 
     def get_remove_from_cart_url(self):
         return reverse("remove-from-cart", kwargs={"slug": self.slug})
+
+    def get_add_to_cart_url(self):
+        return reverse("add-to-favorites", kwargs={"slug": self.slug})
 
 
 class OrderItem(models.Model):
