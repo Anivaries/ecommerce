@@ -1,0 +1,101 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- Basic Page Needs
+  ================================================== -->
+  <meta charset="utf-8">
+  <title>Aviato | E-commerce template</title>
+
+  <!-- Mobile Specific Metas
+  ================================================== -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="Construction Html5 Template">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta name="author" content="Themefisher">
+  <meta name="generator" content="Themefisher Constra HTML Template v1.0">
+  
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/x-icon" href="images/favicon.png" />
+  
+  <!-- Themefisher Icon font -->
+  <link rel="stylesheet" href="{% static 'plugins/themefisher-font/style.css'%}">
+  <!-- bootstrap.min css -->
+  <link rel="stylesheet" href="{% static 'plugins/bootstrap/css/bootstrap.min.css'%}">
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="{% static 'css/style.css'%}">
+
+</head>
+{% load i18n %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block head_title %}{% endblock %}</title>
+    {% block extra_head %}
+    {% endblock %}
+  </head>
+  <body id="body">
+<section class="signin-page account">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <div class="block text-center">
+          {% block body %}
+
+          {% if messages %}
+          <div>
+            <strong>{% trans "Messages:" %}</strong>
+            <ul>
+              {% for message in messages %}
+              <li>{{message}}</li>
+              {% endfor %}
+            </ul>
+          </div>
+          {% endif %}
+
+          {% comment %} <div>
+            <strong>{% trans "Menu:" %}</strong>
+            <ul>
+              {% if user.is_authenticated %}
+              <div class="form-group">
+              <li><a href="{% url 'account_email' %}">{% trans "Change E-mail" %}</a></li>
+            </div>
+              <div class="form-group">
+              <li><a href="{% url 'account_logout' %}">{% trans "Sign Out" %}</a></li>
+            </div>
+              {% else %}
+              <div class="form-group">
+              <li><a href="{% url 'account_login' %}">{% trans "Sign In" %}</a></li>
+            </div>
+              <div class="form-group">
+              <li><a href="{% url 'account_signup' %}">{% trans "Sign Up" %}</a></li>
+            </div>
+              {% endif %}
+            </ul>
+          </div> {% endcomment %}
+          {% block content %}
+          {% endblock %}
+          {% endblock %}
+          {% block extra_body %}
+          {% endblock %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</body>
+</html>
+<!-- 
+Essential Scripts
+=====================================-->
+
+<!-- Main jQuery -->
+<script src="{% static 'plugins/jquery/dist/jquery.min.js'%}"></script>
+<!-- Bootstrap 3.1 -->
+<script src="{% static 'plugins/bootstrap/js/bootstrap.min.js'%}"></script>
+<!-- Main Js File -->
+<script src="{% static 'js/script.js'%}"></script>

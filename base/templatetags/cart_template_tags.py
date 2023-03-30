@@ -15,22 +15,22 @@ def cart_item_count(user):
 
 @register.simple_tag(name="show_cart_items", takes_context=True)
 def show_cart_items(context):
-    print(context)
+    # print(context)
     user = context['request'].user
-    if user.is_authenticated:
-        try:
+    try:
+        if user.is_authenticated:
             qs = Order.objects.get(user=user, ordered=False)
             if qs.items.exists():
                 return qs.items.all()
-        except Order.DoesNotExist:
-            return None
+    except Order.DoesNotExist:
+        return None
 
 
 @register.simple_tag(name="price_for_all", takes_context=True)
 def price_for_all(context):
-    print(context)
+    # print(context)
     user = context['request'].user
-    print(type(user))
+    # print(type(user))
     try:
         if user.is_authenticated:
             order = Order.objects.get(user=user, ordered=False)

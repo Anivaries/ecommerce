@@ -2,6 +2,22 @@ from django.db import models
 from django.urls import reverse
 from django.conf import settings
 
+User = settings.AUTH_USER_MODEL
+
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User,
+                                on_delete=models.CASCADE)
+    first_name = models.CharField(max_length=15, blank=True)
+    last_name = models.CharField(max_length=20, blank=True)
+    address = models.CharField(max_length=30, blank=True)
+    email = models.EmailField(blank=True)
+    phone_number = models.CharField(max_length=15, blank=True)
+    city = models.CharField(max_length=20, blank=True)
+
+    def __str__(self) -> str:
+        return f"{self.first_name} {self.last_name}"
+
 
 class Product(models.Model):
     name = models.CharField(max_length=20)

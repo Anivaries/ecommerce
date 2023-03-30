@@ -145,12 +145,14 @@ class CheckoutView(LoginRequiredMixin, View):
                 apartment_address = form.cleaned_data.get('apartment_address')
                 phone_number = form.cleaned_data.get('phone_number')
                 zip_code = form.cleaned_data.get('zip')
+                city = form.cleaned_data.get('city')
                 billing_address = BillingAddress(
                     user=self.request.user,
                     street_address=street_address,
                     apartment_address=apartment_address,
                     phone_number=phone_number,
-                    zip_code=zip_code
+                    zip_code=zip_code,
+                    city=city
                 )
                 billing_address.save()
                 order.billing_address = billing_address

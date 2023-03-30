@@ -45,7 +45,7 @@ ROOT_URLCONF = 'narcis.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'base/templates/base')],
+        'DIRS': [os.path.join(BASE_DIR, 'base/templates/base'), os.path.join(BASE_DIR, 'templates/allauth')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -96,6 +96,14 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 SITE_ID = 1
 
+ACCOUNT_SIGNUP_FORM_CLASS = 'base.forms.SignupForm'
+ACCOUNT_EMAIL_REQUIRED = True
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+LOGIN_REDIRECT_URL = '/products/'
+ACCOUNT_SIGNUP_REDIRECT_URL = "/products/"
+ACCOUNT_LOGOUT_REDIRECT_URL = "/products/"
+ACCOUNT_EMAIL_REQUIRED = True
+# ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
