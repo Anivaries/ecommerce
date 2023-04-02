@@ -4,6 +4,17 @@ from django.conf import settings
 
 User = settings.AUTH_USER_MODEL
 
+CATEGORIES = (
+    ('P', 'Perfume'),
+    ('J', 'Jewellery'),
+    ('C', 'Cosmetics')
+)
+GENDER = (
+    ('M', 'Male'),
+    ('F', 'Female'),
+    ('U', 'Unisex'),
+)
+
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User,
@@ -25,6 +36,9 @@ class Product(models.Model):
     size = models.CharField(max_length=10)
     price = models.FloatField()
     slug = models.SlugField(null=True)
+    category = models.CharField(
+        max_length=10, choices=CATEGORIES, blank=True)
+    gender = models.CharField(max_length=10, choices=GENDER, blank=True)
 
     def __str__(self) -> str:
         return self.name
@@ -38,7 +52,7 @@ class Product(models.Model):
     def get_remove_from_cart_url(self):
         return reverse("remove-from-cart", kwargs={"slug": self.slug})
 
-    def get_add_to_cart_url(self):
+    def get_add_to_favorites_url(self):
         return reverse("add-to-favorites", kwargs={"slug": self.slug})
 
 

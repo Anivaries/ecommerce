@@ -1,4 +1,5 @@
 from django import forms
+from .models import UserProfile
 
 
 class CheckoutForm(forms.Form):
@@ -26,3 +27,10 @@ class SignupForm(forms.Form):
         user.last_name = self.cleaned_data['last_name']
         # user.phone_number = self.cleaned_data['phone_number']
         user.save()
+
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ["first_name", "last_name", "email",
+                  "address", "city", "phone_number"]

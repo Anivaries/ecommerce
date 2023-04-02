@@ -1,14 +1,14 @@
 
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import DetailView, ListView, View
-from .models import Product, Order, OrderItem, BillingAddress, UserProfile
+from .models import Product, Order, OrderItem, BillingAddress, UserProfile, CATEGORIES
 from django.shortcuts import redirect
 from django.utils import timezone
 from django.urls import reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
-from .forms import CheckoutForm, ContactForm
+from .forms import CheckoutForm, ContactForm, UserProfileForm
 from django.http import HttpResponseRedirect, HttpResponse
 
 
@@ -29,12 +29,24 @@ class ProductListView(ListView):
         return Product.objects.all()
 
     def list_by_male_products(self):
-        # Filter male products only
         pass
 
     def list_by_female_products(self):
         # Filter female products only
         pass
+
+
+class IndexPageView(ListView):
+    model = Product
+    template_name = 'index.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        categories = []
+        for item in CATEGORIES:
+            categories.append(item[1])
+        context["category"] = categories
+        return context
 
 
 class OrderSummaryView(LoginRequiredMixin, View):
@@ -75,6 +87,14 @@ def add_to_favorites(request, slug):
     except:
         return HttpResponse("You must be logged in")
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+@login_required
+def show_favorites(request):
+    qs = UserProfile.objects.get(user=request.user)
+    favorites = qs.favorites.all()
+    # return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    return render(request, "favorites.html", {"favorites": favorites})
 
 
 @login_required
@@ -202,3 +222,37 @@ def contact_form(request):
         # TO DO: REDIRECT TO SUCCESS MESSAGE
         return redirect('product-list')
     return render(request, 'contact.html', {"form": form})
+
+
+class UserProfileView(LoginRequiredMixin, DetailView):
+    model = UserProfile
+    context_object_name = 'profile'
+    template_name = 'profile-details.html'
+
+    def get_object(self, *args, **kwargs):
+        print(self.request.user.id)
+        return UserProfile.objects.get(user=self.request.user.id)
+
+
+@login_required
+def update_profile(request):
+    try:
+        profile = request.user.userprofile
+    except UserProfile.DoesNotExist:
+        profile = UserProfile(user=request.user)
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, instance=request.user)
+        if form.is_valid():
+            profile.first_name = form.cleaned_data['first_name']
+            profile.last_name = form.cleaned_data['last_name']
+            profile.email = form.cleaned_data['email']
+            profile.address = form.cleaned_data['address']
+            profile.city = form.cleaned_data['city']
+            profile.phone_number = form.cleaned_data['phone_number']
+            profile.save()
+            # form.save()
+            print(profile.phone_number)
+            return redirect('profile')
+    else:
+        form = UserProfileForm(instance=profile)
+    return render(request, 'profile-update.html', {"form": form})
