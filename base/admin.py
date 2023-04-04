@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product, Order, OrderItem, BillingAddress, UserProfile
+from .models import Product, Order, OrderItem, BillingAddress, UserProfile, DiscountCode
 
 
 @admin.register(UserProfile)
@@ -20,6 +20,7 @@ class BillingAddressAdmin(admin.ModelAdmin):
     list_display = ("user", "street_address")
 
 
+admin.site.register(DiscountCode)
 admin.site.register(Order, OrderAdmin)
 admin.site.register(OrderItem)
 admin.site.register(BillingAddress, BillingAddressAdmin)

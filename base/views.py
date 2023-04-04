@@ -1,14 +1,14 @@
 
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import DetailView, ListView, View
-from .models import Product, Order, OrderItem, BillingAddress, UserProfile, CATEGORIES
+from .models import Product, Order, OrderItem, BillingAddress, UserProfile, CATEGORIES, DiscountCode
 from django.shortcuts import redirect
 from django.utils import timezone
 from django.urls import reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
-from .forms import CheckoutForm, ContactForm, UserProfileForm
+from .forms import CheckoutForm, ContactForm, UserProfileForm, CouponForm
 from django.http import HttpResponseRedirect, HttpResponse
 
 
@@ -178,11 +178,26 @@ def remove_item_from_cart(request, slug):
 class CheckoutView(LoginRequiredMixin, View):
 
     def get(self, *args, **kwargs):
-        form = CheckoutForm()
-        context = {
-            'form': form
-        }
-        return render(self.request, 'checkout.html', context=context)
+        try:
+            order = Order.objects.get(
+                user=self.request.user, ordered=False)
+            if order.get_total_price() <= 0:
+                print("you must have active order")
+                return redirect('product-list')
+        except ObjectDoesNotExist:
+            print("You must have active order")
+            return redirect('product-list')
+        try:
+            form = CheckoutForm()
+            context = {
+                'form': form,
+                'order': order,
+                'couponform': CouponForm(),
+            }
+            return render(self.request, 'checkout.html', context=context)
+        except ObjectDoesNotExist:
+            print("You have no active order")
+            return redirect('checkout')
 
     def post(self, *args, **kwargs):
         form = CheckoutForm(self.request.POST or None)
@@ -205,7 +220,6 @@ class CheckoutView(LoginRequiredMixin, View):
                 billing_address.save()
                 order.billing_address = billing_address
                 order.save()
-            # print(form.cleaned_data)
             return redirect('checkout')
         except ObjectDoesNotExist:
             # TO DO ; ERROR - no order, add message
@@ -250,9 +264,37 @@ def update_profile(request):
             profile.city = form.cleaned_data['city']
             profile.phone_number = form.cleaned_data['phone_number']
             profile.save()
-            # form.save()
             print(profile.phone_number)
             return redirect('profile')
     else:
         form = UserProfileForm(instance=profile)
     return render(request, 'profile-update.html', {"form": form})
+
+
+def get_coupon(request, code):
+    coupon = DiscountCode.objects.get(code=code)
+    return coupon
+
+
+class CouponView(View):
+    def post(self, *args, **kwargs):
+        form = CouponForm(self.request.POST or None)
+        if form.is_valid():
+            try:
+                code = form.cleaned_data['code']
+                order = Order.objects.get(
+                    user=self.request.user, ordered=False)
+                coupon = get_coupon(self.request, code)
+                if order.coupon:
+                    # TODO Coupon already active message
+                    print("A coupon is already active")
+                else:
+                    order.coupon = coupon
+                    order.save()
+                    # TODO Pop message Successfully applied coupon
+                    print("Successfully applied coupon")
+                return redirect('checkout')
+            except ObjectDoesNotExist:
+                # TODO Pop message it does not exist
+                print("This coupon does not exist")
+                return redirect('checkout')

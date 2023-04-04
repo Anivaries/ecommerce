@@ -34,3 +34,11 @@ class UserProfileForm(forms.ModelForm):
         model = UserProfile
         fields = ["first_name", "last_name", "email",
                   "address", "city", "phone_number"]
+
+
+class CouponForm(forms.Form):
+    code = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        'type': 'text',
+        'placeholder': 'Enter Coupon Code'
+    }))

@@ -39,6 +39,9 @@ class Product(models.Model):
     category = models.CharField(
         max_length=10, choices=CATEGORIES, blank=True)
     gender = models.CharField(max_length=10, choices=GENDER, blank=True)
+    short_description = models.TextField()
+    long_description = models.TextField()
+    sale = models.BooleanField(default=False)
 
     def __str__(self) -> str:
         return self.name
@@ -80,6 +83,8 @@ class Order(models.Model):
     start_date = models.DateTimeField(auto_now_add=True)
     billing_address = models.ForeignKey(
         'BillingAddress', on_delete=models.SET_NULL, blank=True, null=True)
+    coupon = models.ForeignKey(
+        'DiscountCode', on_delete=models.SET_NULL, blank=True, null=True)
 
     def __str__(self) -> str:
         return f"{self.user} ordered {self.items}"
@@ -88,6 +93,8 @@ class Order(models.Model):
         total = 0
         for item in self.items.all():
             total += item.get_sum_price()
+        if self.coupon:
+            total -= self.coupon.discount
         return total
 
 
@@ -101,3 +108,11 @@ class BillingAddress(models.Model):
 
     def __str__(self) -> str:
         return self.user.username
+
+
+class DiscountCode(models.Model):
+    code = models.CharField(max_length=15)
+    discount = models.FloatField()
+
+    def __str__(self) -> str:
+        return self.code

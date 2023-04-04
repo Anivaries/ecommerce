@@ -101,15 +101,22 @@
                         </div>
                      </div>
                      {% endfor %}
-					 <!-- TO DO: ADD DISCOUNT-->
-                     {% comment %} <div class="discount-code">
+					 <!-- TO DO: ADD DISCOUNT--><br>
+                {% if order.coupon %}
+                     <div>
+                        Coupon code: {{ order.coupon.code }}
+                        <p class="pull-right">Saving: {{ order.coupon.discount }} din</p>
+                     </div><br>
+                     {% else %}
+                     <div class="discount-code">
                         <p>Have a discount ? <a data-toggle="modal" data-target="#coupon-modal" href="#!">enter it here</a></p>
-                     </div> {% endcomment %}
+                     </div> 
                      <ul class="summary-prices">
                         <li>
                            <span>Subtotal:</span>
                            <span class="price">{{item.get_sum_price}}</span>
                         </li>
+                     {% endif %}
                         {% comment %} <li> {% endcomment %}
 							<!-- TO DO: Do something about shipping-->
                            {% comment %} <span>Shipping:</span>
@@ -137,9 +144,11 @@
       <div class="modal-dialog" role="document">
          <div class="modal-content">
             <div class="modal-body">
-               <form>
+               <form action="{% url 'apply-coupon' %}" method="POST">
                   <div class="form-group">
-                     <input class="form-control" type="text" placeholder="Enter Coupon Code">
+                     {% csrf_token %}
+                     {% comment %} <input class="form-control" type="text" placeholder="Enter Coupon Code"> {% endcomment %}
+                     {{ couponform.code }}
                   </div>
                   <button type="submit" class="btn btn-main">Apply Coupon</button>
                </form>
