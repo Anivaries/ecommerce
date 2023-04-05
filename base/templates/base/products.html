@@ -106,7 +106,10 @@
 						<span class="bage">Sale</span>
 						{% endif %}
 						<!-- TO DO: FIX IMAGES -->
-						<img class="img-responsive" src="images/shop/products/product-1.jpg" alt="product-img" />
+						{% load display_image %}
+						{% static 'base/static/catalog/sku/'|add_str:item.front_image|add_str:'.webp' as front_image %}
+						<img class="img-responsive" src="{{front_image}}" alt="product-img" />
+						{% comment %} {% endfor %} {% endcomment %}
 						<div class="preview-meta">
 							<ul>
 								<li>
@@ -115,7 +118,6 @@
 									</span>
 								</li>
 								<li>
-									ASDASD
 			                        <a href="{% url 'add-to-favorites' item.slug %}" ><i class="tf-ion-ios-heart"></i></a>
 								</li>
 								<li>
@@ -144,7 +146,8 @@
 			        	<div class="row">
 			        		<div class="col-md-8 col-sm-6 col-xs-12">
 			        			<div class="modal-image">
-				        			<img class="img-responsive" src="images/shop/products/modal-product.jpg" alt="product-img" />
+									{% static 'base/static/catalog/sku/'|add_str:item.front_image|add_str:'.webp' as modal_image %}
+				        			<img class="img-responsive" src="{{modal_image}}" alt="product-img" />
 			        			</div>
 			        		</div>
 			        		<div class="col-md-4 col-sm-6 col-xs-12">

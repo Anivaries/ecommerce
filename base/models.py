@@ -42,6 +42,8 @@ class Product(models.Model):
     short_description = models.TextField()
     long_description = models.TextField()
     sale = models.BooleanField(default=False)
+    product_code = models.CharField(max_length=8)
+    front_image = models.CharField(max_length=8)
 
     def __str__(self) -> str:
         return self.name

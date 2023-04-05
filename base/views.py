@@ -10,6 +10,8 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from .forms import CheckoutForm, ContactForm, UserProfileForm, CouponForm
 from django.http import HttpResponseRedirect, HttpResponse
+import os
+from django.conf import settings
 
 
 class ProductDetailView(DetailView):
@@ -18,6 +20,15 @@ class ProductDetailView(DetailView):
 
     def get_queryset(self):
         return super().get_queryset()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        a = os.listdir(os.path.join(settings.BASE_DIR,
+                                    'static/base/static/catalog/productimages/product'))
+        item = Product.objects.get(slug=self.kwargs['slug'])
+        list_of_images = [a for a in a if item.product_code in a]
+        context["images"] = list_of_images
+        return context
 
 
 class ProductListView(ListView):
@@ -298,3 +309,9 @@ class CouponView(View):
                 # TODO Pop message it does not exist
                 print("This coupon does not exist")
                 return redirect('checkout')
+
+
+# def get_image_url():
+#     a = os.listdir(os.path.join(settings.BASE_DIR,
+#                                 'static/base/static/catalog/productimages/product'))
+#     print(a)

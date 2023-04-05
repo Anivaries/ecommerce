@@ -55,7 +55,7 @@ FACEBOOK: https://www.facebook.com/themefisher
               <tbody>
 				{% for item in favorites%}
                 <tr>
-                  <td>{{item}}</td>
+                  <td><a href="{% url 'product-detail' item.slug %}">{{item}}</a></td>
 				  
                   <td>
                     <div class="btn-group" role="group">

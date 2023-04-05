@@ -57,8 +57,8 @@ TEMPLATES = [
             ],
             'libraries':{
                 'cart_template_tags': 'base.templatetags.cart_template_tags',
-                'favorites_template_tags': 'base.templatetags.favorites_template_tags'
-
+                'favorites_template_tags': 'base.templatetags.favorites_template_tags',
+                'display_image': 'base.templatetags.display_image'
             }
         },
     },
@@ -113,8 +113,10 @@ USE_I18N = True
 
 USE_TZ = True
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static/base/static/')
+    os.path.join(BASE_DIR, 'static/base/static/'),
+    BASE_DIR / "static",
 ]
+
 STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
