@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from .forms import CheckoutForm, ContactForm, UserProfileForm, CouponForm
 from django.http import HttpResponseRedirect, HttpResponse
+from django.contrib import messages
 import os
 from django.conf import settings
 
@@ -67,34 +68,33 @@ class OrderSummaryView(LoginRequiredMixin, View):
     def get(self, request, *args):
         try:
             order = Order.objects.get(user=self.request.user, ordered=False)
+            if len(order.items.all()) == 0:
+                return render(self.request, 'empty-cart.html')
         except ObjectDoesNotExist:
-            # TO DO ; ERROR - no order, add message
-            return redirect("/")
+            messages.warning(request, "You have no active orders")
         return render(self.request, 'order_summary.html', {"object": order})
 
 
 @login_required
-# TO DO: CHECK IF ITEM IS IN FAVORITES AND THEN CHANGE ICON COLOR ACORDINGLY
+def empty_cart(request):
+    return render(request, 'empty-cart')
+
+
+@login_required
+# TO DO: CHECK IF ITEM IS IN FAVORITES AND THEN CHANGE HTTP ICON COLOR ACORDINGLY
 def add_to_favorites(request, slug):
     item = get_object_or_404(Product, slug=slug)
     qs = UserProfile.objects.filter(user=request.user)
-    # print(qs[0].favorites.count())
+    print(qs.all())
     try:
         if UserProfile.objects.get(user=request.user):
             user = UserProfile.objects.get(user=request.user)
             if user.favorites.contains(item):
-                print(f'{item} YES')
                 user.favorites.remove(item)
-                # TO DO: ADD MESSAGE - ITEM REMOVE FROM FAVORITES
-                print(f'{item} NO')
-                print(qs[0].favorites.count())
+                messages.warning(request, f"{item} removed from favorites")
             else:
                 user.favorites.add(item)
-                print(qs[0].favorites.count())
-                # TO DO: ADD MESSAGE - ITEM ADDED TO FAVORITES
-                print(f'{item} YES')
-            print(item)
-            print(UserProfile.objects.get(user=request.user))
+                messages.success(request, f"{item} added to favorites")
     except:
         return HttpResponse("You must be logged in")
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
@@ -104,7 +104,6 @@ def add_to_favorites(request, slug):
 def show_favorites(request):
     qs = UserProfile.objects.get(user=request.user)
     favorites = qs.favorites.all()
-    # return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     return render(request, "favorites.html", {"favorites": favorites})
 
 
@@ -119,15 +118,16 @@ def add_to_cart(request, slug):
         if order.items.filter(item__slug=item.slug).exists():
             order_item.quantity += 1
             order_item.save()
-            print("ITEM QUANTITY UPDATED")
-            # TO DO Message to update cart item
+            messages.info(request, f"{item} quantity updated")
         else:
             order.items.add(order_item)
+            messages.success(request, f"{item} added to cart")
     else:
         ordered_date = timezone.now()
         order = Order.objects.create(
             user=request.user, ordered_date=ordered_date)
         order.items.add(order_item)
+        messages.success(request, f"{item} added to cart")
     return redirect('order-summary')
 
 
@@ -137,19 +137,17 @@ def remove_from_cart(request, slug):
     order_qs = Order.objects.filter(user=request.user, ordered=False)
     if order_qs.exists():
         order = order_qs[0]
-        # print(len(order))
         if order.items.filter(item__slug=item.slug).exists():
             order_item = OrderItem.objects.filter(
                 item=item, user=request.user, ordered=False)[0]
             order_item.delete()
             if len(order.items.all()) == 0:
-                # TO DO MESSAGE CART IS EMPTY
-                print("CART IS EMPTY")
-            print("ITEM DELETED")
+                # TODO: REDIRECT TO EMPRYT CART PAGE
+                messages.info(request, "Cart is empty")
+            messages.info(request, f"{item} removed from cart")
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-            # TO DO Message to remove cart item
         else:
-            print("This item was not in your cart")
+            messages.warning(request, f"{item} was not in your cart")
             return redirect('product-detail', slug=slug)
     return redirect('order-summary')
 
@@ -167,22 +165,19 @@ def remove_item_from_cart(request, slug):
             if order_item.quantity == 0:
                 order_item.delete()
                 if len(order.items.all()) == 0:
-                    # TO DO MESSAGE CART IS EMPTY
+                    # TODO:  REDIRECT TO EMPTY CART
+                    messages.info(request, "Your cart is empty")
                     print("CART IS EMPTY")
-                # order.items.remove(order_item)
-                # TO DO: Print message item removed from cart
-                print("MESSAGE DA JE REMOVED IZ CARTA")
+                messages.info(request, f"{item} removed from cart")
                 return redirect('order-summary')
             else:
                 order_item.save()
-                # TO DO: Print message item quantity updated
-                print("Item quantity updated")
+                messages.info(request, f"{item} quantity updated")
                 return redirect('order-summary')
-            # TO DO Message to update cart item
         else:
             return redirect('product-detail', slug=slug)
     else:
-        print("THE CART IS EMPTY")
+        messages.warning(request, "Cart is empty")
         return redirect('order-summary')
 
 
@@ -193,10 +188,10 @@ class CheckoutView(LoginRequiredMixin, View):
             order = Order.objects.get(
                 user=self.request.user, ordered=False)
             if order.get_total_price() <= 0:
-                print("you must have active order")
+                messages.info(self.request, "You must have active order")
                 return redirect('product-list')
         except ObjectDoesNotExist:
-            print("You must have active order")
+            messages.info(self.request, "You must have active order")
             return redirect('product-list')
         try:
             form = CheckoutForm()
@@ -207,7 +202,7 @@ class CheckoutView(LoginRequiredMixin, View):
             }
             return render(self.request, 'checkout.html', context=context)
         except ObjectDoesNotExist:
-            print("You have no active order")
+            messages.warning(self.request, "You have no active orders")
             return redirect('checkout')
 
     def post(self, *args, **kwargs):
@@ -233,7 +228,7 @@ class CheckoutView(LoginRequiredMixin, View):
                 order.save()
             return redirect('checkout')
         except ObjectDoesNotExist:
-            # TO DO ; ERROR - no order, add message
+            messages.warning(self.request, "You have no active orders")
             return redirect('checkout')
 
 
@@ -255,7 +250,6 @@ class UserProfileView(LoginRequiredMixin, DetailView):
     template_name = 'profile-details.html'
 
     def get_object(self, *args, **kwargs):
-        print(self.request.user.id)
         return UserProfile.objects.get(user=self.request.user.id)
 
 
@@ -297,21 +291,13 @@ class CouponView(View):
                     user=self.request.user, ordered=False)
                 coupon = get_coupon(self.request, code)
                 if order.coupon:
-                    # TODO Coupon already active message
-                    print("A coupon is already active")
+                    messages.info(self.request, "A coupon is already active")
                 else:
                     order.coupon = coupon
                     order.save()
-                    # TODO Pop message Successfully applied coupon
-                    print("Successfully applied coupon")
+                    messages.success(
+                        self.request, "Successfully applied coupon")
                 return redirect('checkout')
             except ObjectDoesNotExist:
-                # TODO Pop message it does not exist
-                print("This coupon does not exist")
+                messages.warning(self.request, "This coupon does not exist")
                 return redirect('checkout')
-
-
-# def get_image_url():
-#     a = os.listdir(os.path.join(settings.BASE_DIR,
-#                                 'static/base/static/catalog/productimages/product'))
-#     print(a)

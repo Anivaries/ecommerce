@@ -53,7 +53,6 @@ FACEBOOK: https://www.facebook.com/themefisher
 </head>
 
 <body id="body">
-
 <!-- Start Top Header Bar -->
 <section class="top-header">
 	<div class="container">
@@ -118,7 +117,7 @@ FACEBOOK: https://www.facebook.com/themefisher
 							</div>
 							{% endfor %}
 							<!-- / Cart Item -->
-							{% if price < 0 %}
+							{% if price < 1 %}
 							<div class="cart-summary">
 								<span>Cart is empty.</span>
 							</div>
@@ -149,7 +148,6 @@ FACEBOOK: https://www.facebook.com/themefisher
 		</div>
 	</div>
 </section><!-- End Top Header Bar -->
-
 
 <!-- Main Menu Section -->
 <section class="menu">
@@ -288,6 +286,11 @@ FACEBOOK: https://www.facebook.com/themefisher
 		</div><!-- / .container -->
 	</nav>
 </section>
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-{{ message.tags }} alert-common" role="alert"><i class="tf-ion-android-checkbox-outline"></i>{{ message }}</div>
+{% endfor %}
+{% endif %}
 {% block contact%}{% endblock%}
 {% block cart%}{% endblock%}
 {% block products%}{% endblock %}

@@ -1,6 +1,5 @@
 from django.urls import path
-from .views import ProductDetailView, ProductListView, add_to_cart, remove_from_cart, OrderSummaryView, remove_item_from_cart, CheckoutView, contact_form, add_to_favorites, IndexPageView, UserProfileView, update_profile, show_favorites, CouponView
-
+from .views import ProductDetailView, ProductListView, add_to_cart, remove_from_cart, OrderSummaryView, remove_item_from_cart, CheckoutView, contact_form, add_to_favorites, IndexPageView, UserProfileView, update_profile, show_favorites, CouponView, empty_cart
 
 urlpatterns = [
     path('', IndexPageView.as_view(), name='index-page'),
@@ -19,5 +18,6 @@ urlpatterns = [
     path('add-to-favorites/<slug:slug>/',
          add_to_favorites, name="add-to-favorites"),
     path('update-profile/', update_profile, name="profile-update"),
-    path('favorites/', show_favorites, name="favorites")
+    path('favorites/', show_favorites, name="favorites"),
+    path('empty-cart', empty_cart, name="empty-cart"),
 ]
