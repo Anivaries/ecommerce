@@ -58,7 +58,8 @@ TEMPLATES = [
             'libraries':{
                 'cart_template_tags': 'base.templatetags.cart_template_tags',
                 'favorites_template_tags': 'base.templatetags.favorites_template_tags',
-                'display_image': 'base.templatetags.display_image'
+                'display_image': 'base.templatetags.display_image',
+                'item_sizes': 'base.templatetags.item_sizes',
             }
         },
     },

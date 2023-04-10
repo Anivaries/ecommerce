@@ -16,6 +16,13 @@ GENDER = (
 )
 
 
+class Brand(models.Model):
+    brand = models.CharField(max_length=30)
+
+    def __str__(self) -> str:
+        return self.brand
+
+
 class UserProfile(models.Model):
     user = models.OneToOneField(User,
                                 on_delete=models.CASCADE)
@@ -32,6 +39,7 @@ class UserProfile(models.Model):
 
 
 class Product(models.Model):
+    brand = models.ForeignKey(Brand, on_delete=models.CASCADE, default=1)
     name = models.CharField(max_length=20)
     size = models.CharField(max_length=10)
     price = models.FloatField()
@@ -44,6 +52,7 @@ class Product(models.Model):
     sale = models.BooleanField(default=False)
     product_code = models.CharField(max_length=8)
     front_image = models.CharField(max_length=8)
+    modal_details = models.TextField()
 
     def __str__(self) -> str:
         return self.name

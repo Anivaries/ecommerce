@@ -52,13 +52,11 @@
 						<ol class='carousel-indicators mCustomScrollbar meartlab'>
 							{% for item in images %}
 							{% static 'base/static/catalog/productimages/product/'|add_str:item as image_static %}
-							<li data-target='#carousel-custom' data-slide-to='{{forloop.counter}}' class='active'>
-								<img src='{{image_static}}' alt='' />
+							
+							<li data-target='#carousel-custom' {% if forloop.first %} class='active' {% endif %} data-slide-to="{{forloop.counter}}" >
+								<img src="{{image_static}}" alt='' />
 							</li>
 							{% endfor %}
-							{% comment %} <li data-target='#carousel-custom' data-slide-to='1'>
-								<img src='images/shop/single-products/product-2.jpg' alt='' />
-							</li> {% endcomment %}
 						</ol>
 					</div>
 				</div>
@@ -66,23 +64,34 @@
 			<div class="col-md-7">
 				<div class="single-product-details">
 					<h2>{{object.name}}</h2>
+					<p>Size: {{object.size}}</p>
 					<p class="product-price"><b>{{object.price}}</b> din</p>
 					<p class="product-description mt-20">
 						{{object.short_description}}
 					</p>
 					<div class="color-swatches">
 						<!-- ADD HIGHLITS INTEAD OF COLORS -->
-						<span>highlights:</span>
+						{% comment %} <span>highlights:</span> {% endcomment %}
 						<ul>
+							{% load item_sizes %}
+							{% item_sizes as size %}
+							{% for item in size %}
+							{% static 'base/static/catalog/sku/'|add_str:item.front_image|add_str:'.webp' as small_image %}
+							{% comment %} {{image_static}} {% endcomment %}
 							<li>
-								<a href="#!" class="swatch-violet"></a>
+								<a href="{% url 'product-detail' item.slug %}"><div class="button-container">
+									<button class="btn btn-md">
+									  <img src="{{small_image}}" width="25" /><span
+										style="margin-left: 10px;"
+										>{{item.size}}</span
+									  >
+									</button>
+								  </div></a>
 							</li>
-							<li>
-								<a href="#!" class="swatch-black"></a>
-							</li>
-							<li>
-								<a href="#!" class="swatch-cream"></a>
-							</li>
+							{% comment %} <li>
+								<a href="{% url 'product-detail' item.slug %}" class="swatch-violet">{{item.size}} </a>
+							</li> {% endcomment %}
+							{% endfor %}
 						</ul>
 					</div>
 					<div class="product-size">

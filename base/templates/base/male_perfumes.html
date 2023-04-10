@@ -47,16 +47,10 @@
 					    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
 							<div class="panel-body">
 								<ul>
-									<li><a href="{% url 'product-list'%}">All</a></li>
+                                    <li><a href="{% url 'product-list'%}">All</a></li>
 									<li><a href="{% url 'male-perfumes'%}">For Him</a></li>
 									<li><a href="{% url 'female-perfumes'%}">For Her</a></li>
-									<hr>
-									{% for brand in brands %}
-									<li><a href="">{{brand}}</a></li>
-									{% endfor %}
-									{% comment %} {% for item in item_by_brand%}
-									{{item}}
-									{% endfor %} {% endcomment %}
+									{% comment %} <li><a href="#!">Shoe Color</a></li> {% endcomment %}
 								</ul>
 							</div>
 					    </div>
@@ -104,7 +98,7 @@
 			</div>
 			<div class="col-md-9">
 				<div class="row">
-			{% for item in products %}		
+			{% for item in m_products %}		
 			<div class="col-md-4">
 				<div class="product-item">
 					<div class="product-thumb">
@@ -142,7 +136,7 @@
 			{% endfor %}
 		
 		<!-- Modal -->
-		{% for item in products%}
+		{% for item in m_products%}
 		<div class="modal product-modal fade" id="itemModal{{forloop.counter}}">
 			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 				<i class="tf-ion-close"></i>
@@ -160,16 +154,14 @@
 			        		<div class="col-md-4 col-sm-6 col-xs-12">
 			        			<div class="product-short-details">
 			        				<h2 class="product-title">{{item.name}}</h2>
-			        				<p class="product-price">{{item.price}} din</p>
-									<h3 class="product-size">{{item.size}}</h3>
+			        				<p class="product-price">{{item.price}}</p>
 									<!-- TO DO: ADD ITEM DESCRIPTION TO MODELS-->
-									
 			        				<p class="product-short-description">
 			        					{{item.short_description}}
 			        				</p>
 			        				<a href="{% url 'add-to-cart' item.slug %}" class="btn btn-main">Add To Cart</a>
-			        				<a href="{% url 'product-detail' item.slug %}" class="btn btn-transparent" style="margin-bottom: 15px;">View Product Details</a><br>
-									
+			        				<a href="{% url 'product-detail' item.slug %}" class="btn btn-transparent"style="margin-bottom: 15px;">View Product Details</a>
+
 									<p>{{item.modal_details}}</p>
 			        			</div>
 			        		</div>

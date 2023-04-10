@@ -1,7 +1,7 @@
 
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import DetailView, ListView, View
-from .models import Product, Order, OrderItem, BillingAddress, UserProfile, CATEGORIES, DiscountCode
+from .models import Product, Order, OrderItem, BillingAddress, UserProfile, CATEGORIES, DiscountCode, Brand
 from django.shortcuts import redirect
 from django.utils import timezone
 from django.urls import reverse
@@ -35,17 +35,27 @@ class ProductDetailView(DetailView):
 class ProductListView(ListView):
     model = Product
     template_name = "products.html"
-    context_object_name = "products"
+    # context_object_name = "products"
 
-    def get_queryset(self):
-        return Product.objects.all()
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        all_products = Product.objects.all()
+        brands = Brand.objects.all()
+        context = {
+            'products': all_products,
+            'brands': brands,
+        }
+        return context
 
-    def list_by_male_products(self):
-        pass
 
-    def list_by_female_products(self):
-        # Filter female products only
-        pass
+def list_by_male_products(request):
+    male_qs = Product.objects.filter(gender='M')
+    return render(request, 'male_perfumes.html', {'m_products': male_qs})
+
+
+def list_by_female_products(request):
+    female_qs = Product.objects.filter(gender='F')
+    return render(request, 'female_perfumes.html', {'f_products': female_qs})
 
 
 class IndexPageView(ListView):
@@ -85,7 +95,6 @@ def empty_cart(request):
 def add_to_favorites(request, slug):
     item = get_object_or_404(Product, slug=slug)
     qs = UserProfile.objects.filter(user=request.user)
-    print(qs.all())
     try:
         if UserProfile.objects.get(user=request.user):
             user = UserProfile.objects.get(user=request.user)

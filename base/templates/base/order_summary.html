@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-
+{% load display_image %}
 {% block cart%}
 <div class="page-wrapper">
   <div class="cart shopping">
@@ -13,10 +13,10 @@
                 <table class="table">
                   <thead>
                     <tr>
-                      <th class="">Item Name</th>
-                      <th class="">Item Price</th>
-					  <th class="">Ammount</th>
-					  <th class="">Total Price</th>
+                      <th class="">Name</th>
+                      <th class="">Single Price</th>
+                      <th class="">Ammount</th>
+                      <th class="">Total Price</th>
                       <th class="">Actions</th>
                     </tr>
                   </thead>
@@ -25,7 +25,8 @@
                     <tr class="">
                       <td class="">
                         <div class="product-info">
-                          <img width="80" src="" alt="" />
+                          {% static 'base/static/catalog/sku/'|add_str:object.item.front_image|add_str:'.webp' as summary_image %}
+                          <img width="80" src="{{summary_image}}" alt="" />
                           <a href="{% url 'product-detail' object.item.slug %}">{{object.item.name}}</a>
                         </div>
                       </td>
