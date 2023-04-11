@@ -334,33 +334,3 @@ class CouponView(View):
             except ObjectDoesNotExist:
                 messages.warning(self.request, "This coupon does not exist")
                 return redirect('checkout')
-
-
-# def brand_dior(request):
-#     brand_dior = Product.objects.filter(brand="Dior")
-#     return render(request, 'dior.html', {'brand_dior': brand_dior})
-
-
-# def brand_valentino(request):
-#     brand_valentino = Product.objects.filter(brand="Valentino")
-#     return render(request, 'valentino.html', {'brand_valentino': brand_valentino})
-
-
-# def brand_chanel(request):
-#     brand_chanel = Product.objects.filter(brand="Chanel")
-#     return render(request, 'chanel.html', {'brand_chanel': brand_chanel})
-
-
-# def brand_prada(request):
-#     brand_prada = Product.objects.filter(brand="Prada")
-#     return render(request, 'prada.html', {'brand_prada': brand_prada})
-
-
-# def brand_glossier(request):
-#     brand_glossier = Product.objects.filter(brand="Glossier")
-#     return render(request, 'glossier.html', {'brand_glossier': brand_glossier})
-
-
-# def brand_yves_saint(request):
-#     brand_yves_saint = Product.objects.filter(brand="Yves Saint Laurent")
-#     return render(request, 'yves-saint.html', {'brand_yves_saint': brand_yves_saint})
