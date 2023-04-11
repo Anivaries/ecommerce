@@ -52,11 +52,8 @@
 									<li><a href="{% url 'female-perfumes'%}">For Her</a></li>
 									<hr>
 									{% for brand in brands %}
-									<li><a href="">{{brand}}</a></li>
+									<li><a href="{{brand.get_absolute_url}}">{{brand}}</a></li>
 									{% endfor %}
-									{% comment %} {% for item in item_by_brand%}
-									{{item}}
-									{% endfor %} {% endcomment %}
 								</ul>
 							</div>
 					    </div>

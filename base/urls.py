@@ -1,10 +1,12 @@
 from django.urls import path
-from .views import ProductDetailView, ProductListView, add_to_cart, remove_from_cart, OrderSummaryView, remove_item_from_cart, CheckoutView, contact_form, add_to_favorites, IndexPageView, UserProfileView, update_profile, show_favorites, CouponView, empty_cart, list_by_female_products, list_by_male_products
+from .views import ProductDetailView, ProductListView, add_to_cart, remove_from_cart, OrderSummaryView, remove_item_from_cart, CheckoutView, contact_form, add_to_favorites, IndexPageView, UserProfileView, update_profile, show_favorites, CouponView, empty_cart, list_by_female_products, list_by_male_products, BrandView, BrandDetail
 
 urlpatterns = [
     path('', IndexPageView.as_view(), name='index-page'),
     path('products/', ProductListView.as_view(), name="product-list"),
     path('products/<slug:slug>', ProductDetailView.as_view(), name="product-detail"),
+    path('brand-list/', BrandView.as_view(), name='brand-list'),
+    path('brand/<slug:slug>', BrandDetail.as_view(), name="brand-detail"),
     path('order-summary/', OrderSummaryView.as_view(), name="order-summary"),
     path('checkout/', CheckoutView.as_view(), name="checkout"),
     path('profile/', UserProfileView.as_view(), name='profile'),

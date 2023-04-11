@@ -18,9 +18,13 @@ GENDER = (
 
 class Brand(models.Model):
     brand = models.CharField(max_length=30)
+    slug = models.SlugField(null=True)
 
     def __str__(self) -> str:
         return self.brand
+
+    def get_absolute_url(self):
+        return reverse("brand-detail", kwargs={"slug": self.slug})
 
 
 class UserProfile(models.Model):
@@ -39,7 +43,8 @@ class UserProfile(models.Model):
 
 
 class Product(models.Model):
-    brand = models.ForeignKey(Brand, on_delete=models.CASCADE, default=1)
+    brand = models.ForeignKey(
+        Brand, on_delete=models.CASCADE, default=1)
     name = models.CharField(max_length=20)
     size = models.CharField(max_length=10)
     price = models.FloatField()

@@ -174,14 +174,23 @@ FACEBOOK: https://www.facebook.com/themefisher
 
 					<!-- Home -->
 					<li class="dropdown ">
-						<a href="{% url 'product-list'%}">Home</a>
+						<a href="{% url 'product-list'%}">Shop</a>
 					</li><!-- / Home -->
-
+					<li class="dropdown dropdown-slide">
+						<a href="#!" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="350"
+							role="button" aria-haspopup="true" aria-expanded="false">New <span
+								class="tf-ion-ios-arrow-down"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="typography.html">New Makeup</a></li>
+							<li><a href="buttons.html">New Fragrances</a></li>
+							<li><a href="alerts.html">New Haircare</a></li>
+						</ul>
+					</li>
 
 					<!-- Elements -->
 					<li class="dropdown dropdown-slide">
 						<a href="#!" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="350"
-							role="button" aria-haspopup="true" aria-expanded="false">Shop <span
+							role="button" aria-haspopup="true" aria-expanded="false">Brands <span
 								class="tf-ion-ios-arrow-down"></span></a>
 						<div class="dropdown-menu">
 							<div class="row">
@@ -219,7 +228,7 @@ FACEBOOK: https://www.facebook.com/themefisher
 					<!-- Pages -->
 					<li class="dropdown full-width dropdown-slide">
 						<a href="#!" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="350"
-							role="button" aria-haspopup="true" aria-expanded="false">Pages <span
+							role="button" aria-haspopup="true" aria-expanded="false">Brands <span
 								class="tf-ion-ios-arrow-down"></span></a>
 						<div class="dropdown-menu">
 							<div class="row">
@@ -227,13 +236,10 @@ FACEBOOK: https://www.facebook.com/themefisher
 								<!-- Introduction -->
 								<div class="col-sm-3 col-xs-12">
 									<ul>
-										<li class="dropdown-header">Introduction</li>
+										<li class="dropdown-header">Brands</li>
 										<li role="separator" class="divider"></li>
-										<li><a href="contact.html">Contact Us</a></li>
-										<li><a href="about.html">About Us</a></li>
-										<li><a href="404.html">404 Page</a></li>
-										<li><a href="coming-soon.html">Coming Soon</a></li>
-										<li><a href="faq.html">FAQ</a></li>
+										<li><a href="{% url 'brand-list'%}">Brands A-Z</a></li>
+										<li><a href="#!">Only at !here</a></li>
 									</ul>
 								</div>
 
@@ -302,6 +308,7 @@ FACEBOOK: https://www.facebook.com/themefisher
 {% block index %}{% endblock %}
 {% block profile %}{% endblock %}
 {% block favorites %}{% endblock %}
+{% block brand %}{% endblock %}
 <!--
 Start Call To Action
 ==================================== -->

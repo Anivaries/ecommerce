@@ -50,7 +50,12 @@
                                     <li><a href="{% url 'product-list'%}">All</a></li>
 									<li><a href="{% url 'male-perfumes'%}">For Him</a></li>
 									<li><a href="{% url 'female-perfumes'%}">For Her</a></li>
-									{% comment %} <li><a href="#!">Shoe Color</a></li> {% endcomment %}
+									<hr>
+									{% load item_sizes %}
+                                    {% all_brands as brands %}
+									{% for brand in brands %}
+									<li><a href="{{brand.get_absolute_url}}">{{brand}}</a></li>
+									{% endfor %}
 								</ul>
 							</div>
 					    </div>

@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block brand %}
+
+{% regroup brands|dictsort:"brand" by brand.0 as brand_list %}
+{% for brand in brand_list %}
+<div class="row">
+    <div class="container">
+        
+        <ul>
+            <li>
+                <div class="col-3">
+                    <b>{{brand.grouper.0}}</b>
+                </div><br>
+                <div class="col-9">
+                    {% for brand in brand.list %}
+                    <div class="col-9">
+                        <a href="{{brand.get_absolute_url}}">{{brand}}</a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </li><hr>
+        </ul> 
+    </div>
+</div>
+
+
+{% comment %} <li class="dropdown-header">{{brand.grouper.0}}</li>
+<li role="separator" class="divider"></li>
+{% for brand in brand.list %}
+<li><a href="shop.html">{{brand}}</a></li>
+{% endfor %} {% endcomment %}
+{% endfor %}
+{% endblock %}
