@@ -18,8 +18,13 @@ FACEBOOK: https://www.facebook.com/themefisher
 
 <!-- Main Menu Section -->
 {% block index %}
+{% load display_image %}
+{% carousel as carousel %}
+
 <div class="hero-slider">
-  <div class="slider-item th-fullpage hero-area" style="background-image: url(images/slider/slider-1.jpg);">
+{% for item in carousel %}
+{% static 'base/static/carousel/'|add_str:item as image %}
+  <div class="slider-item th-fullpage hero-area" style="background-image: url({{image}})">
     <div class="container">
       <div class="row">
         <div class="col-lg-8 text-center">
@@ -30,28 +35,7 @@ FACEBOOK: https://www.facebook.com/themefisher
       </div>
     </div>
   </div>
-  <div class="slider-item th-fullpage hero-area" style="background-image: url(images/slider/slider-3.jpg);">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 text-left">
-          <p data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".1">PRODUCTS</p>
-          <h1 data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".5">The beauty of nature <br> is hidden in details.</h1>
-          <a data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".8" class="btn" href="{% url 'product-list'%}">Shop Now</a>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="slider-item th-fullpage hero-area" style="background-image: url(images/slider/slider-2.jpg);">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 text-right">
-          <p data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".1">PRODUCTS</p>
-          <h1 data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".5">The beauty of nature <br> is hidden in details.</h1>
-          <a data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".8" class="btn" href="{% url 'product-list'%}">Shop Now</a>
-        </div>
-      </div>
-    </div>
-  </div>
+{% endfor %}
 </div>
 
 <section class="product-category section">
@@ -64,20 +48,20 @@ FACEBOOK: https://www.facebook.com/themefisher
 			</div>
 			<div class="col-md-6">
 				<div class="category-box">
-					<a href="#!">
-						<img src="images/shop/category/category-1.jpg" alt="" />
+					<a href="{% url 'perfumes'%}">
+						<img src="{% static 'images/shop/category/category-perfume.webp'%}" alt="" />
 						<div class="content">
-							<h3>CLothes</h3>
-							<p>Shop New Season Clothing</p>
+							<h3>Perfumes</h3>
+							<p>Shop New Season Fragrances</p>
 						</div>
 					</a>	
 				</div>
 				<div class="category-box">
 					<a href="#!">
-						<img src="images/shop/category/category-1.jpg" alt="" />
+						<img src="{% static 'images/shop/category/category-new-1.webp'%}" alt="" />
 						<div class="content">
-							<h3>Cosmetics</h3>
-							<p>Shop New Cosmetics</p>
+							<h3>Makeup</h3>
+							<p>What Lady Deserves</p>
 						</div>
 					</a>	
 				</div>
@@ -85,9 +69,9 @@ FACEBOOK: https://www.facebook.com/themefisher
 			<div class="col-md-6">
 				<div class="category-box category-box-2">
 					<a href="#!">
-						<img src="images/shop/category/category-3.jpg" alt="" />
+						<img src="{% static 'images/shop/category/category-new-2.webp'%}" alt="" />
 						<div class="content">
-							<h3>Jewellery</h3>
+							<h3>New Arrivals</h3>
 							<p>Special Design Comes First</p>
 						</div>
 					</a>	

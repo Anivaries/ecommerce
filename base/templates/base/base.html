@@ -196,15 +196,16 @@ FACEBOOK: https://www.facebook.com/themefisher
 							<div class="row">
 
 								<!-- Basic -->
+								{% load item_sizes %}
+								{% all_brands as brands%}
 								<div class="col-lg-6 col-md-6 mb-sm-3">
 									<ul>
-										<li class="dropdown-header">Pages</li>
+										
+										<li class="dropdown-header">Perfumes</li>
 										<li role="separator" class="divider"></li>
-										<li><a href="shop.html">Shop</a></li>
-										<li><a href="checkout.html">Checkout</a></li>
-										<li><a href="cart.html">Cart</a></li>
-										<li><a href="pricing.html">Pricing</a></li>
-										<li><a href="confirmation.html">Confirmation</a></li>
+										{% for brand in brands%}
+										<li><a href="{{brand.get_absolute_url}}">{{brand}}</a></li>
+										{% endfor %}
 
 									</ul>
 								</div>
@@ -309,6 +310,7 @@ FACEBOOK: https://www.facebook.com/themefisher
 {% block profile %}{% endblock %}
 {% block favorites %}{% endblock %}
 {% block brand %}{% endblock %}
+{% block perfume %}{% endblock %}
 <!--
 Start Call To Action
 ==================================== -->

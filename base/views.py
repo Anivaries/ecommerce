@@ -48,6 +48,14 @@ class ProductListView(ListView):
         return context
 
 
+def get_perfumes(request):
+    perfume_qs = Product.objects.filter(category="P")
+    context = {
+        "perfumes": perfume_qs
+    }
+    return render(request, 'perfumes.html', context)
+
+
 def list_by_male_products(request):
     male_qs = Product.objects.filter(gender='M')
     return render(request, 'male_perfumes.html', {'m_products': male_qs})
@@ -77,7 +85,7 @@ class BrandDetail(DetailView):
         context = super().get_context_data(**kwargs)
         brand = Brand.objects.get(slug=self.kwargs['slug'])
         product_qs = Product.objects.filter(
-            brand__brand=brand)
+            brand__brand=brand).filter(category="P")
         context['branditems'] = product_qs
         return context
 
