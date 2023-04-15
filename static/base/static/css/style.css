@@ -1157,6 +1157,18 @@ input[type="tel"]:focus {
   display: inline-block;
 }
 
+.product-item .product-thumb .new {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: #df15c4;
+  color: #fff;
+  font-size: 12px;
+  padding: 4px 12px;
+  font-weight: 300;
+  display: inline-block;
+}
+
 .product-item .product-thumb:before {
   transition: .3s all;
   opacity: 0;

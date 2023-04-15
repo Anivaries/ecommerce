@@ -34,6 +34,9 @@
 						{% if item.sale %}
 						<span class="bage">Sale</span>
 						{% endif %}
+						{% if item.is_new %}
+						<span class="new">New</span>
+						{% endif %}
 						<!-- TO DO: FIX IMAGES -->
 						{% load display_image %}
 						{% static 'base/static/catalog/sku/'|add_str:item.front_image|add_str:'.webp' as front_image %}

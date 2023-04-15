@@ -1,6 +1,6 @@
 from django import template
 from ..models import Product, Brand
-
+import datetime
 
 register = template.Library()
 
@@ -16,3 +16,9 @@ def item_sizes(context):
 def all_brands(context):
     brand_qs = Brand.objects.all()
     return brand_qs
+
+
+@register.filter
+def date_today():
+    date = datetime.datetime.now()
+    return date

@@ -1,7 +1,9 @@
 from django.db import models
 from django.urls import reverse
 from django.conf import settings
-
+import datetime
+from datetime import date
+from django.utils import timezone
 User = settings.AUTH_USER_MODEL
 
 CATEGORIES = (
@@ -58,6 +60,8 @@ class Product(models.Model):
     product_code = models.CharField(max_length=8)
     front_image = models.CharField(max_length=8)
     modal_details = models.TextField()
+    date_added = models.DateTimeField()
+    new = models.BooleanField(default=True)
 
     def __str__(self) -> str:
         return self.name
@@ -73,6 +77,10 @@ class Product(models.Model):
 
     def get_add_to_favorites_url(self):
         return reverse("add-to-favorites", kwargs={"slug": self.slug})
+
+    @property
+    def is_new(self):
+        return (datetime.datetime.today().astimezone() - self.date_added).days < 60
 
 
 class OrderItem(models.Model):

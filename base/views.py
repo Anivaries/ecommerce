@@ -13,6 +13,9 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib import messages
 import os
 from django.conf import settings
+from datetime import timedelta
+import datetime
+from django.db.models import Q
 
 
 class ProductDetailView(DetailView):
@@ -64,6 +67,14 @@ def list_by_male_products(request):
 def list_by_female_products(request):
     female_qs = Product.objects.filter(gender='F')
     return render(request, 'female_perfumes.html', {'f_products': female_qs})
+
+
+def new_arrivals(request):
+    products = Product.objects.all()
+    context = {
+        "products": products
+    }
+    return render(request, 'new-products.html', context)
 
 
 class BrandView(ListView):
