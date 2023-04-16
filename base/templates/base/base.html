@@ -182,7 +182,7 @@ FACEBOOK: https://www.facebook.com/themefisher
 								class="tf-ion-ios-arrow-down"></span></a>
 						<ul class="dropdown-menu">
 							<li><a href="typography.html">New Makeup</a></li>
-							<li><a href="buttons.html">New Fragrances</a></li>
+							<li><a href="{% url 'new-products'%}">New Fragrances</a></li>
 							<li><a href="alerts.html">New Haircare</a></li>
 						</ul>
 					</li>
@@ -312,6 +312,7 @@ FACEBOOK: https://www.facebook.com/themefisher
 {% block brand %}{% endblock %}
 {% block perfume %}{% endblock %}
 {% block new_products%}{% endblock %}
+{% block ratings %}{% endblock %}
 <!--
 Start Call To Action
 ==================================== -->

@@ -3,7 +3,6 @@ from pathlib import Path
 import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-print(BASE_DIR)
 SECRET_KEY = 'django-insecure-+$kyo*x5&ld5@4qjnqn2dqxyu^gtm(sr6w($4xtw*t^dk70j84'
 
 
@@ -25,6 +24,9 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
 
     'base',
+
+    'star_ratings',
+
     'crispy_forms',
     'crispy_bootstrap4',
 ]
@@ -39,7 +41,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
 ROOT_URLCONF = 'narcis.urls'
 
 TEMPLATES = [
@@ -121,3 +122,5 @@ STATICFILES_DIRS = [
 STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+STAR_RATINGS_STAR_HEIGHT = 17

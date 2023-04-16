@@ -1,23 +1,28 @@
 {% extends 'base.html'%}
-{% load static%}
-{% block products%}
+{% load static %}
+{% load ratings %}
+{% block ratings %}
+<style>
+	.star-ratings-rating-count{
+		display: none;
+	}
+</style>
+<link rel="stylesheet" href="{% static 'star-ratings/css/star-ratings.css' %}">
 <section class="page-header">
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
 				<div class="content">
-					<h1 class="page-name">Narcis</h1>
+					<h1 class="page-name">Best rated</h1>
 					<ol class="breadcrumb">
 						<li><a href="{% url 'product-list'%}">Home</a></li>
-						<li class="active">shop</li>
+						<li class="active">best rated</li>
 					</ol>
 				</div>
 			</div>
 		</div>
 	</div>
 </section>
-
-
 <section class="products section">
 	<div class="container">
 		<div class="row">
@@ -26,10 +31,12 @@
 			</div>
 			<div class="col-md-9">
 				<div class="row">
-			{% for item in products %}		
+			{% for item in ratings %}		
 			<div class="col-md-4">
 				<div class="product-item">
+                    <div class="pull-middle">{% ratings item read_only=True %}{% block rating_count %}{% endblock %}</div>
 					<div class="product-thumb">
+                        
 						<!-- TODO: CHANGE PRICE IF SALE -->
 						{% if item.sale %}
 						<span class="bage">Sale</span>
@@ -41,6 +48,7 @@
 						{% load display_image %}
 						{% static 'base/static/catalog/sku/'|add_str:item.front_image|add_str:'.webp' as front_image %}
 						<img class="img-responsive" src="{{front_image}}" alt="product-img" />
+                        
 						{% comment %} {% endfor %} {% endcomment %}
 						<div class="preview-meta">
 							<ul>
@@ -68,7 +76,7 @@
 			{% endfor %}
 		
 		<!-- Modal -->
-		{% for item in products%}
+		{% for item in ratings%}
 		<div class="modal product-modal fade" id="itemModal{{forloop.counter}}">
 			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 				<i class="tf-ion-close"></i>
@@ -111,6 +119,5 @@
 		</div>
 	</div>
 </section>
+<script type="text/javascript" src="{% static 'star-ratings/js/dist/star-ratings.min.js' %}"></script>
 {% endblock %}
-
-

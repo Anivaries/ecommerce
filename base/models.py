@@ -4,6 +4,9 @@ from django.conf import settings
 import datetime
 from datetime import date
 from django.utils import timezone
+from django.contrib.contenttypes.fields import GenericRelation
+from star_ratings.models import Rating
+
 User = settings.AUTH_USER_MODEL
 
 CATEGORIES = (
@@ -44,6 +47,13 @@ class UserProfile(models.Model):
         return f"{self.first_name} {self.last_name}"
 
 
+class PerfumeHighlights(models.Model):
+    highlights = models.CharField(max_length=20)
+
+    def __str__(self) -> str:
+        return self.highlights
+
+
 class Product(models.Model):
     brand = models.ForeignKey(
         Brand, on_delete=models.CASCADE, default=1)
@@ -62,6 +72,8 @@ class Product(models.Model):
     modal_details = models.TextField()
     date_added = models.DateTimeField()
     new = models.BooleanField(default=True)
+    ratings = GenericRelation(Rating, related_query_name="ratings")
+    highlights = models.ManyToManyField(PerfumeHighlights, blank=True)
 
     def __str__(self) -> str:
         return self.name

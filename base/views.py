@@ -77,6 +77,15 @@ def new_arrivals(request):
     return render(request, 'new-products.html', context)
 
 
+def arrange_by_rating(request):
+    sd = Product.objects.filter(
+        ratings__isnull=False).order_by('-ratings__average')
+    context = {
+        'ratings': sd
+    }
+    return render(request, 'best-rated.html', context)
+
+
 class BrandView(ListView):
     model = Brand
     template_name = 'brand-list.html'

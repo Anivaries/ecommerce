@@ -28,7 +28,7 @@
                     <li><a href="{% url 'male-perfumes'%}">For Him</a></li>
                     <li><a href="{% url 'female-perfumes'%}">For Her</a></li>
                     <li><a href="{% url 'new-products'%}">New</a></li>
-                    <li><a href="{% url 'new-products'%}">Most Popular</a></li>
+                    <li><a href="{% url 'best-rated'%}">Best Rated</a></li>
                     <hr>
                     {% for brand in brands %}
                     <li><a href="{{brand.get_absolute_url}}">{{brand}}</a></li>

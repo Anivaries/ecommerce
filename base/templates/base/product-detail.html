@@ -1,7 +1,12 @@
 {% extends 'base.html'%}
 {% load static %}
 {% block product_details %}
+
+<link rel="stylesheet" href="{% static 'star-ratings/css/star-ratings.css' %}">
+{% load ratings %}
+
 <section class="single-product">
+	
 	<div class="container">
 		<div class="row">
 			<div class="col-md-6">
@@ -53,7 +58,7 @@
 							{% for item in images %}
 							{% static 'base/static/catalog/productimages/product/'|add_str:item as image_static %}
 							
-							<li data-target='#carousel-custom' {% if forloop.first %} class='active' {% endif %} data-slide-to="{{forloop.counter}}" >
+							<li data-target='#carousel-custom' {% if forloop.first %} class='active' data-slide-to=0 {% else %} data-slide-to="{{forloop.counter|add:"-1"}} "{% endif %} >
 								<img src="{{image_static}}" alt='' />
 							</li>
 							{% endfor %}
@@ -62,8 +67,8 @@
 				</div>
 			</div>
 			<div class="col-md-7">
-				<div class="single-product-details">
-					<h2>{{object.name}}</h2>
+				<div class="single-product-details"><h4 class="pull-middle" >{% ratings object icon_height=30 icon_width=30%}</h4>
+						<h2>{{object.name}}</h2> 
 					<p>Size: {{object.size}}</p>
 					<p class="product-price"><b>{{object.price}}</b> din</p>
 					<p class="product-description mt-20">
@@ -168,4 +173,5 @@
 		</div>
 	</div>
 </section>
+<script type="text/javascript" src="{% static 'star-ratings/js/dist/star-ratings.min.js' %}"></script>
 {% endblock%}
