@@ -11,8 +11,8 @@ User = settings.AUTH_USER_MODEL
 
 CATEGORIES = (
     ('P', 'Perfume'),
-    ('J', 'Jewellery'),
-    ('C', 'Cosmetics')
+    ('M', 'Makeup'),
+    ('S', 'Skincare')
 )
 GENDER = (
     ('M', 'Male'),
@@ -54,10 +54,17 @@ class PerfumeHighlights(models.Model):
         return self.highlights
 
 
+class SkinCareCategory(models.Model):
+    category = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.category
+
+
 class Product(models.Model):
     brand = models.ForeignKey(
         Brand, on_delete=models.CASCADE, default=1)
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=50)
     size = models.CharField(max_length=10)
     price = models.FloatField()
     slug = models.SlugField(null=True)
@@ -74,12 +81,14 @@ class Product(models.Model):
     new = models.BooleanField(default=True)
     ratings = GenericRelation(Rating, related_query_name="ratings")
     highlights = models.ManyToManyField(PerfumeHighlights, blank=True)
+    skincare_category = models.ForeignKey(
+        SkinCareCategory, blank=True, null=True, on_delete=models.SET_NULL)
 
     def __str__(self) -> str:
         return self.name
 
     def get_absolute_url(self):
-        return reverse("product_detail", kwargs={"slug": self.slug})
+        return reverse("product-detail", kwargs={"slug": self.slug})
 
     def get_add_to_cart_url(self):
         return reverse("add-to-cart", kwargs={"slug": self.slug})

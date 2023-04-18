@@ -38,7 +38,6 @@ class ProductDetailView(DetailView):
 class ProductListView(ListView):
     model = Product
     template_name = "products.html"
-    # context_object_name = "products"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -59,31 +58,83 @@ def get_perfumes(request):
     return render(request, 'perfumes.html', context)
 
 
-def list_by_male_products(request):
-    male_qs = Product.objects.filter(gender='M')
-    return render(request, 'male_perfumes.html', {'m_products': male_qs})
-
-
-def list_by_female_products(request):
-    female_qs = Product.objects.filter(gender='F')
-    return render(request, 'female_perfumes.html', {'f_products': female_qs})
-
-
-def new_arrivals(request):
-    products = Product.objects.all()
+def get_new_perfumes(request):
+    products = Product.objects.filter(category="P")
     context = {
         "products": products
     }
-    return render(request, 'new-products.html', context)
+    return render(request, 'new-perfumes.html', context)
 
 
-def arrange_by_rating(request):
-    sd = Product.objects.filter(
-        ratings__isnull=False).order_by('-ratings__average')
+def get_skincare(request):
+    skincare_qs = Product.objects.filter(category="S")
     context = {
-        'ratings': sd
+        "skincare": skincare_qs
     }
-    return render(request, 'best-rated.html', context)
+    return render(request, 'skincare.html', context)
+
+
+def get_new_skincare(request):
+    skincare_qs = Product.objects.filter(category="S")
+    context = {
+        "skincare": skincare_qs
+    }
+    return render(request, 'new-skincare.html', context)
+
+
+def get_skincare_moisturizers(request):
+    moist_qs = Product.objects.filter(
+        skincare_category__category="Moisturizer")
+    context = {
+        "moisturizers": moist_qs
+    }
+    return render(request, 'moisturizers.html', context)
+
+
+def get_skincare_lip_balm(request):
+    lipbalm_qs = Product.objects.filter(
+        skincare_category__category="Lip Balms & Treatmen")
+    context = {
+        "lipbalm": lipbalm_qs
+    }
+    return render(request, 'lip-balm-care.html', context)
+
+
+def get_skincare_cleanser(request):
+    cleanser_qs = Product.objects.filter(
+        skincare_category__category="Cleanser")
+    context = {
+        "cleansers": cleanser_qs
+    }
+    return render(request, 'cleansers.html', context)
+
+
+def list_by_male_perfumes(request):
+    male_qs = Product.objects.filter(gender='M').exclude(~Q(category="P"))
+    return render(request, 'male_perfumes.html', {'m_products': male_qs})
+
+
+def list_by_female_perfumes(request):
+    female_qs = Product.objects.filter(gender='F').exclude(~Q(category="P"))
+    return render(request, 'female_perfumes.html', {'f_products': female_qs})
+
+
+def arrange_by_rating_perfumes(request):
+    perfumes_qs = Product.objects.filter(
+        ratings__isnull=False).exclude(~Q(category="P")).order_by('-ratings__average')
+    context = {
+        'ratings': perfumes_qs
+    }
+    return render(request, 'top-perfumes.html', context)
+
+
+def arrange_by_rating_skincare(request):
+    skincare_qs = Product.objects.filter(
+        ratings__isnull=False).exclude(~Q(category="S")).order_by('-ratings__average')
+    context = {
+        'ratings': skincare_qs
+    }
+    return render(request, 'top-skincare.html', context)
 
 
 class BrandView(ListView):
@@ -105,7 +156,7 @@ class BrandDetail(DetailView):
         context = super().get_context_data(**kwargs)
         brand = Brand.objects.get(slug=self.kwargs['slug'])
         product_qs = Product.objects.filter(
-            brand__brand=brand).filter(category="P")
+            brand__brand=brand)
         context['branditems'] = product_qs
         return context
 

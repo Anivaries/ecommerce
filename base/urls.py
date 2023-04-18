@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import ProductDetailView, ProductListView, add_to_cart, remove_from_cart, OrderSummaryView, remove_item_from_cart, CheckoutView, contact_form, add_to_favorites, IndexPageView, UserProfileView, update_profile, show_favorites, CouponView, empty_cart, list_by_female_products, list_by_male_products, BrandView, BrandDetail, get_perfumes, new_arrivals, arrange_by_rating
+from .views import ProductDetailView, ProductListView, add_to_cart, remove_from_cart, OrderSummaryView, remove_item_from_cart, CheckoutView, contact_form, add_to_favorites, IndexPageView, UserProfileView, update_profile, show_favorites, CouponView, empty_cart, list_by_female_perfumes, list_by_male_perfumes, BrandView, BrandDetail, get_perfumes, get_new_perfumes, arrange_by_rating_perfumes, get_skincare, get_skincare_moisturizers, get_skincare_lip_balm, get_new_skincare, arrange_by_rating_skincare, get_skincare_cleanser
 
 urlpatterns = [
     path('', IndexPageView.as_view(), name='index-page'),
@@ -22,9 +22,15 @@ urlpatterns = [
     path('update-profile/', update_profile, name="profile-update"),
     path('favorites/', show_favorites, name="favorites"),
     path('empty-cart', empty_cart, name="empty-cart"),
-    path('female_perfumes/', list_by_female_products, name="female-perfumes"),
-    path('male_perfumes/', list_by_male_products, name="male-perfumes"),
+    path('female_perfumes/', list_by_female_perfumes, name="female-perfumes"),
+    path('male_perfumes/', list_by_male_perfumes, name="male-perfumes"),
     path('perfumes/', get_perfumes, name="perfumes"),
-    path('new-products/', new_arrivals, name="new-products"),
-    path('best-rated', arrange_by_rating, name="best-rated")
+    path('skincare/', get_skincare, name="skincare"),
+    path('moisturizers/', get_skincare_moisturizers, name="moisturizers"),
+    path('lip-balm-care/', get_skincare_lip_balm, name="lipbalm"),
+    path('cleansers/', get_skincare_cleanser, name="cleanser"),
+    path('new-perfumes/', get_new_perfumes, name="new-perfumes"),
+    path('new-skincare/', get_new_skincare, name="new-skincare"),
+    path('top-perfumes/', arrange_by_rating_perfumes, name="top-perfumes"),
+    path('top-skincare/', arrange_by_rating_skincare, name="top-skincare"),
 ]

@@ -95,7 +95,7 @@ FACEBOOK: https://www.facebook.com/themefisher
 					</li>
 					<li class="dropdown cart-nav dropdown-slide">
 						<a href="#!" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"><i
-								class="tf-ion-android-cart"></i>Cart</a>
+								class="tf-ion-android-cart" ></i>Cart</a>
 						<div class="dropdown-menu cart-dropdown">
 							<!-- Cart Item -->
 							<!-- TO DO: Don't show cart dropdown if empty -->
@@ -109,7 +109,7 @@ FACEBOOK: https://www.facebook.com/themefisher
 									<img class="media-object" src="{{cart_image}}" alt="image" />
 								</a>
 								<div class="media-body">
-									<h4 class="media-heading"><a href="#!">{{item.item.name}} {{item.item.size}}</a></h4>
+									<h4 class="media-heading"><a href="{{ item.item.get_absolute_url }}">{{item.item.name}} {{item.item.size}}</a></h4>
 									<div class="cart-price">
 										<span>{{item.quantity}}x</span>
 										<span>{{item.item.price}} din</span>
@@ -182,48 +182,13 @@ FACEBOOK: https://www.facebook.com/themefisher
 								class="tf-ion-ios-arrow-down"></span></a>
 						<ul class="dropdown-menu">
 							<li><a href="typography.html">New Makeup</a></li>
-							<li><a href="{% url 'new-products'%}">New Fragrances</a></li>
-							<li><a href="alerts.html">New Haircare</a></li>
+							<li><a href="{% url 'new-perfumes'%}">New Fragrances</a></li>
+							<li><a href="alerts.html">New Skincare</a></li>
 						</ul>
 					</li>
 
 					<!-- Elements -->
-					<li class="dropdown dropdown-slide">
-						<a href="#!" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="350"
-							role="button" aria-haspopup="true" aria-expanded="false">Brands <span
-								class="tf-ion-ios-arrow-down"></span></a>
-						<div class="dropdown-menu">
-							<div class="row">
-
-								<!-- Basic -->
-								{% load item_sizes %}
-								{% all_brands as brands%}
-								<div class="col-lg-6 col-md-6 mb-sm-3">
-									<ul>
-										
-										<li class="dropdown-header">Perfumes</li>
-										<li role="separator" class="divider"></li>
-										{% for brand in brands%}
-										<li><a href="{{brand.get_absolute_url}}">{{brand}}</a></li>
-										{% endfor %}
-
-									</ul>
-								</div>
-
-								<!-- Layout -->
-								<div class="col-lg-6 col-md-6 mb-sm-3">
-									<ul>
-										<li class="dropdown-header">Layout</li>
-										<li role="separator" class="divider"></li>
-										<li><a href="product-single.html">Product Details</a></li>
-										<li><a href="shop-sidebar.html">Shop With Sidebar</a></li>
-
-									</ul>
-								</div>
-
-							</div><!-- / .row -->
-						</div><!-- / .dropdown-menu -->
-					</li><!-- / Elements -->
+					<!-- / Elements -->
 
 
 					<!-- Pages -->
@@ -247,7 +212,30 @@ FACEBOOK: https://www.facebook.com/themefisher
 								<!-- Contact -->
 								<div class="col-sm-3 col-xs-12">
 									<ul>
-										<li class="dropdown-header">Dashboard</li>
+										<li class="dropdown-header">Perfumes</li>
+										<li role="separator" class="divider"></li>
+										{% load item_sizes %}
+										{% all_brands_p as brands_p %}
+										{% for brand in brands_p %}
+										<li><a href="{{brand.get_absolute_url}}">{{brand}}</a></li>
+										{% endfor %}
+									</ul>
+								</div>
+
+								<!-- Utility -->
+								<div class="col-sm-3 col-xs-12">
+									<ul>
+										<li class="dropdown-header">Skincare</li>
+										<li role="separator" class="divider"></li>
+										{% all_brands_s as brands_s %}
+										{% for brand in brands_s %}
+										<li><a href="{{brand.get_absolute_url}}">{{brand}}</a></li>
+										{% endfor %}
+									</ul>
+								</div>
+								<div class="col-sm-3 col-xs-12">
+									<ul>
+										<li class="dropdown-header">Makeup</li>
 										<li role="separator" class="divider"></li>
 										<li><a href="dashboard.html">User Interface</a></li>
 										<li><a href="order.html">Orders</a></li>
@@ -256,23 +244,6 @@ FACEBOOK: https://www.facebook.com/themefisher
 									</ul>
 								</div>
 
-								<!-- Utility -->
-								<div class="col-sm-3 col-xs-12">
-									<ul>
-										<li class="dropdown-header">Utility</li>
-										<li role="separator" class="divider"></li>
-										<li><a href="login.html">Login Page</a></li>
-										<li><a href="signin.html">Signin Page</a></li>
-										<li><a href="forget-password.html">Forget Password</a></li>
-									</ul>
-								</div>
-
-								<!-- Mega Menu -->
-								<div class="col-sm-3 col-xs-12">
-									<a href="shop.html">
-										<img class="img-responsive" src="images/shop/header-img.jpg" alt="menu image" />
-									</a>
-								</div>
 							</div><!-- / .row -->
 						</div><!-- / .dropdown-menu -->
 					</li><!-- / Pages -->
@@ -313,6 +284,7 @@ FACEBOOK: https://www.facebook.com/themefisher
 {% block perfume %}{% endblock %}
 {% block new_products%}{% endblock %}
 {% block ratings %}{% endblock %}
+{% block skincare%}{% endblock %}
 <!--
 Start Call To Action
 ==================================== -->

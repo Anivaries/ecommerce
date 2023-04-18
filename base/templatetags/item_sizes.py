@@ -1,7 +1,7 @@
 from django import template
 from ..models import Product, Brand
 import datetime
-
+from django.db.models import Q
 register = template.Library()
 
 
@@ -12,9 +12,15 @@ def item_sizes(context):
     return items
 
 
-@register.simple_tag(name="all_brands", takes_context=True)
-def all_brands(context):
-    brand_qs = Brand.objects.all()
+@register.simple_tag(name="all_brands_p", takes_context=True)
+def all_brands_p(context):
+    brand_qs = Brand.objects.exclude(~Q(product__category="P"))
+    return brand_qs
+
+
+@register.simple_tag(name="all_brands_s", takes_context=True)
+def all_brands_s(context):
+    brand_qs = Brand.objects.exclude(~Q(product__category="S"))
     return brand_qs
 
 
