@@ -1,6 +1,7 @@
 {% load item_sizes %}
-{% all_brands_p as all_brands_p%}
-{% all_brands_s as all_brands_s%}
+
+
+
 <div class="widget">
     <h4 class="widget-title">Sort By</h4>
     <form method="post" action="#">
@@ -32,6 +33,7 @@
                     <li><a href="{% url 'new-perfumes'%}">New</a></li>
                     <li><a href="{% url 'top-perfumes'%}">Best Rated</a></li>
                     <hr>
+                    {% all_brands_p as all_brands_p%}
                     {% for brand in all_brands_p %}
                     <li><a href="{{brand.get_absolute_url}}">{{brand}}</a></li>
                     {% endfor %}
@@ -50,14 +52,18 @@
         <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
             <div class="panel-body">
                  <ul>
-                    <li><a href="#!">All</a></li>
-                    <li><a href="#!">New</a></li>
-                    <li><a href="#!">Most Popular</a></li>
+                    <li><a href="{% url 'makeup'%}">All</a></li>
+                    <li><a href="{% url 'new-makeup'%}">New</a></li>
+                    <li><a href="{% url 'top-makeup'%}">Best Rated</a></li>
                     <hr>
-                    <li><a href="#!">Face</a></li>
-                    <li><a href="#!">Eye</a></li>
-                    <li><a href="#!">Lip</a></li>
-                    
+                    <li><a href="{% url 'face-makeup'%}">Face</a></li>
+                    <li><a href="{% url 'eye-makeup'%}">Eye</a></li>
+                    <li><a href="{% url 'lip-makeup'%}">Lip</a></li>
+                    <hr>
+                    {% all_brands_m as all_brands_m%}
+                    {% for brand in all_brands_m %}
+                    <li><a href="{{brand.get_absolute_url}}">{{brand}}</a></li>
+                    {% endfor %}
                 </ul>
             </div>
         </div>
@@ -75,13 +81,14 @@
                   <ul>
                     <li><a href="{% url 'skincare'%}">All</a></li>
                     <li><a href="{% url 'new-skincare'%}">New</a></li>
-                    <li><a href="{% url 'top-skincare'%}">Most Popular</a></li>
+                    <li><a href="{% url 'top-skincare'%}">Best Rated</a></li>
                     <hr>
                     <li><a href="{% url 'moisturizers'%}">Moisturizers</a></li>
                     <li><a href="{% url 'lipbalm'%}">Lip Balms & Treatment</a></li>
                     <li><a href="{% url 'cleanser'%}">Cleanser</a></li>
-                    <li><a href="#!">Masks</a></li>
+                    <li><a href="{% url 'masks'%}">Masks</a></li>
                     <hr>
+                    {% all_brands_s as all_brands_s%}
                     {% for brand in all_brands_s %}
                     <li><a href="{{brand.get_absolute_url}}">{{brand}}</a></li>
                     {% endfor %}

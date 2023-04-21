@@ -16,3 +16,13 @@ def carousel():
     c_base = os.listdir(os.path.join(settings.BASE_DIR,
                         'static/base/static/carousel'))
     return c_base
+
+
+@register.simple_tag(name="perfume_highlights", takes_context=True)
+def carousel(context):
+    product = context['object']
+    perfume_highlights = os.listdir(os.path.join(settings.BASE_DIR,
+                                                 'static/base/static/catalog/highlights'))
+    lis = [str(a) for a in product.highlights.all() if str(
+        a) in str(perfume_highlights)]
+    return lis

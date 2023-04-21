@@ -50,7 +50,7 @@
                 {% if object.coupon %}
                 <p class="pull-left">Active coupon: {{object.coupon.code}} -{{object.coupon.discount}} din</p>  
                 {% endif %}
-                <a href="{% url 'checkout'%}" class="btn btn-main pull-right ml-2">Checkout</a>
+                <a href="{% url 'checkout'%}" class="btn btn-main pull-right"style="margin-left:10px">Checkout</a> 
 				        <a href="{% url 'product-list'%}" class="btn btn-main pull-right mr-2">Continue Shopping</a>
               </form>
             </div>

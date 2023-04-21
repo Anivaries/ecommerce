@@ -1,6 +1,8 @@
 {% extends 'base.html'%}
 {% load crispy_forms_tags %}
 {% load cart_template_tags %}
+{% load display_image%}
+{% load static %}
 {% block checkout %}
 <!-- TO DO: BLOCK ACCESS TO CHECKOUT IF NOT REGISTERED OR HAVE EMPTY CART-->
 <section class="page-header">
@@ -82,26 +84,25 @@
                </div>
             </div>
             {% if user.is_authenticated%}
-           
             <div class="col-md-4">
                <div class="product-checkout-details">
                   <div class="block">
                      <h4 class="widget-title">Order Summary</h4>
                      {% show_cart_items as cart_items %}
-                     
                      {% for item in cart_items %}
                      <div class="media product-card">
                         <a class="pull-left" href="{% url 'product-detail' item.item.slug %}">
-                           <img class="media-object" src="images/shop/cart/cart-1.jpg" alt="Image" />
+                           {% static 'base/static/catalog/sku/'|add_str:item.item.front_image|add_str:'.webp' as summary_image %}
+                           <img class="media-object" src="{{summary_image}}" alt="Image" />
                         </a>
                         <div class="media-body">
                            <h4 class="media-heading"><a href="{% url 'product-detail' item.item.slug %}">{{item.item.name}}</a></h4>
                            <p class="price">{{item.quantity}}x {{item.item.price}} din</p>
-                           <span class="remove" >Remove</span>
+                           <span class="remove"><a href="{{item.item.get_remove_from_cart_url}}">Remove</a></span>
                         </div>
                      </div>
                      {% endfor %}
-					 <!-- TO DO: ADD DISCOUNT--><br>
+                     <br>
                 {% if order.coupon %}
                      <div>
                         Coupon code: {{ order.coupon.code }}

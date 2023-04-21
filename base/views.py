@@ -49,6 +49,8 @@ class ProductListView(ListView):
         }
         return context
 
+#### PRODUCT CATEGORIES / NEW ARRIVALS #####
+
 
 def get_perfumes(request):
     perfume_qs = Product.objects.filter(category="P")
@@ -56,14 +58,6 @@ def get_perfumes(request):
         "perfumes": perfume_qs
     }
     return render(request, 'perfumes.html', context)
-
-
-def get_new_perfumes(request):
-    products = Product.objects.filter(category="P")
-    context = {
-        "products": products
-    }
-    return render(request, 'new-perfumes.html', context)
 
 
 def get_skincare(request):
@@ -74,12 +68,41 @@ def get_skincare(request):
     return render(request, 'skincare.html', context)
 
 
+def get_makeup(request):
+    makeup_qs = Product.objects.filter(category="M")
+    context = {
+        "makeup": makeup_qs
+    }
+    return render(request, 'makeup.html', context)
+
+
+def get_new_perfumes(request):
+    perfumes_qs = Product.objects.filter(category="P")
+    context = {
+        "perfumes": perfumes_qs
+    }
+    return render(request, 'new-perfumes.html', context)
+
+
+def get_new_makeup(request):
+    makeup_qs = Product.objects.filter(category="M")
+    context = {
+        "new_makeup": makeup_qs
+    }
+    return render(request, 'new-makeup.html', context)
+
+
 def get_new_skincare(request):
-    skincare_qs = Product.objects.filter(category="S")
+    skincare_qs = Product.objects.filter(
+        category="S")
     context = {
         "skincare": skincare_qs
     }
     return render(request, 'new-skincare.html', context)
+
+#### \\\\ PRODUCT CATEGORIES / PRODUCT NEW ARRIVALS \\\\ #####
+
+#### SKINCARE SUB CATEGORIES ########
 
 
 def get_skincare_moisturizers(request):
@@ -89,6 +112,15 @@ def get_skincare_moisturizers(request):
         "moisturizers": moist_qs
     }
     return render(request, 'moisturizers.html', context)
+
+
+def get_skincare_masks(request):
+    mask_qs = Product.objects.filter(
+        skincare_category__category="Mask")
+    context = {
+        "masks": mask_qs
+    }
+    return render(request, 'masks.html', context)
 
 
 def get_skincare_lip_balm(request):
@@ -107,6 +139,37 @@ def get_skincare_cleanser(request):
         "cleansers": cleanser_qs
     }
     return render(request, 'cleansers.html', context)
+#### \\\\\\SKINCARE SUB CATEGORIES \\\\\\\\\\########
+
+#### MAKEUP SUB CATEGORIES ########
+
+
+def get_makeup_face(request):
+    face_qs = Product.objects.filter(
+        makeup_category="F")
+    context = {
+        "face_makeup": face_qs
+    }
+    return render(request, 'face-makeup.html', context)
+
+
+def get_makeup_eye(request):
+    makeup_eye_qs = Product.objects.filter(
+        makeup_category="E")
+    context = {
+        "eye_makeup": makeup_eye_qs
+    }
+    return render(request, 'eye-makeup.html', context)
+
+
+def get_makeup_lip(request):
+    makeup_lip_qs = Product.objects.filter(
+        makeup_category="L")
+    context = {
+        "lip_makeup": makeup_lip_qs
+    }
+    return render(request, 'lip-makeup.html', context)
+#### \\\\\\MAKEUP SUB CATEGORIES\\\\\\ ########
 
 
 def list_by_male_perfumes(request):
@@ -115,7 +178,8 @@ def list_by_male_perfumes(request):
 
 
 def list_by_female_perfumes(request):
-    female_qs = Product.objects.filter(gender='F').exclude(~Q(category="P"))
+    female_qs = Product.objects.filter(
+        gender='F').exclude(~Q(category="P"))
     return render(request, 'female_perfumes.html', {'f_products': female_qs})
 
 
@@ -135,6 +199,56 @@ def arrange_by_rating_skincare(request):
         'ratings': skincare_qs
     }
     return render(request, 'top-skincare.html', context)
+
+
+def arrange_by_rating_makeup(request):
+    makeup_qs = Product.objects.filter(
+        ratings__isnull=False).exclude(~Q(category="M")).order_by('-ratings__average')
+    context = {
+        'rating_makeup': makeup_qs
+    }
+    return render(request, 'top-makeup.html', context)
+
+
+def get_all_new_products(request):
+    all_new_products_qs = Product.objects.all()
+    context = {
+        "new_products": all_new_products_qs
+    }
+    return render(request, 'new-arrivals.html', context)
+
+### FILTER CATEGORY BY BRAND ###
+
+
+def get_makeup_by_brand(request, *args, **kwargs):
+    brand = Brand.objects.get(slug=kwargs['slug'])
+    makeup_product_brand_qs = Product.objects.filter(
+        Q(category="M") & Q(brand__brand=brand))
+    context = {
+        "makeup_brand": makeup_product_brand_qs
+    }
+    return render(request, "makeup-by-brand.html", context)
+
+
+def get_skincare_by_brand(request, *args, **kwargs):
+    brand = Brand.objects.get(slug=kwargs['slug'])
+    skincare_product_brand_qs = Product.objects.filter(
+        Q(category="S") & Q(brand__brand=brand))
+    context = {
+        "skincare_brand": skincare_product_brand_qs
+    }
+    return render(request, "skincare-by-brand.html", context)
+
+
+def get_perfumes_by_brand(request, *args, **kwargs):
+    brand = Brand.objects.get(slug=kwargs['slug'])
+    perfumes_product_brand_qs = Product.objects.filter(
+        Q(category="P") & Q(brand__brand=brand))
+    context = {
+        "perfumes_brand": perfumes_product_brand_qs
+    }
+    return render(request, "perfumes-by-brand.html", context)
+### \\\\ CATEGORY BRANDS \\\\ ###
 
 
 class BrandView(ListView):
@@ -209,6 +323,23 @@ def add_to_favorites(request, slug):
                 messages.success(request, f"{item} added to favorites")
     except:
         return HttpResponse("You must be logged in")
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+@login_required
+def remove_from_favorites(request, slug):
+    item = get_object_or_404(Product, slug=slug)
+    print(item)
+    qs = UserProfile.objects.filter(user=request.user)
+    print(qs)
+    try:
+        if UserProfile.objects.get(user=request.user):
+            user = UserProfile.objects.get(user=request.user)
+            if user.favorites.contains(item):
+                user.favorites.remove(item)
+                messages.warning(request, f"{item} removed from favorites")
+    except:
+        return HttpResponse("Woops, something went wrong")
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
@@ -408,7 +539,7 @@ class CouponView(View):
                     order.coupon = coupon
                     order.save()
                     messages.success(
-                        self.request, "Successfully applied coupon")
+                        self.request, "Coupon applied")
                 return redirect('checkout')
             except ObjectDoesNotExist:
                 messages.warning(self.request, "This coupon does not exist")

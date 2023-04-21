@@ -20,7 +20,7 @@ FACEBOOK: https://www.facebook.com/themefisher
 		<div class="row">
 			<div class="col-md-12">
 				<div class="content">
-					<h1 class="page-name">Dashboard</h1>
+					<h1 class="page-name">Favorites</h1>
 					<ol class="breadcrumb">
 						<li><a href="{% url 'product-list' %}">Home</a></li>
 						<li class="active">my account</li>
@@ -45,19 +45,24 @@ FACEBOOK: https://www.facebook.com/themefisher
             <table class="table">
               <thead>
                 <tr>
-					<!-- can add product image-->
-				  {% comment %} <th>Image</th> {% endcomment %}
                   <th>Name</th>
-                  <th class="col-md-2 col-sm-3">Add to cart</th>
-                  <th></th>
+                  <th>Brand</th>
+                  <th>Price</th>
+                  <th>Add to cart</th>
                 </tr>
               </thead>
               <tbody>
+                {% load display_image%}
 				{% for item in favorites%}
+        {% static 'base/static/catalog/sku/'|add_str:item.front_image|add_str:'.webp' as summary_image %}
                 <tr>
-                  <td><a href="{% url 'product-detail' item.slug %}">{{item}}</a></td>
-				  
-                  <td>
+                  <td><img width="80" src="{{summary_image}}" alt="" /><a href="{% url 'product-detail' item.slug %}">{{item.short_description}}</a>
+                  </td>
+                  <td style="vertical-align: inherit;">{{item.brand}}</td>
+                  <td style="vertical-align: inherit;">
+                    {{item.price}} din
+                  </td>
+                  <td style="vertical-align: inherit;">
                     <div class="btn-group" role="group">
                       <button type="button" class="btn btn-default"><i class="tf-ion-android-cart" aria-hidden="true"></i></button>
                     </div>

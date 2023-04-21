@@ -19,6 +19,11 @@ GENDER = (
     ('F', 'Female'),
     ('U', 'Unisex'),
 )
+MAKEUP_CATEGORY = (
+    ('E', 'Eye'),
+    ('F', 'Face'),
+    ('L', 'Lip'),
+)
 
 
 class Brand(models.Model):
@@ -83,6 +88,8 @@ class Product(models.Model):
     highlights = models.ManyToManyField(PerfumeHighlights, blank=True)
     skincare_category = models.ForeignKey(
         SkinCareCategory, blank=True, null=True, on_delete=models.SET_NULL)
+    makeup_category = models.CharField(
+        max_length=10, choices=MAKEUP_CATEGORY, blank=True)
 
     def __str__(self) -> str:
         return self.name
@@ -98,6 +105,9 @@ class Product(models.Model):
 
     def get_add_to_favorites_url(self):
         return reverse("add-to-favorites", kwargs={"slug": self.slug})
+
+    def get_remove_from_favorites_url(self):
+        return reverse("remove-from-favorites", kwargs={"slug": self.slug})
 
     @property
     def is_new(self):

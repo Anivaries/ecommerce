@@ -32,24 +32,19 @@
 			<div class="col-md-9">
 				<div class="row">
 			{% for item in ratings %}		
-			<div class="col-md-4">
+			<div class="col-md-3">
 				<div class="product-item">
                     <div class="pull-middle">{% ratings item read_only=True %}{% block rating_count %}{% endblock %}</div>
 					<div class="product-thumb">
-                        
-						<!-- TODO: CHANGE PRICE IF SALE -->
 						{% if item.sale %}
 						<span class="bage">Sale</span>
 						{% endif %}
 						{% if item.is_new %}
 						<span class="new">New</span>
 						{% endif %}
-						<!-- TO DO: FIX IMAGES -->
 						{% load display_image %}
 						{% static 'base/static/catalog/sku/'|add_str:item.front_image|add_str:'.webp' as front_image %}
 						<img class="img-responsive" src="{{front_image}}" alt="product-img" />
-                        
-						{% comment %} {% endfor %} {% endcomment %}
 						<div class="preview-meta">
 							<ul>
 								<li>
@@ -67,8 +62,9 @@
                       	</div>
 					</div>
 					<div class="product-content">
-						<h4><a href="{% url 'product-detail' item.slug %}">{{item.name}}</a></h4>
-						<h5>{{item.short_description}}</h5><h6 style="margin-top:-4px;">{{item.size}}</h6>
+						<p><a href="{% url 'product-detail' item.slug %}">{{item.name}}</a></p>
+						<h4>{{item.short_description}}</h4>
+						{% comment %} <h6>{{item.size}}</h6> {% endcomment %}
 						<p class="price">{{item.price}} din</p>
 					</div>
 				</div>
@@ -96,8 +92,6 @@
 			        				<h2 class="product-title">{{item.name}}</h2>
 			        				<p class="product-price">{{item.price}} din</p>
 									<h3 class="product-size">{{item.size}}</h3>
-									<!-- TO DO: ADD ITEM DESCRIPTION TO MODELS-->
-									
 			        				<p class="product-short-description">
 			        					{{item.short_description}}
 			        				</p>

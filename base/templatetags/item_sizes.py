@@ -24,7 +24,7 @@ def all_brands_s(context):
     return brand_qs
 
 
-@register.filter
-def date_today():
-    date = datetime.datetime.now()
-    return date
+@register.simple_tag(name="all_brands_m", takes_context=True)
+def all_brands_s(context):
+    brand_qs = Brand.objects.exclude(~Q(product__category="M"))
+    return brand_qs

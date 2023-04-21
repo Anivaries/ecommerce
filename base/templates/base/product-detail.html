@@ -76,14 +76,11 @@
 						{{object.short_description}}
 					</p>
 					<div class="color-swatches">
-						<!-- ADD HIGHLITS INTEAD OF COLORS -->
-						{% comment %} <span>highlights:</span> {% endcomment %}
 						<ul>
 							{% load item_sizes %}
 							{% item_sizes as size %}
 							{% for item in size %}
 							{% static 'base/static/catalog/sku/'|add_str:item.front_image|add_str:'.webp' as small_image %}
-							{% comment %} {{image_static}} {% endcomment %}
 							<li>
 								<a href="{% url 'product-detail' item.slug %}"><div class="button-container">
 									<button class="btn btn-md">
@@ -94,21 +91,22 @@
 									</button>
 								  </div></a>
 							</li>
-							{% comment %} <li>
-								<a href="{% url 'product-detail' item.slug %}" class="swatch-violet">{{item.size}} </a>
-							</li> {% endcomment %}
 							{% endfor %}
 						</ul>
 					</div>
 					<div class="product-size">
-						<!-- CHANGE BOTTLE SIZES INSTEAD  -->
-						<span>Size:</span>
-						<select class="form-control">
-							<option>S</option>
-							<option>M</option>
-							<option>L</option>
-							<option>XL</option>
-						</select>
+						{% if object.highlights.all %}
+						{% perfume_highlights as pf %}
+						<span>Highlights:</span>
+						{% for hl in pf %}
+						<ul>
+							<li style="padding-right:10px">
+								{% static 'base/static/catalog/highlights/'|add_str:hl|add_str:'.svg' as image %}
+								<img src="{{image}}" width="50"> {{hl}}
+							</li>
+						</ul>
+						{% endfor %}
+						{% endif %}
 					</div>
 					<div class="product-quantity">
 						<span>Quantity:</span>
@@ -116,13 +114,17 @@
 							<input id="product-quantity" type="text" value="0" name="product-quantity">
 						</div>
 					</div>
+					{% if user.is_authenticated%}
+					{% if object in request.user.userprofile.favorites.all %}
 					<div class="product-category">
-						<span>Categories:</span>
-						<ul>
-							<li><a href="product-single.html">Products</a></li>
-							<li><a href="product-single.html">Soap</a></li>
-						</ul>
+						<a href="{{object.get_remove_from_favorites_url}}" class="btn btn-main btn-small btn-round-full">Remove from Favorites</a>
 					</div>
+					{% else %}
+					<div class="product-category">
+						<a href="{{object.get_add_to_favorites_url}}" class="btn btn-main btn-small btn-round-full">Add to Favorites</a>
+					</div>
+					{% endif %}
+					{% endif %}
 					<a href="{{object.get_add_to_cart_url}}" class="btn btn-main mt-20">Add To Cart</a>
 				</div>
 			</div>

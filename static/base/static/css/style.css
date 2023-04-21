@@ -1126,6 +1126,7 @@ input[type="tel"]:focus {
   right: 20px;
 }
 
+
 @media (max-width: 768px) {
   .heroSliderArrow {
     display: none !important;
@@ -1230,10 +1231,16 @@ input[type="tel"]:focus {
 }
 
 .product-item .product-content h4 {
-  font-size: 16px;
-  font-weight: 400;
+  font-size: 15px;
+  font-weight: 300;
   margin-top: 15px;
-  margin-bottom: 6px;
+  /* margin-bottom: 2px; */
+}
+
+.wrapper {
+  height: 93px;
+  position: relative;
+  width: 100%;
 }
 
 .product-item .product-content h4 a {

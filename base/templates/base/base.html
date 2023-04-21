@@ -172,26 +172,22 @@ FACEBOOK: https://www.facebook.com/themefisher
 			<div id="navbar" class="navbar-collapse collapse text-center">
 				<ul class="nav navbar-nav">
 
-					<!-- Home -->
+					<!-- Shop -->
 					<li class="dropdown ">
 						<a href="{% url 'product-list'%}">Shop</a>
-					</li><!-- / Home -->
+					</li><!-- New -->
 					<li class="dropdown dropdown-slide">
 						<a href="#!" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="350"
 							role="button" aria-haspopup="true" aria-expanded="false">New <span
 								class="tf-ion-ios-arrow-down"></span></a>
 						<ul class="dropdown-menu">
-							<li><a href="typography.html">New Makeup</a></li>
+							<li><a href="{% url 'new-makeup'%}">New Makeup</a></li>
 							<li><a href="{% url 'new-perfumes'%}">New Fragrances</a></li>
-							<li><a href="alerts.html">New Skincare</a></li>
+							<li><a href="{% url 'new-skincare'%}">New Skincare</a></li>
 						</ul>
 					</li>
-
 					<!-- Elements -->
-					<!-- / Elements -->
-
-
-					<!-- Pages -->
+					<!-- Brands Navbar -->
 					<li class="dropdown full-width dropdown-slide">
 						<a href="#!" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="350"
 							role="button" aria-haspopup="true" aria-expanded="false">Brands <span
@@ -199,17 +195,18 @@ FACEBOOK: https://www.facebook.com/themefisher
 						<div class="dropdown-menu">
 							<div class="row">
 
-								<!-- Introduction -->
+								<!-- Brands Navitem -->
 								<div class="col-sm-3 col-xs-12">
 									<ul>
 										<li class="dropdown-header">Brands</li>
 										<li role="separator" class="divider"></li>
 										<li><a href="{% url 'brand-list'%}">Brands A-Z</a></li>
 										<li><a href="#!">Only at !here</a></li>
+										<li><a href="#!">On sale</a></li>
 									</ul>
 								</div>
 
-								<!-- Contact -->
+								<!-- Perfumes brands-navitem -->
 								<div class="col-sm-3 col-xs-12">
 									<ul>
 										<li class="dropdown-header">Perfumes</li>
@@ -217,30 +214,31 @@ FACEBOOK: https://www.facebook.com/themefisher
 										{% load item_sizes %}
 										{% all_brands_p as brands_p %}
 										{% for brand in brands_p %}
-										<li><a href="{{brand.get_absolute_url}}">{{brand}}</a></li>
+										<li><a href="{% url 'perfumes-by-brand' brand.slug %}">{{brand}}</a></li>
 										{% endfor %}
 									</ul>
 								</div>
 
-								<!-- Utility -->
+								<!-- Skincare brands-navitem -->
 								<div class="col-sm-3 col-xs-12">
 									<ul>
 										<li class="dropdown-header">Skincare</li>
 										<li role="separator" class="divider"></li>
 										{% all_brands_s as brands_s %}
 										{% for brand in brands_s %}
-										<li><a href="{{brand.get_absolute_url}}">{{brand}}</a></li>
+										<li><a href="{% url 'skincare-by-brand' brand.slug %}">{{brand}}</a></li>
 										{% endfor %}
 									</ul>
 								</div>
+								<!-- Makeup brands-navitem -->
 								<div class="col-sm-3 col-xs-12">
 									<ul>
 										<li class="dropdown-header">Makeup</li>
 										<li role="separator" class="divider"></li>
-										<li><a href="dashboard.html">User Interface</a></li>
-										<li><a href="order.html">Orders</a></li>
-										<li><a href="address.html">Address</a></li>
-										<li><a href="profile-details.html">Profile Details</a></li>
+										{% all_brands_m as brands_m %}
+										{% for brand in brands_m %}
+										<li><a href="{% url 'makeup-by-brand' brand.slug %}">{{brand}}</a></li>
+										{% endfor %}
 									</ul>
 								</div>
 
@@ -249,17 +247,148 @@ FACEBOOK: https://www.facebook.com/themefisher
 					</li><!-- / Pages -->
 
 
-					<!-- Shop -->
-					<li class="dropdown dropdown-slide">
+					<!-- Perfumes Navbar-->
+					<li class="dropdown full-width dropdown-slide">
 						<a href="#!" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="350"
-							role="button" aria-haspopup="true" aria-expanded="false">Elements <span
+							role="button" aria-haspopup="true" aria-expanded="false">Perfumes<span
 								class="tf-ion-ios-arrow-down"></span></a>
-						<ul class="dropdown-menu">
-							<li><a href="typography.html">Typography</a></li>
-							<li><a href="buttons.html">Buttons</a></li>
-							<li><a href="alerts.html">Alerts</a></li>
-						</ul>
-					</li><!-- / Blog -->
+						<div class="dropdown-menu">
+							<div class="row">
+								<!-- Introduction -->
+								<div class="col-sm-4 col-xs-12">
+									<ul>
+										<li class="dropdown-header">&nbsp;</li>
+										<li role="separator" class="divider"></li>
+										<li><a href="{% url 'new-perfumes'%}">New</a></li>
+										<li><a href="#!">Best Selling</a></li>
+										<li><a href="{% url 'top-perfumes'%}">Best Rated</a></li>
+										<li><a href="{% url 'male-perfumes'%}">For Him</a></li>
+										<li><a href="{% url 'female-perfumes'%}">For Her</a></li>
+	
+									</ul>
+								</div>
+								<!-- Perfumes -->
+								<div class="col-sm-4 col-xs-12">
+									<ul>
+										<li class="dropdown-header">Perfumes by Brand</li>
+										<li role="separator" class="divider"></li>
+										{% all_brands_p as brands_p %}
+										{% for brand in brands_p %}
+										<li><a href="{% url 'perfumes-by-brand' brand.slug %}">{{brand}}</a></li>
+										{% endfor %}
+									</ul>
+								</div>
+								<!-- Utility -->
+								<div class="col-sm-4 col-xs-12">
+									<ul>
+										<li class="dropdown-header">Brands</li>
+										<li role="separator" class="divider"></li>
+										<li><a href="{% url 'brand-list'%}">Brands A-Z</a></li>
+										<li><a href="#!">Only at !here</a></li>
+									</ul>
+								</div>
+
+							</div><!-- / .row -->
+						</div><!-- / .dropdown-menu -->
+					</li>
+					<!-- Skincare Navbar -->
+					<li class="dropdown full-width dropdown-slide">
+						<a href="#!" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="350"
+							role="button" aria-haspopup="true" aria-expanded="false">Skincare<span
+								class="tf-ion-ios-arrow-down"></span></a>
+						<div class="dropdown-menu">
+							<div class="row">
+
+								<!-- Introduction -->
+								<!-- Categories -->
+								<div class="col-sm-4 col-xs-12">
+									<ul>
+										<li class="dropdown-header">&nbsp;</li>
+										<li role="separator" class="divider"></li>
+										<li><a href="{% url 'new-skincare'%}">New</a></li>
+										<li><a href="#!">Best Selling</a></li>
+										<li><a href="{% url 'top-skincare'%}">Best Rated</a></li>
+										<li role="separator" class="divider"></li>
+										<li><a href="{% url 'moisturizers'%}">Moisturizers</a></li>
+										<li><a href="{% url 'lipbalm'%}">Lip & Balm Treatments</a></li>
+										<li><a href="{% url 'cleanser'%}">Cleansers</a></li>
+										<li><a href="{% url 'masks'%}">Masks</a></li>
+	
+									</ul>
+								</div>
+								<!-- Brands -->
+								<div class="col-sm-4 col-xs-12">
+									<ul>
+										<li class="dropdown-header">Skincare by Brand</li>
+										<li role="separator" class="divider"></li>
+										{% all_brands_p as brands_p %}
+										{% for brand in brands_s %}
+										<li><a href="{% url 'skincare-by-brand' brand.slug %}">{{brand}}</a></li>
+										{% endfor %}
+									</ul>
+								</div>
+								<!-- Brands -->
+								<div class="col-sm-4 col-xs-12">
+									<ul>
+										<li class="dropdown-header">Brands</li>
+										<li role="separator" class="divider"></li>
+										<li><a href="{% url 'brand-list'%}">Brands A-Z</a></li>
+										<li><a href="#!">Only at !here</a></li>
+										<li><a href="#!">On sale</a></li>
+									</ul>
+								</div>
+							</div><!-- / .row -->
+						</div><!-- / .dropdown-menu -->
+					</li>
+					<!-- MAKEUP Navbar -->
+					<li class="dropdown full-width dropdown-slide">
+						<a href="#!" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="350"
+							role="button" aria-haspopup="true" aria-expanded="false">Makeup<span
+								class="tf-ion-ios-arrow-down"></span></a>
+						<div class="dropdown-menu">
+							<div class="row">
+
+								<!-- Introduction -->
+								<!-- Categories -->
+								<div class="col-sm-4 col-xs-12">
+									<ul>
+										{% comment %} <br> {% endcomment %}
+										<li class="dropdown-header">&nbsp;</li>
+										<li role="separator" class="divider"></li>
+										<li><a href="{% url 'new-makeup'%}">New</a></li>
+										<li><a href="#!">Best Selling</a></li>
+										<li><a href="{% url 'top-makeup'%}">Best Rated</a></li>
+										<li role="separator" class="divider"></li>
+										<li><a href="{% url 'lip-makeup'%}">Lip Makeup</a></li>
+										<li><a href="{% url 'eye-makeup'%}">Eye Makeup</a></li>
+										<li><a href="{% url 'face-makeup'%}">Face Makeup</a></li>
+									</ul>
+								</div>
+								<!-- Brands -->
+								<div class="col-sm-4 col-xs-12">
+									<ul>
+										<li class="dropdown-header">Makeup by Brand</li>
+										<li role="separator" class="divider"></li>
+										{% all_brands_m as brands_m %}
+										{% for brand in brands_m %}
+										<li><a href="{% url 'makeup-by-brand' brand.slug %}">{{brand}}</a></li>
+										{% endfor %}
+									</ul>
+								</div>
+								{% comment %} TODO: ADD BRANDS TO SKINCARE  {% endcomment %}
+								<!-- Brands -->
+								<div class="col-sm-4 col-xs-12">
+									<ul>
+										<li class="dropdown-header">Brands</li>
+										<li role="separator" class="divider"></li>
+										<li><a href="{% url 'brand-list'%}">Brands A-Z</a></li>
+										<li><a href="#!">Only at !here</a></li>
+										<li><a href="#!">On sale</a></li>
+									</ul>
+								</div>
+							</div><!-- / .row -->
+						</div><!-- / .dropdown-menu -->
+					</li>
 				</ul><!-- / .nav .navbar-nav -->
 
 			</div>
@@ -285,6 +414,9 @@ FACEBOOK: https://www.facebook.com/themefisher
 {% block new_products%}{% endblock %}
 {% block ratings %}{% endblock %}
 {% block skincare%}{% endblock %}
+{% block makeup_brand %}{% endblock %}
+{% block perfumes_brand %}{% endblock %}
+{% block skincare_brand %}{% endblock %}
 <!--
 Start Call To Action
 ==================================== -->

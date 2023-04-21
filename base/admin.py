@@ -9,7 +9,7 @@ class UserProfileAdmin(admin.ModelAdmin):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ("name", "size")
+    list_display = ["name", "short_description", "size"]
 
 
 class OrderAdmin(admin.ModelAdmin):
