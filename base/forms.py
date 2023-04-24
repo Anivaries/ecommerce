@@ -1,5 +1,5 @@
 from django import forms
-from .models import UserProfile
+from .models import UserProfile, Comment
 
 
 class CheckoutForm(forms.Form):
@@ -42,3 +42,15 @@ class CouponForm(forms.Form):
         'type': 'text',
         'placeholder': 'Enter Coupon Code'
     }))
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['text']
+
+
+class CommentUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['text']

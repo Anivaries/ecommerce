@@ -1,5 +1,6 @@
 from django.urls import path
-from .views import ProductDetailView, ProductListView, add_to_cart, remove_from_cart, OrderSummaryView, remove_item_from_cart, CheckoutView, contact_form, add_to_favorites, remove_from_favorites, IndexPageView, UserProfileView, update_profile, show_favorites, CouponView, empty_cart, list_by_female_perfumes, list_by_male_perfumes, BrandView, BrandDetail, get_perfumes, get_new_perfumes, arrange_by_rating_perfumes, get_skincare, get_skincare_moisturizers, get_skincare_lip_balm, get_new_skincare, arrange_by_rating_skincare, get_skincare_cleanser, get_skincare_masks, get_makeup, get_new_makeup, get_makeup_eye, get_makeup_face, get_makeup_lip, arrange_by_rating_makeup, get_all_new_products, get_makeup_by_brand, get_perfumes_by_brand, get_skincare_by_brand
+from .views import ProductDetailView, ProductListView, add_to_cart, remove_from_cart, OrderSummaryView, remove_item_from_cart, CheckoutView, contact_form, add_to_favorites, remove_from_favorites, IndexPageView, UserProfileView, update_profile, show_favorites, CouponView, empty_cart, list_by_female_perfumes, list_by_male_perfumes, BrandView, BrandDetail, get_perfumes, get_new_perfumes, arrange_by_rating_perfumes, get_skincare, get_skincare_moisturizers, get_skincare_lip_balm, get_new_skincare, arrange_by_rating_skincare, get_skincare_cleanser, get_skincare_masks, get_makeup, get_new_makeup, get_makeup_eye, get_makeup_face, get_makeup_lip, arrange_by_rating_makeup, get_all_new_products, get_makeup_by_brand, get_perfumes_by_brand, get_skincare_by_brand, delete_comment
+# delete_comment update_comment
 
 urlpatterns = [
     path('', IndexPageView.as_view(), name='index-page'),
@@ -12,6 +13,10 @@ urlpatterns = [
     path('profile/', UserProfileView.as_view(), name='profile'),
     path('apply-coupon/', CouponView.as_view(), name='apply-coupon'),
     path('contact/', contact_form, name='contact'),
+    path('delete-comment/<int:pk>/',
+         delete_comment, name='delete-comment'),
+    path('update-comment/<int:pk>/',
+         ProductDetailView.update, name='update-comment'),
     path('add-to-cart/<slug:slug>/', add_to_cart, name="add-to-cart"),
     path('remove-from-cart/<slug:slug>/',
          remove_from_cart, name="remove-from-cart"),

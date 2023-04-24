@@ -91,11 +91,11 @@ FACEBOOK: https://www.facebook.com/themefisher
 						<a href="{% url 'profile'%}" >{{request.user}}</a>
 						</li>
 					<li>
-					<a href="{% url 'favorites' %}">{{request.user|count_favorites}}<i class="tf-ion-heart"></i></a>
+					<a href="{% url 'favorites' %}"style="font-size:14px">{{request.user|count_favorites}}<i class="tf-ion-heart" style="font-size:20px"></i></a>
 					</li>
 					<li class="dropdown cart-nav dropdown-slide">
 						<a href="#!" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"><i
-								class="tf-ion-android-cart" ></i>Cart</a>
+								class="tf-ion-android-cart" style="font-size:20px"></i>Cart</a>
 						<div class="dropdown-menu cart-dropdown">
 							<!-- Cart Item -->
 							<!-- TO DO: Don't show cart dropdown if empty -->

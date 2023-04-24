@@ -8,6 +8,7 @@
 {% load ratings %}
 
 <section class="single-product">
+	
 	<div class="container">
 		<div class="row">
 			<div class="col-md-6">
@@ -15,6 +16,12 @@
 					<li><a href="{% url 'product-list'%}">Home</a></li>
 					<li><a href="{% url 'product-list' %}">Shop</a></li>
 					<li class="active">{{object.name}}</li>
+				</ol>
+			</div>
+			<div class="col-md-6">
+				<ol class="product-pagination text-right">
+					<li><a href="blog-left-sidebar.html"><i class="tf-ion-ios-arrow-left"></i> Next </a></li>
+					<li><a href="blog-left-sidebar.html">Preview <i class="tf-ion-ios-arrow-right"></i></a></li>
 				</ol>
 			</div>
 		</div>
@@ -47,6 +54,7 @@
 								<i class="tf-ion-ios-arrow-right"></i>
 							</a>
 						</div>
+						
 						<!-- thumb -->
 						<ol class='carousel-indicators mCustomScrollbar meartlab'>
 							{% for item in images %}
@@ -62,7 +70,7 @@
 			</div>
 			<div class="col-md-7">
 				<div class="single-product-details">
-					<h4 class="pull-middle" >{% ratings object icon_height=30 icon_width=30%}</h4>
+                    {% comment %} <h4 class="pull-middle" >{% ratings object icon_height=30 icon_width=30%}</h4> {% endcomment %}
 						<h2>{{object.name}}</h2> 
 					<p>Size: {{object.size}}</p>
 					<p class="product-price"><b>{{object.price}}</b> din</p>
@@ -134,41 +142,38 @@
 						<div id="details" class="tab-pane fade active in">
 							<p>{{ object.long_description|safe|linebreaksbr }}</p>
 						</div>
-						
 						<div id="reviews" class="tab-pane fade">
 							<div class="post-comments">
 						    	<ul class="media-list comments-list m-bot-50 clearlist">
 								    <!-- Comment Item start-->
-									 {% for a in comments %}
+									 <form method="post" action="post-comment">
+										{% csrf_token %}
+										{{form.as_p}}
+										<input type="submit" name="submit_button" value="Leave a comment">
+									 </form>
+									 {% comment %} {% for a in comments %}
 								    <li class="media">
 								        <div class="media-body">
 								            <div class="comment-info">
 								                <h4 class="comment-author">
 								                    <a href="#!">{{a.author}}</a>
 								                </h4>
-								                <time datetime="2013-04-06T13:53">{{a.time}}</time>
+								                <time datetime="2013-04-06T13:53">July 02, 2015, at 11:34</time>
 								                <a class="comment-button" href="#!"><i class="tf-ion-chatbubbles"></i>Reply</a>
 								            </div>
-											{% if a.author == request.user.userprofile %}
-													<a href="{% url 'delete-comment' a.pk %}"><h6>Delete comment</h6></a>
-													<a href="{% url 'update-comment' a.pk %}"><h6>Edit</h6></a>
-													{% endif %}
 								            <p>
 								                {{a.text}}
 								            </p>
 								        </div>
 								    </li>
-									{% endfor %}
-									<form method="post" action="">
-										{% csrf_token %}
-										{{form|crispy}}
-										<input type="submit" name="submit_button" value="Leave a comment"class="btn btn-main btn-small btn-round">
-									</form>
+									{% endfor %} {% endcomment %}
 								    <!-- End Comment Item -->
 								</ul>
 							</div>
 						</div>
+						<a href="">Leave a review</a>
 					</div>
+					<a href="">Leave a review</a>
 				</div>
 			</div>
 		</div>

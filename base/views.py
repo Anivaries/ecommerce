@@ -1,14 +1,14 @@
 
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import DetailView, ListView, View
-from .models import Product, Order, OrderItem, BillingAddress, UserProfile, CATEGORIES, DiscountCode, Brand
+from .models import Product, Order, OrderItem, BillingAddress, UserProfile, CATEGORIES, DiscountCode, Brand, Comment
 from django.shortcuts import redirect
 from django.utils import timezone
 from django.urls import reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
-from .forms import CheckoutForm, ContactForm, UserProfileForm, CouponForm
+from .forms import CheckoutForm, ContactForm, UserProfileForm, CouponForm, CommentForm, CommentUpdateForm
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib import messages
 import os
@@ -31,8 +31,78 @@ class ProductDetailView(DetailView):
                                     'static/base/static/catalog/productimages/product'))
         item = Product.objects.get(slug=self.kwargs['slug'])
         list_of_images = [a for a in a if item.product_code in a]
+        product = Comment.objects.filter(
+            product=Product.objects.get(slug=self.kwargs['slug']))
+        total_comments = Comment.objects.filter(
+            product=Product.objects.get(slug=self.kwargs['slug'])).count()
+        context['total_comments'] = total_comments
+        context['comments'] = product
         context["images"] = list_of_images
+        context['form'] = CommentForm()
         return context
+
+    def post(self, request, slug):
+        try:
+            product = get_object_or_404(Product, slug=slug)
+            user = request.user.userprofile
+            if request.method == "POST":
+                form = CommentForm(request.POST or None)
+                if form.is_valid():
+                    text = form.cleaned_data.get('text')
+                    time = datetime.datetime.now()
+                    form = Comment(
+                        product=product,
+                        text=text,
+                        author=user,
+                        time=time
+                    )
+                    form.save()
+                    messages.success(request, "Review submited")
+                    return redirect('product-detail', slug=slug)
+                return render(request, 'product-detail.html', {"form": form})
+        except:
+            messages.info(request, "You must be logged in to give a review")
+            return redirect('product-detail', slug=slug)
+
+    def update(request, pk):
+        if not request.user.is_authenticated:
+            messages.info(
+                request, "You need to be logged in to edit a review")
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        comment = get_object_or_404(Comment, pk=pk)
+        slug = comment.product.slug
+        product = get_object_or_404(Product, slug=slug)
+        form = CommentForm(request.POST or None)
+        a = os.listdir(os.path.join(settings.BASE_DIR,
+                                    'static/base/static/catalog/productimages/product'))
+        list_of_images = [a for a in a if product.product_code in a]
+        comments = Comment.objects.filter(
+            product=Product.objects.get(slug=slug))
+        total_comments = Comment.objects.filter(
+            product=Product.objects.get(slug=slug)).count()
+        if form.is_valid():
+            comment.text = form.cleaned_data['text']
+            comment.save()
+            form.save()
+            return redirect("product-detail", slug=slug)
+        else:
+            form = CommentForm(instance=comment)
+        return render(request, 'update-comment.html', {"object": product, "form": form, "comments": comments, "images": list_of_images, "total_comments": total_comments})
+
+
+def delete_comment(request, pk):
+    if not request.user.is_authenticated:
+        messages.info(
+            request, "You need to be logged in to delete a review")
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    comment = get_object_or_404(Comment, pk=pk)
+    if request.method == "GET":
+        if comment.author.id == request.user.userprofile.id or request.user.is_staff:
+            comment.delete()
+            messages.warning(request, "Review deleted")
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    messages.info(request, "You can delete only your own reviews")
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 class ProductListView(ListView):
@@ -473,6 +543,25 @@ class CheckoutView(LoginRequiredMixin, View):
         except ObjectDoesNotExist:
             messages.warning(self.request, "You have no active orders")
             return redirect('checkout')
+
+
+# def update_comment(request, pk):
+
+#     comment = get_object_or_404(Comment, pk=pk)
+#     product = get_object_or_404(Product, slug=comment.product.slug)
+#     if request.method == "POST":
+#         form = CommentForm(request.POST, instance=comment)
+#         if form.is_valid():
+#             comment.text = form.cleaned_data['text']
+#             form.save()
+#             messages.success(request, "Review updated")
+#             return redirect('product-detail')
+#     else:
+#         form = CommentForm(instance=comment)
+#     return render(request, "update-comment.html", {"form": form})
+    # except:
+    # messages.info(request, "Woops, something went wrong")
+    # return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 def contact_form(request):

@@ -109,6 +109,9 @@ class Product(models.Model):
     def get_remove_from_favorites_url(self):
         return reverse("remove-from-favorites", kwargs={"slug": self.slug})
 
+    def edit_comment(self):
+        return reverse("update-comment", kwargs={"pk": self.pk})
+
     @property
     def is_new(self):
         return (datetime.datetime.today().astimezone() - self.date_added).days < 60
@@ -171,3 +174,15 @@ class DiscountCode(models.Model):
 
     def __str__(self) -> str:
         return self.code
+
+
+class Comment(models.Model):
+    product = models.ForeignKey(
+        Product, on_delete=models.CASCADE, blank=True, null=True)
+    text = models.TextField()
+    author = models.ForeignKey(
+        UserProfile, on_delete=models.CASCADE, null=True, blank=True)
+    time = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+
+    def __str__(self) -> str:
+        return str(self.author)
