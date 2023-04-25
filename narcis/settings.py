@@ -113,7 +113,7 @@ TIME_ZONE = 'Europe/Belgrade'
 
 USE_I18N = True
 
-USE_TZ = False
+USE_TZ = True
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static/base/static/'),
     BASE_DIR / "static",
