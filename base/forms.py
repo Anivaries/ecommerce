@@ -45,12 +45,7 @@ class CouponForm(forms.Form):
 
 
 class CommentForm(forms.ModelForm):
-    class Meta:
-        model = Comment
-        fields = ['text']
 
-
-class CommentUpdateForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ['text']

@@ -109,9 +109,6 @@ class Product(models.Model):
     def get_remove_from_favorites_url(self):
         return reverse("remove-from-favorites", kwargs={"slug": self.slug})
 
-    def edit_comment(self):
-        return reverse("update-comment", kwargs={"pk": self.pk})
-
     @property
     def is_new(self):
         return (datetime.datetime.today().astimezone() - self.date_added).days < 60

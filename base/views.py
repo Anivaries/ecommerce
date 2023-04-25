@@ -8,7 +8,7 @@ from django.urls import reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
-from .forms import CheckoutForm, ContactForm, UserProfileForm, CouponForm, CommentForm, CommentUpdateForm
+from .forms import CheckoutForm, ContactForm, UserProfileForm, CouponForm, CommentForm
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib import messages
 import os
@@ -59,10 +59,12 @@ class ProductDetailView(DetailView):
                     form.save()
                     messages.success(request, "Review submited")
                     return redirect('product-detail', slug=slug)
-                return render(request, 'product-detail.html', {"form": form})
+                return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+                # return render(request, 'product-detail.html', {"form": form})
         except:
             messages.info(request, "You must be logged in to give a review")
             return redirect('product-detail', slug=slug)
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
     def update(request, pk):
         if not request.user.is_authenticated:
@@ -73,20 +75,31 @@ class ProductDetailView(DetailView):
         slug = comment.product.slug
         product = get_object_or_404(Product, slug=slug)
         form = CommentForm(request.POST or None)
-        a = os.listdir(os.path.join(settings.BASE_DIR,
-                                    'static/base/static/catalog/productimages/product'))
-        list_of_images = [a for a in a if product.product_code in a]
         comments = Comment.objects.filter(
             product=Product.objects.get(slug=slug))
         total_comments = Comment.objects.filter(
             product=Product.objects.get(slug=slug)).count()
-        if form.is_valid():
-            comment.text = form.cleaned_data['text']
-            comment.save()
-            form.save()
-            return redirect("product-detail", slug=slug)
+        a = os.listdir(os.path.join(settings.BASE_DIR,
+                                    'static/base/static/catalog/productimages/product'))
+        list_of_images = [a for a in a if product.product_code in a]
+        if comment.author.id == request.user.userprofile.id or request.user.is_staff:
+            # if request.method == "POST":
+            #     form = CommentForm(request.POST, instance=comment)
+            # try:
+            if form.is_valid():
+                comment.text = form.cleaned_data['text']
+                comment.author = comment.author
+                comment.time = datetime.datetime.now()
+                comment.save()
+                return redirect("product-detail", slug=slug)
+            else:
+                form = CommentForm(instance=comment)
+            # except:
+            #     messages.info(request, "You can update your own review")
+            #     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         else:
-            form = CommentForm(instance=comment)
+            # messages.info(request, "You can update your own review")
+            return redirect("product-detail", slug=slug)
         return render(request, 'update-comment.html', {"object": product, "form": form, "comments": comments, "images": list_of_images, "total_comments": total_comments})
 
 

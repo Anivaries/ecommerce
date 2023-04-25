@@ -62,7 +62,7 @@
 			</div>
 			<div class="col-md-7">
 				<div class="single-product-details">
-					{% comment %} <h4 class="pull-middle" >{% ratings object icon_height=30 icon_width=30%}</h4> {% endcomment %}
+					<h4 class="pull-middle" >{% ratings object icon_height=30 icon_width=30%}</h4>
 						<h2>{{object.name}}</h2> 
 					<p>Size: {{object.size}}</p>
 					<p class="product-price"><b>{{object.price}}</b> din</p>
@@ -72,7 +72,7 @@
 					<div class="color-swatches">
 						<ul>
 							{% load item_sizes %}
-							{% comment %} {% item_sizes as size %} {% endcomment %}
+							{% item_sizes as size %}
 							{% for item in size %}
 							{% static 'base/static/catalog/sku/'|add_str:item.front_image|add_str:'.webp' as small_image %}
 							<li>
@@ -164,17 +164,8 @@
 									<form method="post" action="">
 										{% csrf_token %}
 										{{form|crispy}}
-										<input type="submit" name="submit_button" value="Leave a comment"class="btn btn-main btn-small btn-round">
+										<input type="submit" name="submit_button" value="Update"class="btn btn-main btn-small btn-round">
 									</form>
-									{% comment %} <form method="post" action="">
-									{% if form %}
-									{{form}}
-									ASDAD
-									{% endif %}
-									{% if product %}
-									ASDAD
-									{% endif %} {% endcomment %}
-								    <!-- End Comment Item -->
 								</ul>
 							</div>
 						</div>
