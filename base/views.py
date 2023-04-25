@@ -67,40 +67,41 @@ class ProductDetailView(DetailView):
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
     def update(request, pk):
-        if not request.user.is_authenticated:
-            messages.info(
-                request, "You need to be logged in to edit a review")
-            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         comment = get_object_or_404(Comment, pk=pk)
         slug = comment.product.slug
-        product = get_object_or_404(Product, slug=slug)
-        form = CommentForm(request.POST or None)
-        comments = Comment.objects.filter(
-            product=Product.objects.get(slug=slug))
-        total_comments = Comment.objects.filter(
-            product=Product.objects.get(slug=slug)).count()
-        a = os.listdir(os.path.join(settings.BASE_DIR,
-                                    'static/base/static/catalog/productimages/product'))
-        list_of_images = [a for a in a if product.product_code in a]
-        if comment.author.id == request.user.userprofile.id or request.user.is_staff:
-            # if request.method == "POST":
-            #     form = CommentForm(request.POST, instance=comment)
-            # try:
-            if form.is_valid():
-                comment.text = form.cleaned_data['text']
-                comment.author = comment.author
-                comment.time = datetime.datetime.now()
-                comment.save()
-                return redirect("product-detail", slug=slug)
+
+        if request.method == "GET":
+            product = get_object_or_404(Product, slug=slug)
+            form = CommentForm(instance=comment)
+            comments = Comment.objects.filter(
+                product=Product.objects.get(slug=slug))
+            total_comments = Comment.objects.filter(
+                product=Product.objects.get(slug=slug)).count()
+            a = os.listdir(os.path.join(settings.BASE_DIR,
+                                        'static/base/static/catalog/productimages/product'))
+            list_of_images = [a for a in a if product.product_code in a]
+            context = {
+                "object": product,
+                "form": form,
+                "comments": comments,
+                "images": list_of_images,
+                "total_comments": total_comments
+            }
+            return render(request, 'update-comment.html', context)
+
+        if request.method == "POST":
+            if comment.author.id == request.user.userprofile.id or request.user.is_staff:
+                form = CommentForm(request.POST or None)
+                if form.is_valid():
+                    comment.text = form.cleaned_data['text']
+                    comment.author = comment.author
+                    comment.time = datetime.datetime.now()
+                    comment.save()
+                    messages.info(request, "Review updated")
+                    return redirect("product-detail", slug=slug)
             else:
-                form = CommentForm(instance=comment)
-            # except:
-            #     messages.info(request, "You can update your own review")
-            #     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-        else:
-            # messages.info(request, "You can update your own review")
-            return redirect("product-detail", slug=slug)
-        return render(request, 'update-comment.html', {"object": product, "form": form, "comments": comments, "images": list_of_images, "total_comments": total_comments})
+                messages.warning(request, "You can edit your own comments")
+                return redirect("product-detail", slug=slug)
 
 
 def delete_comment(request, pk):
