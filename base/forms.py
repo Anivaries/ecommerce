@@ -45,7 +45,11 @@ class CouponForm(forms.Form):
 
 
 class CommentForm(forms.ModelForm):
+    text = forms.CharField(widget=forms.Textarea, label='')
 
     class Meta:
         model = Comment
         fields = ['text']
+        widgets = {
+            "name": forms.Textarea(attrs={"cols": 80, "rows": 20}),
+        }

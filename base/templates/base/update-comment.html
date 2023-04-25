@@ -151,8 +151,6 @@
 								            </div>
 											{% if a.author == request.user.userprofile %}
 													<a href="{% url 'delete-comment' a.pk %}"><h6>Delete comment</h6></a>
-													{% comment %} <a href="{% url 'update-comment' a.pk %}"><h6>Edit</h6></a> {% endcomment %}
-													{% comment %} <a href="{% url 'a.update' a.pk %}"><h6>Delete comment</h6></a> {% endcomment %}
 													<a href="{{a.edit_comment}}"><h6>Edit</h6></a>
 													{% endif %}
 								            <p>

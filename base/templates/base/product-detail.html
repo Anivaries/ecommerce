@@ -144,17 +144,17 @@
 								        <div class="media-body" id="review">
 								            <div class="comment-info">
 								                <h4 class="comment-author">
-								                    <a href="#!">{{a.author}}</a>
+								                    <a style="font-size:15px" href="#!">{{a.author}}</a>
 								                </h4>
 								                <time datetime="2013-04-06T13:53">{{a.time}}</time>
 								                <a class="comment-button" href="#!"><i class="tf-ion-chatbubbles"></i>Reply</a>
 								            </div>
-								            <p>
+								            <p style="margin-bottom: 1px;">
 											{{a.text}}
 								            </p>
 											{% if a.author == request.user.userprofile or user.is_staff %}
-											<h6><a id="review" href="{% url 'delete-comment' a.pk %}">Delete comment</a></h6>
-											<h6><a href="{% url 'update-comment' a.pk %}">Edit</a></h6>
+											<h6 style="float: left; padding-right:20px;"><a id="review" href="{% url 'delete-comment' a.pk %}">Delete comment</a></h6>
+											<h6 style="float: left;"><a href="{% url 'update-comment' a.pk %}">Edit</a></h6>
 											{% endif %}
 								        </div>
 								    </li>
@@ -162,7 +162,7 @@
 									<form method="post" action="">
 										{% csrf_token %}
 										{{form|crispy}}
-										<input type="submit" name="submit_button" value="Leave a comment"class="btn btn-main btn-small btn-round" >
+										<input type="submit" name="submit_button" value="Leave a review"class="btn btn-main btn-small btn-round" >
 									</form>
 								    <!-- End Comment Item -->
 								</ul>
@@ -175,24 +175,4 @@
 	</div>
 </section>
 <script type="text/javascript" src="{% static 'star-ratings/js/dist/star-ratings.min.js' %}"></script>
-{% comment %} <script src="https://code.jquery.com/jquery-3.5.1.js" 
-          integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" 
-            crossorigin="anonymous"></script>
-<script type="text/javascript">
-	$(document).on('submit','#review-form',function(e){
-		e.preventDefault();
-		$.ajax({
-			type:'POST',
-			url:'{% url "product-detail" object.slug %}',
-			data:
-			{
-				task:$("#review").val(),
-				csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
-			},
-			success:function(){
-					alert('Saved');
-					}
-			})
-		});
-	</script> {% endcomment %}
 {% endblock%}
