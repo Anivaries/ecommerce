@@ -16,6 +16,11 @@ from django.conf import settings
 from datetime import timedelta
 import datetime
 from django.db.models import Q
+from django.http import Http404
+
+
+def page_not_found(request):
+    return render(request, "404.html", {})
 
 
 class ProductDetailView(DetailView):
@@ -63,52 +68,60 @@ class ProductDetailView(DetailView):
                 # return render(request, 'product-detail.html', {"form": form})
         except:
             messages.info(request, "You must be logged in to give a review")
-            return redirect('product-detail', slug=slug)
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        # return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
     def update(request, pk):
         comment = get_object_or_404(Comment, pk=pk)
         slug = comment.product.slug
 
         if request.method == "GET":
-            product = get_object_or_404(Product, slug=slug)
-            form = CommentForm(instance=comment)
-            comments = Comment.objects.filter(
-                product=Product.objects.get(slug=slug))
-            total_comments = Comment.objects.filter(
-                product=Product.objects.get(slug=slug)).count()
-            a = os.listdir(os.path.join(settings.BASE_DIR,
-                                        'static/base/static/catalog/productimages/product'))
-            list_of_images = [a for a in a if product.product_code in a]
-            context = {
-                "object": product,
-                "form": form,
-                "comments": comments,
-                "images": list_of_images,
-                "total_comments": total_comments
-            }
-            return render(request, 'update-comment.html', context)
+            if not request.user.is_authenticated:
+                return redirect("page-not-found")
+            else:
+                if comment.author.id == request.user.userprofile.id or request.user.is_staff:
+                    product = get_object_or_404(Product, slug=slug)
+                    form = CommentForm(instance=comment)
+                    comments = Comment.objects.filter(
+                        product=Product.objects.get(slug=slug))
+                    total_comments = Comment.objects.filter(
+                        product=Product.objects.get(slug=slug)).count()
+                    a = os.listdir(os.path.join(settings.BASE_DIR,
+                                                'static/base/static/catalog/productimages/product'))
+                    list_of_images = [
+                        a for a in a if product.product_code in a]
+                    context = {
+                        "object": product,
+                        "form": form,
+                        "comments": comments,
+                        "images": list_of_images,
+                        "total_comments": total_comments
+                    }
+                    return render(request, 'update-comment.html', context)
+                else:
+                    return redirect("page-not-found")
 
         if request.method == "POST":
-            if comment.author.id == request.user.userprofile.id or request.user.is_staff:
-                form = CommentForm(request.POST or None)
-                if form.is_valid():
-                    comment.text = form.cleaned_data['text']
-                    comment.author = comment.author
-                    comment.time = datetime.datetime.now()
-                    comment.save()
-                    messages.info(request, "Review updated")
-                    return redirect("product-detail", slug=slug)
+            if not request.user.is_authenticated:
+                return redirect("page-not-found")
             else:
-                messages.warning(request, "You can edit your own comments")
-                return redirect("product-detail", slug=slug)
+                if comment.author.id == request.user.userprofile.id or request.user.is_staff:
+                    form = CommentForm(request.POST or None)
+                    if form.is_valid():
+                        comment.text = form.cleaned_data['text']
+                        comment.author = comment.author
+                        comment.time = comment.time
+                        comment.save()
+                        messages.info(request, "Review updated")
+                        return redirect("product-detail", slug=slug)
+                else:
+                    messages.warning(request, "You can edit your own comments")
+                    return redirect("product-detail", slug=slug)
 
 
 def delete_comment(request, pk):
     if not request.user.is_authenticated:
-        messages.info(
-            request, "You need to be logged in to delete a review")
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        return redirect("page-not-found")
     comment = get_object_or_404(Comment, pk=pk)
     if request.method == "GET":
         if comment.author.id == request.user.userprofile.id or request.user.is_staff:
@@ -334,6 +347,24 @@ def get_perfumes_by_brand(request, *args, **kwargs):
     return render(request, "perfumes-by-brand.html", context)
 ### \\\\ CATEGORY BRANDS \\\\ ###
 
+### BRANDS BY CATEGORY  ###
+
+
+def all_brands_s(request):
+    brand_qs = Brand.objects.exclude(~Q(product__category="S"))
+    return render(request, "brands-by-s.html", {"brands": brand_qs})
+
+
+def all_brands_p(request):
+    brand_qs = Brand.objects.exclude(~Q(product__category="P"))
+    return render(request, "brands-by-p.html", {"brands": brand_qs})
+
+
+def all_brands_m(request):
+    brand_qs = Brand.objects.exclude(~Q(product__category="M"))
+    return render(request, "brands-by-m.html", {"brands": brand_qs})
+### \\\\ BRANDS BY CATEGORY  \\\\ ###
+
 
 class BrandView(ListView):
     model = Brand
@@ -540,42 +571,25 @@ class CheckoutView(LoginRequiredMixin, View):
                 street_address = form.cleaned_data.get('street_address')
                 apartment_address = form.cleaned_data.get('apartment_address')
                 phone_number = form.cleaned_data.get('phone_number')
-                zip_code = form.cleaned_data.get('zip')
+                zip = form.cleaned_data.get('zip')
                 city = form.cleaned_data.get('city')
                 billing_address = BillingAddress(
                     user=self.request.user,
                     street_address=street_address,
                     apartment_address=apartment_address,
                     phone_number=phone_number,
-                    zip_code=zip_code,
+                    zip=zip,
                     city=city
                 )
                 billing_address.save()
                 order.billing_address = billing_address
                 order.save()
+                print(billing_address)
+                print(order.billing_address)
             return redirect('checkout')
         except ObjectDoesNotExist:
             messages.warning(self.request, "You have no active orders")
             return redirect('checkout')
-
-
-# def update_comment(request, pk):
-
-#     comment = get_object_or_404(Comment, pk=pk)
-#     product = get_object_or_404(Product, slug=comment.product.slug)
-#     if request.method == "POST":
-#         form = CommentForm(request.POST, instance=comment)
-#         if form.is_valid():
-#             comment.text = form.cleaned_data['text']
-#             form.save()
-#             messages.success(request, "Review updated")
-#             return redirect('product-detail')
-#     else:
-#         form = CommentForm(instance=comment)
-#     return render(request, "update-comment.html", {"form": form})
-    # except:
-    # messages.info(request, "Woops, something went wrong")
-    # return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 def contact_form(request):

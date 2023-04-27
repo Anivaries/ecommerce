@@ -1,8 +1,10 @@
 from django.urls import path
-from .views import ProductDetailView, ProductListView, add_to_cart, remove_from_cart, OrderSummaryView, remove_item_from_cart, CheckoutView, contact_form, add_to_favorites, remove_from_favorites, IndexPageView, UserProfileView, update_profile, show_favorites, CouponView, empty_cart, list_by_female_perfumes, list_by_male_perfumes, BrandView, BrandDetail, get_perfumes, get_new_perfumes, arrange_by_rating_perfumes, get_skincare, get_skincare_moisturizers, get_skincare_lip_balm, get_new_skincare, arrange_by_rating_skincare, get_skincare_cleanser, get_skincare_masks, get_makeup, get_new_makeup, get_makeup_eye, get_makeup_face, get_makeup_lip, arrange_by_rating_makeup, get_all_new_products, get_makeup_by_brand, get_perfumes_by_brand, get_skincare_by_brand, delete_comment
-# delete_comment update_comment
+from .views import ProductDetailView, ProductListView, add_to_cart, remove_from_cart, OrderSummaryView, remove_item_from_cart, CheckoutView, contact_form, add_to_favorites, remove_from_favorites, IndexPageView, UserProfileView, update_profile, show_favorites, CouponView, empty_cart, list_by_female_perfumes, list_by_male_perfumes, BrandView, BrandDetail, get_perfumes, get_new_perfumes, arrange_by_rating_perfumes, get_skincare, get_skincare_moisturizers, get_skincare_lip_balm, get_new_skincare, arrange_by_rating_skincare, get_skincare_cleanser, get_skincare_masks, get_makeup, get_new_makeup, get_makeup_eye, get_makeup_face, get_makeup_lip, arrange_by_rating_makeup, get_all_new_products, get_makeup_by_brand, get_perfumes_by_brand, get_skincare_by_brand, delete_comment, page_not_found, all_brands_s, all_brands_p, all_brands_m
+
+#
 
 urlpatterns = [
+    path('404/', page_not_found, name='page-not-found'),
     path('', IndexPageView.as_view(), name='index-page'),
     path('products/', ProductListView.as_view(), name="product-list"),
     path('products/<slug:slug>', ProductDetailView.as_view(), name="product-detail"),
@@ -47,6 +49,9 @@ urlpatterns = [
     path('new-skincare/', get_new_skincare, name="new-skincare"),
     path('top-perfumes/', arrange_by_rating_perfumes, name="top-perfumes"),
     path('top-skincare/', arrange_by_rating_skincare, name="top-skincare"),
+    path('brands/skincare/', all_brands_s, name="brands-by-s"),
+    path('brands/makeup/', all_brands_m, name="brands-by-m"),
+    path('brands/perfumes/', all_brands_p, name="brands-by-p"),
     path('top-makeup/', arrange_by_rating_makeup, name="top-makeup"),
     path('brand/<slug:slug>/makeup/', get_makeup_by_brand, name="makeup-by-brand"),
     path('brand/<slug:slug>/skincare/',

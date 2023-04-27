@@ -2,6 +2,7 @@
 {% load cart_template_tags %}
 {% load favorites_template_tags %}
 {% load display_image %}
+{% load humanize %}
 <!-- 
 THEME: Aviato | E-commerce template
 VERSION: 1.0.0
@@ -283,7 +284,7 @@ FACEBOOK: https://www.facebook.com/themefisher
 									<ul>
 										<li class="dropdown-header">Brands</li>
 										<li role="separator" class="divider"></li>
-										<li><a href="{% url 'brand-list'%}">Brands A-Z</a></li>
+										<li><a href="{% url 'brands-by-p'%}">Brands A-Z</a></li>
 										<li><a href="#!">Only at !here</a></li>
 									</ul>
 								</div>
@@ -332,7 +333,7 @@ FACEBOOK: https://www.facebook.com/themefisher
 									<ul>
 										<li class="dropdown-header">Brands</li>
 										<li role="separator" class="divider"></li>
-										<li><a href="{% url 'brand-list'%}">Brands A-Z</a></li>
+										<li><a href="{% url 'brands-by-s'%}">Brands A-Z</a></li>
 										<li><a href="#!">Only at !here</a></li>
 										<li><a href="#!">On sale</a></li>
 									</ul>
@@ -381,7 +382,7 @@ FACEBOOK: https://www.facebook.com/themefisher
 									<ul>
 										<li class="dropdown-header">Brands</li>
 										<li role="separator" class="divider"></li>
-										<li><a href="{% url 'brand-list'%}">Brands A-Z</a></li>
+										<li><a href="{% url 'brands-by-m'%}">Brands A-Z</a></li>
 										<li><a href="#!">Only at !here</a></li>
 										<li><a href="#!">On sale</a></li>
 									</ul>
@@ -417,6 +418,10 @@ FACEBOOK: https://www.facebook.com/themefisher
 {% block makeup_brand %}{% endblock %}
 {% block perfumes_brand %}{% endblock %}
 {% block skincare_brand %}{% endblock %}
+{% block 404 %}{% endblock %}
+{% block brand_by_s %}{% endblock %}
+{% block brand_by_p %}{% endblock %}
+{% block brand_by_m %}{% endblock %}
 <!--
 Start Call To Action
 ==================================== -->

@@ -6,7 +6,7 @@ class CheckoutForm(forms.Form):
     street_address = forms.CharField()
     apartment_address = forms.CharField(required=False)
     phone_number = forms.IntegerField()
-    zip_code = forms.CharField()
+    zip = forms.CharField()
     city = forms.CharField()
 
 

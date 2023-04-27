@@ -1,30 +1,24 @@
 {% load item_sizes %}
-
-
-
-<div class="widget">
-    <h4 class="widget-title">Sort By</h4>
-    <form method="post" action="#">
-        <select class="form-control">
-            <option>Man</option>
-            <option>Women</option>
-            <option>Accessories</option>
-            <option>Shoes</option>
-        </select>
-    </form>
-</div>
 <div class="widget product-category">
     <h4 class="widget-title">Categories</h4>
     <div class="panel-group commonAccordion" id="accordion" role="tablist" aria-multiselectable="true">
           <div class="panel panel-default">
             <div class="panel-heading" role="tab" id="headingOne">
                   <h4 class="panel-title">
-                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                    {% if request.path == "/perfumes/"%}
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#perfumes" aria-expanded="true" aria-controls="perfumes">
+                      {% else %}
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#perfumes" aria-expanded="false" aria-controls="perfumes">
+                      {% endif %}
                       Perfumes
                     </a>
                   </h4>
             </div>
-        <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+            {% if request.path == "/perfumes/"%}
+        <div id="perfumes" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+          {% else %}
+          <div id="perfumes" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          {% endif %}
             <div class="panel-body">
                 <ul>
                     <li><a href="{% url 'perfumes'%}">All</a></li>
@@ -44,12 +38,20 @@
       <div class="panel panel-default">
         <div class="panel-heading" role="tab" id="headingTwo">
           <h4 class="panel-title">
-            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+            {% if request.path == "/makeup/"%}
+              <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#makeup" aria-expanded="true" aria-controls="makeup">
+              {% else %}
+              <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#makeup" aria-expanded="false" aria-controls="makeup">
+              {% endif %}
                  Makeup
             </a>
           </h4>
         </div>
-        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+        {% if request.path == "/makeup/"%}
+        <div id="makeup" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
+          {% else %}
+          <div id="makeup" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+            {% endif %}
             <div class="panel-body">
                  <ul>
                     <li><a href="{% url 'makeup'%}">All</a></li>
@@ -71,12 +73,20 @@
       <div class="panel panel-default">
         <div class="panel-heading" role="tab" id="headingThree">
           <h4 class="panel-title">
-            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+            {% if request.path == "/skincare/"%}
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#skincare" aria-expanded="true" aria-controls="skincare">
+              {% else %}
+              <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#skincare" aria-expanded="false" aria-controls="skincare">
+              {% endif %}
                   Skincare
             </a>
           </h4>
         </div>
-        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+        {% if request.path == "/skincare/"%}
+        <div id="skincare" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
+          {% else %}
+          <div id="skincare" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          {% endif %}
             <div class="panel-body">
                   <ul>
                     <li><a href="{% url 'skincare'%}">All</a></li>
@@ -97,5 +107,4 @@
         </div>
       </div>
     </div>
-    
 </div>

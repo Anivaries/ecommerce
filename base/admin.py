@@ -14,7 +14,10 @@ class ProductAdmin(admin.ModelAdmin):
 
 
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ["user"]
+    list_display = ["user", "total_price"]
+
+    def total_price(self, instance):
+        return instance.get_total_price()
 
 
 class BillingAddressAdmin(admin.ModelAdmin):

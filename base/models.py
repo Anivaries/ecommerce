@@ -157,12 +157,13 @@ class BillingAddress(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              on_delete=models.CASCADE)
     street_address = models.CharField(max_length=100)
-    apartment_address = models.CharField(max_length=10, blank=True)
+    apartment_address = models.CharField(max_length=10)
     phone_number = models.IntegerField()
-    zip = models.CharField(max_length=100)
+    city = models.CharField(max_length=20)
+    zip = models.CharField(max_length=10)
 
     def __str__(self) -> str:
-        return self.user.username
+        return f"{self.user.username} - st: {self.street_address} apt: {self.apartment_address} - {self.city}. Phone {self.phone_number}"
 
 
 class DiscountCode(models.Model):
@@ -182,4 +183,4 @@ class Comment(models.Model):
     time = models.DateTimeField(auto_now_add=True, blank=True, null=True)
 
     def __str__(self) -> str:
-        return str(self.author)
+        return f"{self.author} - {self.product.name} ({self.product.short_description})"
