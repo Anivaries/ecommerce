@@ -444,9 +444,7 @@ def add_to_favorites(request, slug):
 @login_required
 def remove_from_favorites(request, slug):
     item = get_object_or_404(Product, slug=slug)
-    print(item)
     qs = UserProfile.objects.filter(user=request.user)
-    print(qs)
     try:
         if UserProfile.objects.get(user=request.user):
             user = UserProfile.objects.get(user=request.user)
@@ -584,8 +582,6 @@ class CheckoutView(LoginRequiredMixin, View):
                 billing_address.save()
                 order.billing_address = billing_address
                 order.save()
-                print(billing_address)
-                print(order.billing_address)
             return redirect('checkout')
         except ObjectDoesNotExist:
             messages.warning(self.request, "You have no active orders")
@@ -629,7 +625,7 @@ def update_profile(request):
             profile.city = form.cleaned_data['city']
             profile.phone_number = form.cleaned_data['phone_number']
             profile.save()
-            print(profile.phone_number)
+
             return redirect('profile')
     else:
         form = UserProfileForm(instance=profile)

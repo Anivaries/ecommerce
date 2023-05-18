@@ -163,7 +163,7 @@ class BillingAddress(models.Model):
     zip = models.CharField(max_length=10)
 
     def __str__(self) -> str:
-        return f"{self.user.username} - st: {self.street_address} apt: {self.apartment_address} - {self.city}. Phone {self.phone_number}"
+        return f"{self.user.username} - st: {self.street_address} apt: {self.apartment_address} - {self.city} {self.zip}. Phone {self.phone_number}"
 
 
 class DiscountCode(models.Model):

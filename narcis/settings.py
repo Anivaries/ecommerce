@@ -1,9 +1,19 @@
 
 from pathlib import Path
 import os
+import environ
 
+env = environ.Env(
+    DEBUG=(bool, False)
+)
+READ_DOT_ENV_FILE = env.bool('READ_DOT_ENV_FILE', default=False)
+if READ_DOT_ENV_FILE:
+    environ.Env.read_env()
+# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = Path(__file__).resolve().parent.parent
-SECRET_KEY = 'django-insecure-+$kyo*x5&ld5@4qjnqn2dqxyu^gtm(sr6w($4xtw*t^dk70j84'
+
+DEBUG = env('DEBUG')
+SECRET_KEY = env('SECRET_KEY')
 
 
 DEBUG = True
@@ -75,13 +85,23 @@ AUTHENTICATION_BACKENDS = [
 ]
 WSGI_APPLICATION = 'narcis.wsgi.application'
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'narcis2',
+        'USER': 'postgres',
+        'PASSWORD': 'K0marchina!',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
-
 
 AUTH_PASSWORD_VALIDATORS = [
     {
