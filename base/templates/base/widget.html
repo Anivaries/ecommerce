@@ -26,6 +26,7 @@
                     <li><a href="{% url 'female-perfumes'%}">For Her</a></li>
                     <li><a href="{% url 'new-perfumes'%}">New</a></li>
                     <li><a href="{% url 'top-perfumes'%}">Best Rated</a></li>
+                    <li><a href="{% url 'perfumes_on_sale'%}">On Sale</a></li>
                     <hr>
                     {% all_brands_p as all_brands_p%}
                     {% for brand in all_brands_p %}
@@ -57,6 +58,7 @@
                     <li><a href="{% url 'makeup'%}">All</a></li>
                     <li><a href="{% url 'new-makeup'%}">New</a></li>
                     <li><a href="{% url 'top-makeup'%}">Best Rated</a></li>
+                    <li><a href="{% url 'makeup_on_sale'%}">On Sale</a></li>
                     <hr>
                     <li><a href="{% url 'face-makeup'%}">Face</a></li>
                     <li><a href="{% url 'eye-makeup'%}">Eye</a></li>
@@ -93,6 +95,7 @@
                     <li><a href="{% url 'skincare'%}">All</a></li>
                     <li><a href="{% url 'new-skincare'%}">New</a></li>
                     <li><a href="{% url 'top-skincare'%}">Best Rated</a></li>
+                    <li><a href="{% url 'skincare_on_sale'%}">On Sale</a></li>
                     <hr>
                     <li><a href="{% url 'moisturizers'%}">Moisturizers</a></li>
                     <li><a href="{% url 'lipbalm'%}">Lip Balms & Treatment</a></li>

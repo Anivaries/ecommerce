@@ -365,6 +365,31 @@ def all_brands_m(request):
     return render(request, "brands-by-m.html", {"brands": brand_qs})
 ### \\\\ BRANDS BY CATEGORY  \\\\ ###
 
+### SALE QUERY ###
+
+
+def items_on_sale(request):
+    items_on_sale_query = Product.objects.filter(sale=True)
+    return render(request, 'sale.html', {'items_on_sale': items_on_sale_query})
+
+
+def perfumes_on_sale(request):
+    perfumes_on_sale_query = Product.objects.filter(
+        category='P').filter(sale=True)
+    return render(request, 'sale.html', {'items_on_sale': perfumes_on_sale_query})
+
+
+def makeup_on_sale(request):
+    makeup_on_sale_query = Product.objects.filter(
+        category='M').filter(sale=True)
+    return render(request, 'sale.html', {'items_on_sale': makeup_on_sale_query})
+
+
+def skincare_on_sale(request):
+    skincare_on_sale_query = Product.objects.filter(
+        category='S').filter(sale=True)
+    return render(request, 'sale.html', {'items_on_sale': skincare_on_sale_query})
+
 
 class BrandView(ListView):
     model = Brand

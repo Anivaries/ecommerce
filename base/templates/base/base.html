@@ -205,7 +205,7 @@ FACEBOOK: https://www.facebook.com/themefisher
 										<li role="separator" class="divider"></li>
 										<li><a href="{% url 'brand-list'%}">Brands A-Z</a></li>
 										<li><a href="#!">Only at !here</a></li>
-										<li><a href="#!">On sale</a></li>
+										<li><a href="{% url 'items_on_sale'%}">On sale</a></li>
 									</ul>
 								</div>
 
@@ -265,6 +265,7 @@ FACEBOOK: https://www.facebook.com/themefisher
 										<li><a href="{% url 'new-perfumes'%}">New</a></li>
 										<li><a href="#!">Best Selling</a></li>
 										<li><a href="{% url 'top-perfumes'%}">Best Rated</a></li>
+										<li role="separator" class="divider"></li>
 										<li><a href="{% url 'male-perfumes'%}">For Him</a></li>
 										<li><a href="{% url 'female-perfumes'%}">For Her</a></li>
 	
@@ -288,6 +289,7 @@ FACEBOOK: https://www.facebook.com/themefisher
 										<li role="separator" class="divider"></li>
 										<li><a href="{% url 'brands-by-p'%}">Brands A-Z</a></li>
 										<li><a href="#!">Only at !here</a></li>
+										<li><a href="{% url 'perfumes_on_sale'%}">On Sale</a></li
 									</ul>
 								</div>
 
@@ -337,7 +339,7 @@ FACEBOOK: https://www.facebook.com/themefisher
 										<li role="separator" class="divider"></li>
 										<li><a href="{% url 'brands-by-s'%}">Brands A-Z</a></li>
 										<li><a href="#!">Only at !here</a></li>
-										<li><a href="#!">On sale</a></li>
+										<li><a href="{% url 'skincare_on_sale'%}">On sale</a></li>
 									</ul>
 								</div>
 							</div><!-- / .row -->
@@ -386,7 +388,7 @@ FACEBOOK: https://www.facebook.com/themefisher
 										<li role="separator" class="divider"></li>
 										<li><a href="{% url 'brands-by-m'%}">Brands A-Z</a></li>
 										<li><a href="#!">Only at !here</a></li>
-										<li><a href="#!">On sale</a></li>
+										<li><a href="{% url 'makeup_on_sale'%}">On sale</a></li>
 									</ul>
 								</div>
 							</div><!-- / .row -->
@@ -424,6 +426,7 @@ FACEBOOK: https://www.facebook.com/themefisher
 {% block brand_by_s %}{% endblock %}
 {% block brand_by_p %}{% endblock %}
 {% block brand_by_m %}{% endblock %}
+{% block sale %}{% endblock %}
 <!--
 Start Call To Action
 ==================================== -->

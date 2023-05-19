@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import ProductDetailView, ProductListView, add_to_cart, remove_from_cart, OrderSummaryView, remove_item_from_cart, CheckoutView, contact_form, add_to_favorites, remove_from_favorites, IndexPageView, UserProfileView, update_profile, show_favorites, CouponView, empty_cart, list_by_female_perfumes, list_by_male_perfumes, BrandView, BrandDetail, get_perfumes, get_new_perfumes, arrange_by_rating_perfumes, get_skincare, get_skincare_moisturizers, get_skincare_lip_balm, get_new_skincare, arrange_by_rating_skincare, get_skincare_cleanser, get_skincare_masks, get_makeup, get_new_makeup, get_makeup_eye, get_makeup_face, get_makeup_lip, arrange_by_rating_makeup, get_all_new_products, get_makeup_by_brand, get_perfumes_by_brand, get_skincare_by_brand, delete_comment, page_not_found, all_brands_s, all_brands_p, all_brands_m
+from .views import ProductDetailView, ProductListView, add_to_cart, remove_from_cart, OrderSummaryView, remove_item_from_cart, CheckoutView, contact_form, add_to_favorites, remove_from_favorites, IndexPageView, UserProfileView, update_profile, show_favorites, CouponView, empty_cart, list_by_female_perfumes, list_by_male_perfumes, BrandView, BrandDetail, get_perfumes, get_new_perfumes, arrange_by_rating_perfumes, get_skincare, get_skincare_moisturizers, get_skincare_lip_balm, get_new_skincare, arrange_by_rating_skincare, get_skincare_cleanser, get_skincare_masks, get_makeup, get_new_makeup, get_makeup_eye, get_makeup_face, get_makeup_lip, arrange_by_rating_makeup, get_all_new_products, get_makeup_by_brand, get_perfumes_by_brand, get_skincare_by_brand, delete_comment, page_not_found, all_brands_s, all_brands_p, all_brands_m, items_on_sale, perfumes_on_sale, makeup_on_sale, skincare_on_sale
 
 #
 
@@ -58,5 +58,9 @@ urlpatterns = [
          get_skincare_by_brand, name="skincare-by-brand"),
     path('brand/<slug:slug>/perfumes/',
          get_perfumes_by_brand, name="perfumes-by-brand"),
+    path('sale/', items_on_sale, name="items_on_sale"),
+    path('perfumes/sale/', perfumes_on_sale, name="perfumes_on_sale"),
+    path('makeup/sale/', makeup_on_sale, name="makeup_on_sale"),
+    path('skincare/sale/', skincare_on_sale, name="skincare_on_sale"),
 
 ]
