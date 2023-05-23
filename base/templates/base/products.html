@@ -30,7 +30,7 @@
 			<div class="col-md-3">
 				<div class="product-item">
 					 <div class="product-thumb">
-						{% if item.sale %}
+						{% if item.sale_price %}
 						<span class="bage">Sale</span>
 						{% endif %}
 						{% if item.is_new %}
@@ -59,8 +59,12 @@
 					<div class="product-content">
 						<p style="margin: 0 0 -16px;"><a href="{% url 'product-detail' item.slug %}">{{item.name}}</p>
 						<h4>{{item.short_description}}</h4></a>
-						{% comment %} <h6>{{item.size}}</h6> {% endcomment %}
+						{% if not item.sale_price %}
 						<p class="price"><b>{{item.price}} din</b></p>
+						{% else %}
+						<p class="price" style="margin:0px"><s>{{item.price}} din</s></p>
+						<p class="price"><b>{{item.sale_price}} din</b></p>
+						{% endif %}
 					</div> </div>
 				</div>
 			</div>

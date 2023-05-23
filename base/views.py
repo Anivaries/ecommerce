@@ -322,7 +322,8 @@ def get_makeup_by_brand(request, *args, **kwargs):
     makeup_product_brand_qs = Product.objects.filter(
         Q(category="M") & Q(brand__brand=brand))
     context = {
-        "makeup_brand": makeup_product_brand_qs
+        "makeup_brand": makeup_product_brand_qs,
+        "brand_name": brand
     }
     return render(request, "makeup-by-brand.html", context)
 
@@ -332,7 +333,8 @@ def get_skincare_by_brand(request, *args, **kwargs):
     skincare_product_brand_qs = Product.objects.filter(
         Q(category="S") & Q(brand__brand=brand))
     context = {
-        "skincare_brand": skincare_product_brand_qs
+        "skincare_brand": skincare_product_brand_qs,
+        "brand_name": brand
     }
     return render(request, "skincare-by-brand.html", context)
 
@@ -342,7 +344,8 @@ def get_perfumes_by_brand(request, *args, **kwargs):
     perfumes_product_brand_qs = Product.objects.filter(
         Q(category="P") & Q(brand__brand=brand))
     context = {
-        "perfumes_brand": perfumes_product_brand_qs
+        "perfumes_brand": perfumes_product_brand_qs,
+        "brand_name": brand,
     }
     return render(request, "perfumes-by-brand.html", context)
 ### \\\\ CATEGORY BRANDS \\\\ ###
@@ -375,19 +378,19 @@ def items_on_sale(request):
 
 def perfumes_on_sale(request):
     perfumes_on_sale_query = Product.objects.filter(
-        category='P').filter(sale=True)
+        category='P').exclude(sale_price__isnull=True)
     return render(request, 'sale.html', {'items_on_sale': perfumes_on_sale_query})
 
 
 def makeup_on_sale(request):
     makeup_on_sale_query = Product.objects.filter(
-        category='M').filter(sale=True)
+        category='M').exclude(sale_price__isnull=True)
     return render(request, 'sale.html', {'items_on_sale': makeup_on_sale_query})
 
 
 def skincare_on_sale(request):
     skincare_on_sale_query = Product.objects.filter(
-        category='S').filter(sale=True)
+        category='S').exclude(sale_price__isnull=True)
     return render(request, 'sale.html', {'items_on_sale': skincare_on_sale_query})
 
 

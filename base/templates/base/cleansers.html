@@ -6,7 +6,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="content">
-					<h1 class="page-name">Moisturizers</h1>
+					<h1 class="page-name">Cleansers</h1>
 					<ol class="breadcrumb">
 						<li><a href="{% url 'product-list'%}">Home</a></li>
 						<li class="active">moisturizers</li>
@@ -30,14 +30,12 @@
 			<div class="col-md-3">
 				<div class="product-item">
 					<div class="product-thumb">
-						<!-- TODO: CHANGE PRICE IF SALE -->
-						{% if item.sale %}
+						{% if item.sale_price %}
 						<span class="bage">Sale</span>
 						{% endif %}
 						{% if item.is_new %}
 						<span class="new">New</span>
 						{% endif %}
-						<!-- TO DO: FIX IMAGES -->
 						{% load display_image %}
 						{% static 'base/static/catalog/sku/'|add_str:item.front_image|add_str:'.webp' as front_image %}
 						<img class="img-responsive" src="{{front_image}}" alt="product-img" />
@@ -60,7 +58,13 @@
 					</div>
 					<div class="product-content">
 						<h4><a href="{% url 'product-detail' item.slug %}">{{item.name}}</a></h4>
-						<p class="price">{{item.price}}</p>
+						<h4>{{item.short_description}}</h4></a>
+						{% if not item.sale_price %}
+						<p class="price"><b>{{item.price}} din</b></p>
+						{% else %}
+						<p class="price" style="margin:0px"><s>{{item.price}} din</s></p>
+						<p class="price"><b>{{item.sale_price}} din</b></p>
+						{% endif %}
 					</div>
 				</div>
 			</div>
@@ -87,8 +91,6 @@
 			        				<h2 class="product-title">{{item.name}}</h2>
 			        				<p class="product-price">{{item.price}} din</p>
 									<h3 class="product-size">{{item.size}}</h3>
-									<!-- TO DO: ADD ITEM DESCRIPTION TO MODELS-->
-									
 			        				<p class="product-short-description">
 			        					{{item.short_description}}
 			        				</p>

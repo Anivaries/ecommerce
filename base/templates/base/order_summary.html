@@ -30,13 +30,18 @@
                           <a href="{% url 'product-detail' object.item.slug %}">{{object.item.name}}</a>
                         </div>
                       </td>
-                      <td class="">{{object.item.price}}</td>
+                      {% if not object.item.sale_price %}
+                      <td class=""><b>{{object.item.price}}<b></td>
+                      {% else %}
+                      <td class=""><s>{{object.item.price}}</s> <b>{{object.item.sale_price}}<b></td>
+                      {% comment %} <td class="">{{object.item.sale_price}}</td> {% endcomment %}
+                      {% endif%}
 					  <td class="">
 						<a href="{% url 'remove-item-from-cart' object.item.slug %}">&minus;</a>
 						{{object.quantity}}
 						<a href="{% url 'add-to-cart' object.item.slug %}">&plus;</a>
 					</td>
-						<td class="">{{object.get_sum_price}}</td>
+						<td class="">{{object.get_sum_price}} din</td>
                       <td class="">
                         <a class="product-remove" href="{% url 'remove-from-cart' object.item.slug %}">Remove</a>
                       </td>

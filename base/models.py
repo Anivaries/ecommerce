@@ -72,13 +72,13 @@ class Product(models.Model):
     name = models.CharField(max_length=50)
     size = models.CharField(max_length=10)
     price = models.FloatField()
+    sale_price = models.FloatField(blank=True, null=True)
     slug = models.SlugField(null=True)
     category = models.CharField(
         max_length=10, choices=CATEGORIES, blank=True)
     gender = models.CharField(max_length=10, choices=GENDER, blank=True)
     short_description = models.TextField()
     long_description = models.TextField()
-    sale = models.BooleanField(default=False)
     product_code = models.CharField(max_length=8)
     front_image = models.CharField(max_length=8)
     modal_details = models.TextField()
@@ -125,7 +125,10 @@ class OrderItem(models.Model):
         return f"{self.quantity} of {self.item}"
 
     def get_sum_price(self):
-        total_price = self.quantity * self.item.price
+        if self.item.sale_price:
+            total_price = self.quantity * self.item.sale_price
+        else:
+            total_price = self.quantity * self.item.price
         return total_price
 
 

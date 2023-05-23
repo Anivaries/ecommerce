@@ -64,7 +64,12 @@
 					<h4 class="pull-middle" >{% ratings object icon_height=30 icon_width=30%}</h4>
 						<h2>{{object.name}}</h2> 
 					<p>Size: {{object.size}}</p>
+					{% if not object.sale_price %}
 					<p class="product-price"><b>{{object.price }}</b> din</p>
+					{% else %}
+					<p class="product-price"><s>{{object.price }} din</s></p>
+					<p class="product-price"><b>{{object.sale_price }}</b> din</p>
+					{% endif %}
 					<p class="product-description mt-20">
 						{{object.short_description}}
 					</p>
