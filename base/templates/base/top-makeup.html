@@ -63,7 +63,7 @@
 					</div>
 					<div class="product-content">
                         <p style="margin: 0 0 -16px;"><a href="{% url 'product-detail' item.slug %}">{{item.name}}</p>
-                        <h4>{{item.short_description}}</h4></a>
+                        <h4>{{item.short_description}} {{item.size}}</h4></a>
                         {% if not item.sale_price %}
 						<p class="price"><b>{{item.price}} din</b></p>
 						{% else %}

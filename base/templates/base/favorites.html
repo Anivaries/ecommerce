@@ -56,7 +56,7 @@ FACEBOOK: https://www.facebook.com/themefisher
 				{% for item in favorites%}
         {% static 'base/static/catalog/sku/'|add_str:item.front_image|add_str:'.webp' as summary_image %}
                 <tr>
-                  <td><img width="80" src="{{summary_image}}" alt="" /><a href="{% url 'product-detail' item.slug %}">{{item.short_description}}</a>
+                  <td><img width="80" src="{{summary_image}}" alt="" /><a href="{% url 'product-detail' item.slug %}">{{item.short_description}}  {{item.size}}</a>
                   </td>
                   <td style="vertical-align: inherit;">{{item.brand}}</td>
                   <td style="vertical-align: inherit;">
