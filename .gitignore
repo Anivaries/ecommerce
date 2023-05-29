@@ -143,6 +143,7 @@ venv.bak/
 .dmypy.json
 dmypy.json
 
+
 # Pyre type checker
 .pyre/
 
@@ -340,3 +341,5 @@ staticfiles/elden_ring_lore/static/css/style.6e3654aaf6aa.css
 staticfiles/elden_ring_lore/static/js/scripts.26a9a475fc00.js
 staticfiles/staticfiles.json
 staticfiles/staticfiles.json
+
+out.json
