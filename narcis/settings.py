@@ -18,7 +18,7 @@ SECRET_KEY = env('SECRET_KEY')
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["anivaries-ecommerce.herokuapp.com"]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
