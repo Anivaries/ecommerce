@@ -1,0 +1,1 @@
+web: gunicorn narcis.wsgi --log-file -
