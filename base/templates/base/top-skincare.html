@@ -3,7 +3,7 @@
 {% load ratings %}
 {% block ratings %}
 <style>
-	.star-ratings-rating-count{
+	.star-ratings-rating-count, .star-ratings-rating-average, .star-ratings-rating-user{
 		display: none;
 	}
 </style>
@@ -117,5 +117,5 @@
 		</div>
 	</div>
 </section>
-<script type="text/javascript" src="{% static 'star-ratings/js/dist/star-ratings.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'star-ratings/js/fldr/star-ratings.min.js' %}"></script>
 {% endblock %}
