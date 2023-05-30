@@ -9,8 +9,8 @@ env = environ.Env(
 READ_DOT_ENV_FILE = env.bool('READ_DOT_ENV_FILE', default=False)
 if READ_DOT_ENV_FILE:
     environ.Env.read_env()
-# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# BASE_DIR = Path(__file__).resolve().parent.parent
 
 DEBUG = env('DEBUG')
 SECRET_KEY = env('SECRET_KEY')
@@ -126,14 +126,22 @@ TIME_ZONE = 'Europe/Belgrade'
 USE_I18N = True
 
 USE_TZ = True
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static/base/static/'),
-    BASE_DIR / "static",
-]
+STATIC_URL = '/static/'
+if DEBUG:
+    STATICFILES_DIRS = [
+        os.path.join(BASE_DIR, 'static'),
+    ]
+else:
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'static/'),
+#     # BASE_DIR / "static",
+# ]
 
-STATIC_URL = 'static/'
+# STATIC_URL = 'static/'
 
-STATIC_ROOT = BASE_DIR / "staticfiles"
+# # STATIC_ROOT = BASE_DIR / "staticfiles"
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
