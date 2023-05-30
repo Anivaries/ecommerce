@@ -13,4 +13,9 @@ Makeup, skincare and fragrance shop (WIP)
 - Discount coupons 
 
 ----- To add -----
+- fix breadcrumb
+- fix navbar
+- fix carousel
+- fix top-header
+- fix widget 
 - check order status

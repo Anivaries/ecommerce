@@ -21,7 +21,7 @@
 			<div class="col-md-5">
 				{% load display_image %}
 				<div class="single-product-slider">
-					<div id='carousel-custom' class='carousel slide' data-ride='carousel'>
+					<div id='carousel-custom' class='carousel slide' data-bs-ride='carousel'>
 						<div class='carousel-outer'>
 							<!-- me art lab slider -->
 							<div class='carousel-inner '>
@@ -39,10 +39,10 @@
 								{% endfor %}
 							</div>
 							<!-- sag sol -->
-							<a class='left carousel-control' href='#carousel-custom' data-slide='prev'>
+							<a class='left carousel-control' href='#carousel-custom' data-bs-slide='prev'>
 								<i class="tf-ion-ios-arrow-left"></i>
 							</a>
-							<a class='right carousel-control' href='#carousel-custom' data-slide='next'>
+							<a class='right carousel-control' href='#carousel-custom' data-bs-slide='next'>
 								<i class="tf-ion-ios-arrow-right"></i>
 							</a>
 						</div>
@@ -51,7 +51,7 @@
 							{% for item in images %}
 							{% static 'base/static/catalog/productimages/product/'|add_str:item as image_static %}
 							
-							<li data-target='#carousel-custom' {% if forloop.first %} class='active' data-slide-to=0 {% else %} data-slide-to="{{forloop.counter|add:"-1"}} "{% endif %} >
+							<li data-bs-target='#carousel-custom' {% if forloop.first %} class='active' data-bs-slide-to=0 {% else %} data-bs-slide-to="{{forloop.counter|add:"-1"}} "{% endif %} >
 								<img src="{{image_static}}" alt='' />
 							</li>
 							{% endfor %}
