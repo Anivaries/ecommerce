@@ -2,7 +2,11 @@
 {% load static %}
 {% load crispy_forms_tags %}
 {% block product_details %}
-
+<style>
+	.star-ratings-rating-average, .star-ratings-rating-user{
+		display: none;
+	}
+</style>
 <link rel="stylesheet" href="{% static 'star-ratings/css/star-ratings.css' %}">
 {% load ratings %}
 
