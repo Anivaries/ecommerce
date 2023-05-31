@@ -110,12 +110,12 @@
 						{% endfor %}
 						{% endif %}
 					</div>
-					<div class="product-quantity">
+					{% comment %} <div class="product-quantity">
 						<span>Quantity:</span>
 						<div class="product-quantity-slider">
 							<input id="product-quantity" type="text" value="0" name="product-quantity">
 						</div>
-					</div>
+					</div> {% endcomment %}
 					{% if user.is_authenticated%}
 					{% if object in request.user.userprofile.favorites.all %}
 					<div class="product-category">
