@@ -1,26 +1,14 @@
-{% extends 'base.html' %}
-{% load static %}
-<!-- 
-THEME: Aviato | E-commerce template
-VERSION: 1.0.0
-AUTHOR: Themefisher
+{% extends 'base.html'%}
+{% load static%}
+{% block orders %}
 
-HOMEPAGE: https://themefisher.com/products/aviato-e-commerce-template/
-DEMO: https://demo.themefisher.com/aviato/
-GITHUB: https://github.com/themefisher/Aviato-E-Commerce-Template/
 
-WEBSITE: https://themefisher.com
-TWITTER: https://twitter.com/themefisher
-FACEBOOK: https://www.facebook.com/themefisher
--->
-
-{% block favorites %}
 <section class="page-header">
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
 				<div class="content">
-					<h1 class="page-name">Favorites</h1>
+					<h1 class="page-name">Orders</h1>
 					<ol class="breadcrumb">
 						<li><a href="{% url 'product-list' %}">Home</a></li>
 						<li class="active">my account</li>
@@ -35,8 +23,8 @@ FACEBOOK: https://www.facebook.com/themefisher
     <div class="row">
       <div class="col-md-12">
         <ul class="list-inline dashboard-menu text-center">
-          <li><a href="{% url 'orders'%}">Orders</a></li>
-          <li><a class="active" href="{% url 'favorites' %}">Favorites</a></li>
+          <li><a class="active" href="{% url 'orders'%}">Orders</a></li>
+          <li><a href="{% url 'favorites' %}">Favorites</a></li>
           <li><a href="{% url 'profile'%}">Profile Details</a></li>
         </ul>
         <div class="dashboard-wrapper user-dashboard">
@@ -45,13 +33,13 @@ FACEBOOK: https://www.facebook.com/themefisher
             <table class="table">
               <thead>
                 <tr>
-                  <th>Name</th>
-                  <th>Brand</th>
+                  <th>Order number/date</th>
                   <th>Price</th>
-                  <th>Add to cart</th>
+                  <th>Items</th>
+                  <th>Status</th>
                 </tr>
               </thead>
-              <tbody>
+              {% comment %} <tbody>
                 {% load display_image%}
 				{% for item in favorites%}
         {% static 'base/static/catalog/sku/'|add_str:item.front_image|add_str:'.webp' as summary_image %}
@@ -69,6 +57,30 @@ FACEBOOK: https://www.facebook.com/themefisher
                   </td>
                 </tr>
 				{% endfor %}
+              </tbody> {% endcomment %}
+              <tbody>
+                {% for a in order_list%}
+                <tr>
+                    <td>
+                        {{a.start_date}}
+                    </td>
+                    <td>
+                        {{a.get_total_price}} din
+                    </td>
+                    <td>
+                        {% for f in a.items.all%}
+                        <ul>
+                            <li>
+                                {{f.item}}
+                            </li>
+                        </ul>
+                        {% endfor %}
+                    </td>
+                    <td>
+                        TODO: Add status here (processing, sent, completed etc)
+                    </td>
+                </tr>
+                {% endfor %}
               </tbody>
             </table>
 			{% endif %}

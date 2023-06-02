@@ -609,11 +609,12 @@ class CheckoutView(LoginRequiredMixin, View):
                 )
                 billing_address.save()
                 order.billing_address = billing_address
+                order.ordered = True
                 order.save()
-            return redirect('checkout')
+            messages.success(self.request, "Your order has been placed")
+            return redirect('product-list')
         except ObjectDoesNotExist:
-            messages.warning(self.request, "You have no active orders")
-            return redirect('checkout')
+            return redirect('product-list')
 
 
 def contact_form(request):
@@ -685,3 +686,15 @@ class CouponView(View):
             except ObjectDoesNotExist:
                 messages.warning(self.request, "This coupon does not exist")
                 return redirect('checkout')
+
+class OrdersListView(ListView):
+    model = Order
+    template_name = 'orders.html'
+
+    
+    def get_context_data(self, **kwargs):
+        context =  super().get_context_data(**kwargs)
+        order_list = Order.objects.filter(user=self.request.user)
+        order_list.filter(ordered=True)
+        context['order_list'] = order_list
+        return context
