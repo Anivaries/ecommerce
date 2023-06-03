@@ -36,19 +36,19 @@ FACEBOOK: https://www.facebook.com/themefisher
   <meta name="generator" content="Themefisher Constra HTML Template v1.0">
   
   <!-- Favicon -->
-  <link rel="shortcut icon" type="image/x-icon" href="{% static 'images/favicon.png' %}" />
+  <link rel="shortcut icon" type="image/x-icon" href="{% static '/base/static/images/favicon.png' %}" />
   <!-- Themefisher Icon font -->
-  <link rel="stylesheet" type="text/css" href="{% static 'plugins/themefisher-font/style.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static '/base/static/plugins/themefisher-font/style.css' %}">
   <!-- bootstrap.min css -->
-  <link rel="stylesheet" type="text/css" href="{% static 'plugins/bootstrap/css/bootstrap.min.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static '/base/static/plugins/bootstrap/css/bootstrap.min.css' %}">
   <!-- Animate css -->
-  <link rel="stylesheet" type="text/css" href="{% static 'plugins/animate/animate.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static '/base/static/plugins/animate/animate.css' %}">
   <!-- Slick Carousel -->
-  <link rel="stylesheet" type="text/css" href="{% static 'plugins/slick/slick.css' %}">
-  <link rel="stylesheet" type="text/css" href="{% static 'plugins/slick/slick-theme.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static '/base/static/plugins/slick/slick.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static '/base/static/plugins/slick/slick-theme.css' %}">
   
   <!-- Main Stylesheet -->
-  <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static '/base/static/css/style.css' %}">
 
 </head>
 
@@ -111,7 +111,11 @@ FACEBOOK: https://www.facebook.com/themefisher
 									<h4 class="media-heading"><a href="{{ item.item.get_absolute_url }}">{{item.item.name}} {{item.item.size}}</a></h4>
 									<div class="cart-price">
 										<span>{{item.quantity}}x</span>
+										{% if not item.item.sale_price %}
 										<span>{{item.item.price}} din</span>
+										{% else %}
+										<span><s>{{item.item.price}} din</s></span>
+										{% endif %}
 									</div>
 									<h5><strong>{{item.get_sum_price}} din</strong></h5>
 								</div>
@@ -484,24 +488,24 @@ Start Call To Action
     =====================================-->
     
     <!-- Main jQuery -->
-    <script type="text/javascript" src="{% static 'plugins/jquery/fldr/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static '/base/static/plugins/jquery/fldr/jquery.min.js' %}"></script>
     <!-- Bootstrap 3.1 -->
-    <script type="text/javascript" src="{% static 'plugins/bootstrap/js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static '/base/static/plugins/bootstrap/js/bootstrap.min.js' %}"></script>
     <!-- Bootstrap Touchpin -->
-    <script type="text/javascript" src="{% static 'plugins/bootstrap-touchspin/fldr/jquery.bootstrap-touchspin.min.js' %}"></script>
+    <script type="text/javascript" src="{% static '/base/static/plugins/bootstrap-touchspin/fldr/jquery.bootstrap-touchspin.min.js' %}"></script>
     <!-- Instagram Feed Js -->
-    <script type="text/javascript" src="{% static 'plugins/instafeed/instafeed.min.js' %}"></script>
+    <script type="text/javascript" src="{% static '/base/static/plugins/instafeed/instafeed.min.js' %}"></script>
     <!-- Video Lightbox Plugin -->
-    <script type="text/javascript" src="{% static 'plugins/ekko-lightbox/fldr/ekko-lightbox.min.js' %}"></script>
+    <script type="text/javascript" src="{% static '/base/static/plugins/ekko-lightbox/fldr/ekko-lightbox.min.js' %}"></script>
     <!-- Count Down Js -->
-    <script type="text/javascript" src="{% static 'plugins/syo-timer/fldr/jquery.syotimer.min.js' %}"></script>
+    <script type="text/javascript" src="{% static '/base/static/plugins/syo-timer/fldr/jquery.syotimer.min.js' %}"></script>
 
     <!-- slick Carousel -->
-    <script type="text/javascript" src="{% static 'plugins/slick/slick.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'plugins/slick/slick-animation.min.js' %}"></script>
+    <script type="text/javascript" src="{% static '/base/static/plugins/slick/slick.min.js' %}"></script>
+    <script type="text/javascript" src="{% static '/base/static/plugins/slick/slick-animation.min.js' %}"></script>
 
     <!-- Main Js File -->
-    <script type="text/javascript" src="{% static 'js/script.js' %}"></script>
+    <script type="text/javascript" src="{% static '/base/static/js/script.js' %}"></script>
     
 
 

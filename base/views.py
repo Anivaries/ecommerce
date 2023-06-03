@@ -686,12 +686,12 @@ class CouponView(View):
             except ObjectDoesNotExist:
                 messages.warning(self.request, "This coupon does not exist")
                 return redirect('checkout')
+            
 
-class OrdersListView(ListView):
+class OrdersListView(LoginRequiredMixin, ListView):
     model = Order
     template_name = 'orders.html'
 
-    
     def get_context_data(self, **kwargs):
         context =  super().get_context_data(**kwargs)
         order_list = Order.objects.filter(user=self.request.user)

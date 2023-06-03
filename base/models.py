@@ -24,7 +24,13 @@ MAKEUP_CATEGORY = (
     ('F', 'Face'),
     ('L', 'Lip'),
 )
-
+STATUS = (
+        ('Prcss', 'Processing'),
+        ('Cpltd', 'Completed'),
+        ('Cncl', 'Canceled'),
+        ('Hld', 'On Hold'),
+        ('Pndng', 'Pending'),
+    )
 
 class Brand(models.Model):
     brand = models.CharField(max_length=30)
@@ -133,6 +139,7 @@ class OrderItem(models.Model):
 
 
 class Order(models.Model):
+    
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              on_delete=models.CASCADE)
     ordered = models.BooleanField(default=False)
@@ -143,6 +150,7 @@ class Order(models.Model):
         'BillingAddress', on_delete=models.SET_NULL, blank=True, null=True)
     coupon = models.ForeignKey(
         'DiscountCode', on_delete=models.SET_NULL, blank=True, null=True)
+    status = models.CharField(max_length=11, choices=STATUS, default="Pndng")
 
     def __str__(self) -> str:
         return f"{self.user} ordered {self.items}"

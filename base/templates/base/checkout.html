@@ -97,7 +97,12 @@
                         </a>
                         <div class="media-body">
                            <h4 class="media-heading"><a href="{% url 'product-detail' item.item.slug %}">{{item.item.name}}</a></h4>
+                           {% if not item.item.sale_price %}
                            <p class="price">{{item.quantity}}x {{item.item.price}} din</p>
+                           {% else %}
+                           <s>{{item.item.price}}</s>
+                           <p>{{item.quantity}}x {{item.item.sale_price}}<p>
+                           {% endif %}
                            <span class="remove"><a href="{{item.item.get_remove_from_cart_url}}">Remove</a></span>
                         </div>
                      </div>

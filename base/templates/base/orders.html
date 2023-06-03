@@ -71,13 +71,33 @@
                         {% for f in a.items.all%}
                         <ul>
                             <li>
-                                {{f.item}}
+                                <a href="{{ f.item.get_absolute_url }}">{{f.item}}</a>
                             </li>
                         </ul>
                         {% endfor %}
                     </td>
                     <td>
-                        TODO: Add status here (processing, sent, completed etc)
+                      {% if a.status == "Prcss" %}
+                      <span class="label label-primary">
+                        Processing
+                      </span>
+                      {% elif a.status == "Cpltd"%}
+                      <span class="label label-success">
+                        Completed
+                      </span>
+                      {% elif a.status == "Cncl"%}
+                      <span class="label label-danger">
+                        Canceled
+                      </span>
+                      {% elif a.status == "Hld"%}
+                      <span class="label label-info">
+                        On Hold
+                      </span>
+                      {% elif a.status == "Pndng"%}
+                      <span class="label label-warning">
+                        Pending
+                      </span>
+                      {% endif %}
                     </td>
                 </tr>
                 {% endfor %}

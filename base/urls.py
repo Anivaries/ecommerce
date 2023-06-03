@@ -6,6 +6,7 @@ from .views import ProductDetailView, ProductListView, add_to_cart, remove_from_
 urlpatterns = [
     path('404/', page_not_found, name='page-not-found'),
     path('', IndexPageView.as_view(), name='index-page'),
+    path('orders/', OrdersListView.as_view(), name="orders"),
     path('products/', ProductListView.as_view(), name="product-list"),
     path('products/<slug:slug>', ProductDetailView.as_view(), name="product-detail"),
     path('brand-list/', BrandView.as_view(), name='brand-list'),
@@ -15,6 +16,7 @@ urlpatterns = [
     path('profile/', UserProfileView.as_view(), name='profile'),
     path('apply-coupon/', CouponView.as_view(), name='apply-coupon'),
     path('contact/', contact_form, name='contact'),
+    path('favorites/', show_favorites, name="favorites"),
     path('delete-comment/<int:pk>/',
          delete_comment, name='delete-comment'),
     path('update-comment/<int:pk>/',
@@ -29,7 +31,7 @@ urlpatterns = [
     path('remove-from-favorites/<slug:slug>/',
          remove_from_favorites, name="remove-from-favorites"),
     path('update-profile/', update_profile, name="profile-update"),
-    path('favorites/', show_favorites, name="favorites"),
+    
     path('empty-cart', empty_cart, name="empty-cart"),
     path('female-perfumes/', list_by_female_perfumes, name="female-perfumes"),
     path('male-perfumes/', list_by_male_perfumes, name="male-perfumes"),
@@ -62,6 +64,6 @@ urlpatterns = [
     path('perfumes/sale/', perfumes_on_sale, name="perfumes_on_sale"),
     path('makeup/sale/', makeup_on_sale, name="makeup_on_sale"),
     path('skincare/sale/', skincare_on_sale, name="skincare_on_sale"),
-    path('orders/', OrdersListView.as_view(), name="orders"),
+    
 
 ]
