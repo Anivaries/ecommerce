@@ -152,10 +152,10 @@
 								        <div class="media-body" id="review">
 								            <div class="comment-info">
 								                <h4 class="comment-author">
-								                    <a style="font-size:15px" href="#!">{{a.author}}</a>
+								                    <a style="font-size:15px">{{a.author}}</a>
 								                </h4>
-								                <time datetime="2013-04-06T13:53">{{a.time}}</time>
-								                <a class="comment-button" href="#!"><i class="tf-ion-chatbubbles"></i>Reply</a>
+								                <time>{{a.time}}</time>
+								                {% comment %} <a class="comment-button" href="#!"><i class="tf-ion-chatbubbles"></i>Reply</a> {% endcomment %}
 								            </div>
 								            <p style="margin-bottom: 1px;">
 											{{a.text}}
@@ -182,5 +182,5 @@
 		</div>
 	</div>
 </section>
-<script type="text/javascript" src="{% static 'base/static/star-ratings/js/fldr/star-ratings.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'star-ratings/js/fldr/star-ratings.min.js' %}"></script>
 {% endblock%}

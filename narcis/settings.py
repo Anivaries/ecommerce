@@ -117,7 +117,6 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 LOGIN_REDIRECT_URL = '/products/'
 ACCOUNT_SIGNUP_REDIRECT_URL = "/products/"
 ACCOUNT_LOGOUT_REDIRECT_URL = "/products/"
-ACCOUNT_EMAIL_REQUIRED = True
 # ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 LANGUAGE_CODE = 'en-us'
 

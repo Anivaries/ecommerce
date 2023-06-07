@@ -512,7 +512,8 @@ def add_to_cart(request, slug):
             user=request.user, ordered_date=ordered_date)
         order.items.add(order_item)
         messages.success(request, f"{item} added to cart")
-    return redirect('order-summary')
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    # return redirect('order-summary')
 
 
 @login_required
@@ -571,9 +572,9 @@ class CheckoutView(LoginRequiredMixin, View):
         try:
             order = Order.objects.get(
                 user=self.request.user, ordered=False)
-            if order.get_total_price() <= 0:
-                messages.info(self.request, "You must have active order")
-                return redirect('product-list')
+            # if order.get_total_price() <= 0:
+                # messages.info(self.request, "You must have active order")
+                # return redirect('product-list')
         except ObjectDoesNotExist:
             messages.info(self.request, "You must have active order")
             return redirect('product-list')
