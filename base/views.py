@@ -65,11 +65,9 @@ class ProductDetailView(DetailView):
                     messages.success(request, "Review submited")
                     return redirect('product-detail', slug=slug)
                 return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-                # return render(request, 'product-detail.html', {"form": form})
         except:
             messages.info(request, "You must be logged in to give a review")
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-        # return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
     def update(request, pk):
         comment = get_object_or_404(Comment, pk=pk)
@@ -451,7 +449,6 @@ def empty_cart(request):
 
 
 @login_required
-# TO DO: CHECK IF ITEM IS IN FAVORITES AND THEN CHANGE HTTP ICON COLOR ACORDINGLY
 def add_to_favorites(request, slug):
     item = get_object_or_404(Product, slug=slug)
     qs = UserProfile.objects.filter(user=request.user)
@@ -513,7 +510,6 @@ def add_to_cart(request, slug):
         order.items.add(order_item)
         messages.success(request, f"{item} added to cart")
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-    # return redirect('order-summary')
 
 
 @login_required
@@ -527,8 +523,8 @@ def remove_from_cart(request, slug):
                 item=item, user=request.user, ordered=False)[0]
             order_item.delete()
             if len(order.items.all()) == 0:
-                # TODO: REDIRECT TO EMPRYT CART PAGE
                 messages.info(request, "Cart is empty")
+                return redirect('order-summary')
             messages.info(request, f"{item} removed from cart")
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         else:
@@ -552,7 +548,6 @@ def remove_item_from_cart(request, slug):
                 if len(order.items.all()) == 0:
                     # TODO:  REDIRECT TO EMPTY CART
                     messages.info(request, "Your cart is empty")
-                    print("CART IS EMPTY")
                 messages.info(request, f"{item} removed from cart")
                 return redirect('order-summary')
             else:
@@ -572,9 +567,6 @@ class CheckoutView(LoginRequiredMixin, View):
         try:
             order = Order.objects.get(
                 user=self.request.user, ordered=False)
-            # if order.get_total_price() <= 0:
-                # messages.info(self.request, "You must have active order")
-                # return redirect('product-list')
         except ObjectDoesNotExist:
             messages.info(self.request, "You must have active order")
             return redirect('product-list')
