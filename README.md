@@ -1,7 +1,7 @@
 Makeup, skincare and fragrance shop (WIP)
 
-- Full cart funcionality
-- Full favorites funcionality 
+- Full cart functionality
+- Full favorites functionality 
 - Users have to register account to add/remove items to cart or favorites
 - Users can leave a review on items
 - Users can save their billing address
